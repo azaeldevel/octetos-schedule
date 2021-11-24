@@ -8,13 +8,12 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
-bin_PROGRAMS = octetos_schedule
+bin_PROGRAMS = schedule
 
-octetos_schedule_SOURCES = \
-	main.cc
+schedule_SOURCES = main.cc schedule.cc
 
-octetos_schedule_LDFLAGS = 
+schedule_LDFLAGS = 
 
-octetos_schedule_LDADD = 
+schedule_LDADD = 
 
 

@@ -1,5 +1,5 @@
 
-SUBDIRS = src po
+SUBDIRS = src
 
 dist_doc_DATA = \
 	README \
@@ -19,10 +19,9 @@ EXTRA_DIST = \
 
 DISTCLEANFILES = intltool-extract \
 	intltool-merge \
-	intltool-update \
-	po/.intltool-merge-cache
+	intltool-update 
 
 
 # Remove doc directory on uninstall
-uninstall-local:
+uninstall-local :
 	-rm -r $(docdir)
