@@ -30,15 +30,8 @@
 
 #ifdef _WIN32
 
-extern "C" char* strptime(const char* s,
-	const char* f,
-	struct tm* tm) {
-	// Isn't the C++ standard lib nice? std::get_time is defined such that its
-	// format parameters are the exact same as strptime. Of course, we have to
-	// create a string stream first, and imbue it with the current C locale, and
-	// we also have to make sure we return the right things if it fails, or
-	// if it succeeds, but this is still far simpler an implementation than any
-	// of the versions in any of the C standard libraries.
+extern "C" char* strptime(const char* s,const char* f,struct tm* tm) 
+{
 	std::istringstream input(s);
 	input.imbue(std::locale(setlocale(LC_ALL, nullptr)));
 	input >> std::get_time(tm, f);
@@ -115,14 +108,14 @@ namespace oct::sche
 	Teachers::Row::Row()
 	{
 	}
-	Teachers::Row::Row(int z) : std::vector<Teachers::Time>(z)
+	Teachers::Row::Row(int z) : std::vector<ec::sche::Time>(z)
 	{
 	}
 	Teachers::Teachers(const std::string& fn)
 	{
 		loadFile(fn);
 	}
-	bool Teachers::loadFile(const std::string& fn)
+	void Teachers::loadFile(const std::string& fn)
 	{
 		std::fstream csv(fn, std::ios::in);
 		std::string line,data,strTime,strH;
@@ -133,9 +126,89 @@ namespace oct::sche
 				std::stringstream str(line);
 				std::getline(str,data,',');
 				Teachers::Row row;
-				std::cout << data << ",";
+				//std::cout << data << ",";
 				row.teacher = data;
-				Time time;					
+				ec::sche::Time time;					
+				row.push_back(time);
+				while(std::getline(str,data,','))
+				{
+					std::stringstream ssTime(data);
+					std::getline(ssTime,strH,'-');
+					strptime(strH.c_str(), "%H:%M",&time.begin);
+					std::getline(ssTime,strH,'-');
+					strptime(strH.c_str(), "%H:%M",&time.end);
+					/*std::cout << std::put_time(&time.begin, "%H:%M");
+					std::cout << "-";
+					std::cout << std::put_time(&time.end, "%H:%M");
+					std::cout << ",";*/
+					teachers.push_back(row);
+				}				
+				//std::cout << "\n";
+			}
+		}		
+	}
+
+
+
+	
+	
+	Subjects::Row::Row()
+	{
+		
+	}
+	Subjects::Subjects(const std::string& fn)
+	{
+		loadFile(fn);
+	}
+	void Subjects::loadFile(const std::string& fn)
+	{
+		std::fstream csv(fn, std::ios::in);
+		std::string line,data;
+		if(csv.is_open())
+		{
+			while(std::getline(csv,line))
+			{
+				std::stringstream str(line);
+				//std::cout << line;
+				std::getline(str,data,',');
+				Subjects::Row row;
+				row.teacher = data;
+				//std::cout << data << ",";
+
+				std::getline(str,data,',');
+				//std::cout << data << ",";
+				row.subject = data;				
+				//std::cout << "\n";
+			}
+		}
+		
+	}
+
+	
+	Rooms::Row::Row()
+	{
+	}
+	Rooms::Row::Row(int z) : std::vector<ec::sche::Time>(z)
+	{
+	}
+	Rooms::Rooms(const std::string& fn)
+	{
+		loadFile(fn);
+	}
+	void Rooms::loadFile(const std::string& fn)
+	{
+		std::fstream csv(fn, std::ios::in);
+		std::string line,data,strTime,strH;
+		if(csv.is_open())
+		{
+			while(std::getline(csv,line))
+			{
+				std::stringstream str(line);
+				std::getline(str,data,',');
+				Rooms::Row row;
+				std::cout << data << ",";
+				row.room = data;
+				ec::sche::Time time;					
 				row.push_back(time);
 				while(std::getline(str,data,','))
 				{
@@ -148,89 +221,12 @@ namespace oct::sche
 					std::cout << "-";
 					std::cout << std::put_time(&time.end, "%H:%M");
 					std::cout << ",";
-					teachers.push_back(row);
-				}				
+					rooms.push_back(row);
+				}
 				std::cout << "\n";
 			}
 		}		
 		
-		return true;
-	}
-
-
-
-	
-	
-	/*Subjects::Row::Row()
-	{
-		
-	}*/
-	Subjects::Subjects(const std::string& fn)
-	{
-		loadFile(fn);
-	}
-	bool Subjects::loadFile(const std::string& fn)
-	{
-		std::fstream csv(fn, std::ios::in);
-		std::string line,data;
-		if(csv.is_open())
-		{
-			while(std::getline(csv,line))
-			{
-				std::stringstream str(line);
-				//std::cout << line;
-				std::getline(str,data,',');
-				//Subjects::Row row;
-				
-				//std::cout << "\n";
-			}
-		}
-		
-		return true;
-	}
-
-	
-	Rooms::Row::Row()
-	{
-	}
-	Rooms::Row::Row(int z) : std::vector<Rooms::Time>(z)
-	{
-	}
-	Rooms::Rooms(const std::string& fn)
-	{
-		loadFile(fn);
-	}
-	bool Rooms::loadFile(const std::string& fn)
-	{
-		std::fstream csv(fn, std::ios::in);
-		std::string line,data,strTime;
-		if(csv.is_open())
-		{
-			while(std::getline(csv,line))
-			{
-				std::stringstream str(line);
-				std::getline(str,data,',');
-				Rooms::Row row;
-				//std::cout << data << ",";
-				row.room = data;
-				Time time;			
-				row.push_back(time);
-				std::getline(str,data,',');
-				std::stringstream ssTime(data);
-				std::getline(ssTime,strTime,'-');
-				strptime(strTime.c_str(), "%H:%M",&time.begin);
-				std::getline(ssTime,strTime,'-');
-				strptime(strTime.c_str(), "%H:%M",&time.end);
-				//std::cout << std::put_time(&time.begin, "%H:%M");
-				//std::cout << "-";
-				//std::cout << std::put_time(&time.end, "%H:%M");
-				//std::cout << ",";
-				rooms.push_back(row);
-				//std::cout << "\n";
-			}
-		}		
-		
-		return true;
 	}
 }
 

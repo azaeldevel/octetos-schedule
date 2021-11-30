@@ -24,6 +24,14 @@ namespace oct::core
 	};
 }
 
+namespace ec::sche
+{
+	struct Time
+	{
+		tm begin;
+		tm end;
+	};
+}
 
 namespace oct::sche
 {
@@ -96,13 +104,8 @@ namespace oct::sche
 	
 	class Teachers
 	{
-		struct Time
+		struct Row : public std::vector<ec::sche::Time>
 		{
-			tm begin;
-			tm end;
-		};
-		struct Row : public std::vector<Teachers::Time>
-		{			
 			Teacher teacher;
 
 			Row();
@@ -111,7 +114,7 @@ namespace oct::sche
 		
 	public: 
 		Teachers(const std::string& fn);
-		bool loadFile(const std::string& fn);
+		void loadFile(const std::string& fn);
 
 	private:
 		std::list<Row> teachers;
@@ -129,18 +132,13 @@ namespace oct::sche
 		
 	public: 
 		Subjects(const std::string& fn);
-		bool loadFile(const std::string& fn);
+		void loadFile(const std::string& fn);
 	};
 
 	class Rooms
-	{		
-		struct Time
+	{
+		struct Row : public std::vector<ec::sche::Time>
 		{
-			tm begin;
-			tm end;
-		};
-		struct Row : public std::vector<Rooms::Time>
-		{			
 			Room room;
 
 			Row();
@@ -148,7 +146,7 @@ namespace oct::sche
 		};
 	public:
 		Rooms(const std::string& fn);
-		bool loadFile(const std::string& fn);
+		void loadFile(const std::string& fn);
 	private:
 		std::list<Row> rooms;
 	};
