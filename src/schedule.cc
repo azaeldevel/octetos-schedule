@@ -118,13 +118,19 @@ namespace oct::sche
 
 	
 	
-	Room::Room(const std::string& name)
+	Room::Room(const std::string& n)
 	{
-		
+		name = n;
 	}
 	Room::Room()
 	{
 		
+	}
+	Room& Room::operator =(const std::string& n)
+	{
+		name = n;
+		
+		return *this;
 	}
 	const std::string& Room::get_name()
 	{
@@ -274,8 +280,7 @@ namespace oct::sche
 				Rooms::Row row;
 				//std::cout << data << ",";
 				row.room = data;
-				ec::sche::Time time;					
-				row.push_back(time);
+				ec::sche::Time time;
 				while(std::getline(str,data,','))
 				{
 					std::stringstream ssTime(data);
@@ -283,16 +288,31 @@ namespace oct::sche
 					strptime(strH.c_str(), "%H:%M",&time.begin);
 					std::getline(ssTime,strH,'-');
 					strptime(strH.c_str(), "%H:%M",&time.end);
-					//std::cout << std::put_time(&time.begin, "%H:%M");
-					//std::cout << "-";
-					//std::cout << std::put_time(&time.end, "%H:%M");
-					//std::cout << ",";
-					rooms.push_back(row);
+					/*std::cout << std::put_time(&time.begin, "%H:%M");
+					std::cout << "-";
+					std::cout << std::put_time(&time.end, "%H:%M");
+					std::cout << ",";*/
+					row.push_back(time);
 				}
+				rooms.push_back(row);	
 				//std::cout << "\n";
 			}
 		}		
-		
+	}	
+	void Rooms::print(std::ostream& out)
+	{
+		for(Row& row : rooms)
+		{
+			out << row.room.get_name() << ",";
+			for(unsigned int i = 0; i < row.size(); i++)
+			{
+				out << std::put_time(&row[i].begin, "%H:%M");
+				out << "-";
+				out << std::put_time(&row[i].end, "%H:%M");
+				if(i < row.size() - 1) out << ",";
+			}
+			out << "\n";
+		}
 	}
 }
 

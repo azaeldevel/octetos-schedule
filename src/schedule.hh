@@ -118,6 +118,7 @@ namespace oct::sche
 		Room();
 
 		virtual const std::string& get_name();
+		Room& operator =(const std::string&);
 		
 	private:
 		std::string name;
@@ -177,6 +178,8 @@ namespace oct::sche
 	public:
 		Rooms(const std::string& fn);
 		void loadFile(const std::string& fn);
+		void print(std::ostream&);
+		
 	private:
 		std::list<Row> rooms;
 	};
