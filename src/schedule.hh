@@ -30,6 +30,12 @@ namespace ec::sche
 	{
 		tm begin;
 		tm end;
+
+		Time()
+		{
+			begin = {0};
+			end = {0};
+		}
 	};
 }
 
@@ -39,7 +45,7 @@ namespace oct::sche
 	class Configuration
 	{
 	public:
-		enum Schema
+		enum SchemaWeek
 		{
 			MF,//Mondy - Fraday
 			MS,//Monday - Sturday
@@ -48,7 +54,7 @@ namespace oct::sche
 		Configuration(const std::string& name);
 
 	private:
-		Schema schema;
+		SchemaWeek schema;
 		
 	};
 
@@ -64,18 +70,19 @@ namespace oct::sche
 		Saturday
 	};
 		
+	
+
 	class Teacher : public oct::core::Person
 	{
 	public:
 		Teacher(const std::string& name,const std::string& ap,const std::string& am);
 		Teacher(const std::string& name);
 		Teacher();
-
 		
 	private:
 		
 	};
-	
+		
 	class Subject
 	{
 	public:
@@ -97,10 +104,9 @@ namespace oct::sche
 		std::string name;
 	};
 	
-	class Row 
-	{
-
-	};
+	
+	
+	
 	
 	class Teachers
 	{
@@ -144,6 +150,7 @@ namespace oct::sche
 			Row();
 			Row(int z);		
 		};
+		
 	public:
 		Rooms(const std::string& fn);
 		void loadFile(const std::string& fn);

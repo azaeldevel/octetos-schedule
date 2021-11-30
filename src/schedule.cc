@@ -69,6 +69,7 @@ namespace oct::core
 
 namespace oct::sche
 {
+	
 
 	Teacher::Teacher(const std::string& name,const std::string& ap,const std::string& am) : oct::core::Person(name,ap,am)
 	{
