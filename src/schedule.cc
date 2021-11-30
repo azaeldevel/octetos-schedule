@@ -125,31 +125,32 @@ namespace oct::sche
 	bool Teachers::loadFile(const std::string& fn)
 	{
 		std::fstream csv(fn, std::ios::in);
-		std::string line,data,strTime;
+		std::string line,data,strTime,strH;
 		if(csv.is_open())
 		{
 			while(std::getline(csv,line))
 			{
 				std::stringstream str(line);
+				std::getline(str,data,',');
+				Teachers::Row row;
+				std::cout << data << ",";
+				row.teacher = data;
+				Time time;					
+				row.push_back(time);
 				while(std::getline(str,data,','))
 				{
-					Teachers::Row row;
-					//std::cout << data << ",";
-					row.teacher = data;
-					Time time;					
-					row.push_back(time);
 					std::stringstream ssTime(data);
-					std::getline(ssTime,strTime,'-');
-					strptime(strTime.c_str(), "%H:%M",&time.begin);
-					std::getline(ssTime,strTime,'-');
-					strptime(strTime.c_str(), "%H:%M",&time.end);
-					//std::cout << std::put_time(&time.begin, "%H:%M");
+					std::getline(ssTime,strH,'-');
+					strptime(strH.c_str(), "%H:%M",&time.begin);
+					std::getline(ssTime,strH,'-');
+					strptime(strH.c_str(), "%H:%M",&time.end);
+					std::cout << std::put_time(&time.begin, "%H:%M");
 					std::cout << "-";
-					//std::cout << std::put_time(&time.end, "%H:%M");
-					//std::cout << ",";
+					std::cout << std::put_time(&time.end, "%H:%M");
+					std::cout << ",";
 					teachers.push_back(row);
-				}
-				//std::cout << "\n";
+				}				
+				std::cout << "\n";
 			}
 		}		
 		
@@ -210,21 +211,22 @@ namespace oct::sche
 				std::stringstream str(line);
 				std::getline(str,data,',');
 				Rooms::Row row;
-				std::cout << data << ",";
+				//std::cout << data << ",";
 				row.room = data;
 				Time time;			
 				row.push_back(time);
+				std::getline(str,data,',');
 				std::stringstream ssTime(data);
-					std::getline(ssTime,strTime,'-');
-					strptime(strTime.c_str(), "%H:%M",&time.begin);
-					std::getline(ssTime,strTime,'-');
-					strptime(strTime.c_str(), "%H:%M",&time.end);
-					std::cout << std::put_time(&time.begin, "%H:%M");
-					std::cout << "-";
-					std::cout << std::put_time(&time.end, "%H:%M");
-					std::cout << ",";
+				std::getline(ssTime,strTime,'-');
+				strptime(strTime.c_str(), "%H:%M",&time.begin);
+				std::getline(ssTime,strTime,'-');
+				strptime(strTime.c_str(), "%H:%M",&time.end);
+				//std::cout << std::put_time(&time.begin, "%H:%M");
+				//std::cout << "-";
+				//std::cout << std::put_time(&time.end, "%H:%M");
+				//std::cout << ",";
 				rooms.push_back(row);
-				std::cout << "\n";
+				//std::cout << "\n";
 			}
 		}		
 		
