@@ -159,6 +159,9 @@ namespace oct::sche
 	public: 
 		Subjects(const std::string& fn);
 		void loadFile(const std::string& fn);
+		void print(std::ostream&);
+	private:
+		std::list<Row> rooms;
 	};
 
 	class Rooms

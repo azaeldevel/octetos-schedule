@@ -133,9 +133,9 @@ namespace oct::sche
 
 
 	
-	Subject::Subject(const std::string& name)
+	Subject::Subject(const std::string& n)
 	{
-		
+		name = n;
 	}
 	Subject::Subject()
 	{
@@ -236,9 +236,18 @@ namespace oct::sche
 				//std::cout << data << ",";
 				row.subject = data;				
 				//std::cout << "\n";
+				rooms.push_back(row);
 			}
+		}		
+	}
+	void Subjects::print(std::ostream& out)
+	{
+		for(Row& row : rooms)
+		{
+			out << row.teacher.get_name() << ",";
+			out << row.subject.get_name();
+			out << "\n";
 		}
-		
 	}
 
 	
