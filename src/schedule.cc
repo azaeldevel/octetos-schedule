@@ -71,18 +71,28 @@ namespace oct::sche
 	{
 		
 	}
+	Room::Room()
+	{
+		
+	}
 
-
+	
+	Subject::Subject(const std::string& name)
+	{
+		
+	}
+	Subject::Subject()
+	{
+		
+	}
 
 
 	
 	Teachers::Row::Row()
 	{
-		
 	}
 	Teachers::Row::Row(int z) : std::vector<Teachers::Time>(z)
 	{
-		
 	}
 	Teachers::Teachers(const std::string& fn)
 	{
@@ -100,10 +110,87 @@ namespace oct::sche
 				while(std::getline(str,data,','))
 				{
 					Teachers::Row row;
-					std::cout << data << ",";
+					//std::cout << data << ",";
+					row.teacher = data;
 					Time time;					
 					row.push_back(time);
 					std::stringstream ssTime(data);
+					std::getline(ssTime,strTime,'-');
+					strptime(strTime.c_str(), "%H:%M",&time.begin);
+					std::getline(ssTime,strTime,'-');
+					strptime(strTime.c_str(), "%H:%M",&time.end);
+					//std::cout << std::put_time(&time.begin, "%H:%M");
+					std::cout << "-";
+					//std::cout << std::put_time(&time.end, "%H:%M");
+					//std::cout << ",";
+					teachers.push_back(row);
+				}
+				//std::cout << "\n";
+			}
+		}		
+		
+		return true;
+	}
+
+
+
+	
+	
+	/*Subjects::Row::Row()
+	{
+		
+	}*/
+	Subjects::Subjects(const std::string& fn)
+	{
+		loadFile(fn);
+	}
+	bool Subjects::loadFile(const std::string& fn)
+	{
+		std::fstream csv(fn, std::ios::in);
+		std::string line,data;
+		if(csv.is_open())
+		{
+			while(std::getline(csv,line))
+			{
+				std::stringstream str(line);
+				//std::cout << line;
+				std::getline(str,data,',');
+				//Subjects::Row row;
+				
+				//std::cout << "\n";
+			}
+		}
+		
+		return true;
+	}
+
+	
+	Rooms::Row::Row()
+	{
+	}
+	Rooms::Row::Row(int z) : std::vector<Rooms::Time>(z)
+	{
+	}
+	Rooms::Rooms(const std::string& fn)
+	{
+		loadFile(fn);
+	}
+	bool Rooms::loadFile(const std::string& fn)
+	{
+		std::fstream csv(fn, std::ios::in);
+		std::string line,data,strTime;
+		if(csv.is_open())
+		{
+			while(std::getline(csv,line))
+			{
+				std::stringstream str(line);
+				std::getline(str,data,',');
+				Rooms::Row row;
+				std::cout << data << ",";
+				row.room = data;
+				Time time;			
+				row.push_back(time);
+				std::stringstream ssTime(data);
 					std::getline(ssTime,strTime,'-');
 					strptime(strTime.c_str(), "%H:%M",&time.begin);
 					std::getline(ssTime,strTime,'-');
@@ -112,7 +199,7 @@ namespace oct::sche
 					std::cout << "-";
 					std::cout << std::put_time(&time.end, "%H:%M");
 					std::cout << ",";
-				}
+				rooms.push_back(row);
 				std::cout << "\n";
 			}
 		}		

@@ -72,6 +72,7 @@ namespace oct::sche
 	{
 	public:
 		Subject(const std::string& name);
+		Subject();
 
 	private:
 		std::string name;
@@ -82,14 +83,18 @@ namespace oct::sche
 	{
 	public:
 		Room(const std::string& name);
+		Room();
 
 	private:
 		std::string name;
 	};
 	
+	class Row 
+	{
 
+	};
 	
-	class Teachers : public std::list<Teacher>
+	class Teachers
 	{
 		struct Time
 		{
@@ -101,8 +106,7 @@ namespace oct::sche
 			Teacher teacher;
 
 			Row();
-			Row(int z);
-		
+			Row(int z);		
 		};
 		
 	public: 
@@ -110,13 +114,43 @@ namespace oct::sche
 		bool loadFile(const std::string& fn);
 
 	private:
-		std::vector<Row> teachers;
+		std::list<Row> teachers;
 	};
 
-	class Subjects : public std::list<Subject>
+	class Subjects
 	{
+		struct Row
+		{
+			Subject subject;
+			Teacher teacher;
+
+			Row();
+		};
+		
 	public: 
 		Subjects(const std::string& fn);
+		bool loadFile(const std::string& fn);
+	};
+
+	class Rooms
+	{		
+		struct Time
+		{
+			tm begin;
+			tm end;
+		};
+		struct Row : public std::vector<Rooms::Time>
+		{			
+			Room room;
+
+			Row();
+			Row(int z);		
+		};
+	public:
+		Rooms(const std::string& fn);
+		bool loadFile(const std::string& fn);
+	private:
+		std::list<Row> rooms;
 	};
 				
 }
