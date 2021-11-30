@@ -21,3 +21,4 @@ Makefile.in
 src/Makefile.in
 test-driver
 
+.vs
