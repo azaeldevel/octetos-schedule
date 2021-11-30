@@ -47,13 +47,15 @@ namespace oct::core
 {
 	Person::Person(const std::string& name,const std::string& ap,const std::string& am)
 	{
-		
+		names.resize(3);
+
+		names[0] = name;
+		names[1] = ap;
+		names[2] = am;
 	}
 	Person::Person(const std::string& name)
 	{
-		std::stringstream ss(name);
-
-		
+		operator =(name);
 	}
 	Person::Person()
 	{
@@ -61,9 +63,26 @@ namespace oct::core
 	 
 	const Person& Person::operator =(const std::string& name)
 	{
-		
+		std::stringstream ss(name);
+		std::string word;
 
+		unsigned int count = 0;
+		while(std::getline(ss,word,' '))
+		{
+			count++;
+			names.push_back(word);
+		}
+		names.resize(count);
+		
 		return *this;
+	}
+	void Person::get_name(std::string& n)
+	{
+		for(unsigned int i = 0; i < names.size(); i++)
+		{
+			n += names[i];
+			if(i < names.size() - 1) n += " "; 
+		}
 	}
 }
 
@@ -83,7 +102,21 @@ namespace oct::sche
 	{
 		
 	}
+	const std::string& Teacher::get_name()
+	{
+		if(name.empty()) 
+		{
+			Person::get_name(name);
+		}
+		return name;
+	}
 
+
+
+
+
+
+	
 	
 	Room::Room(const std::string& name)
 	{
@@ -93,6 +126,11 @@ namespace oct::sche
 	{
 		
 	}
+	const std::string& Room::get_name()
+	{
+		return name;
+	}
+
 
 	
 	Subject::Subject(const std::string& name)
@@ -102,6 +140,10 @@ namespace oct::sche
 	Subject::Subject()
 	{
 		
+	}
+	const std::string& Subject::get_name()
+	{
+		return name;
 	}
 
 
@@ -129,8 +171,7 @@ namespace oct::sche
 				Teachers::Row row;
 				//std::cout << data << ",";
 				row.teacher = data;
-				ec::sche::Time time;					
-				row.push_back(time);
+				ec::sche::Time time;
 				while(std::getline(str,data,','))
 				{
 					std::stringstream ssTime(data);
@@ -142,13 +183,28 @@ namespace oct::sche
 					std::cout << "-";
 					std::cout << std::put_time(&time.end, "%H:%M");
 					std::cout << ",";*/
-					teachers.push_back(row);
-				}				
+					row.push_back(time);
+				}
+				teachers.push_back(row);	
 				//std::cout << "\n";
 			}
 		}		
 	}
-
+	void Teachers::print(std::ostream& out)
+	{
+		for(Row& row : teachers)
+		{
+			out << row.teacher.get_name() << ",";
+			for(unsigned int i = 0; i < row.size(); i++)
+			{
+				out << std::put_time(&row[i].begin, "%H:%M");
+				out << "-";
+				out << std::put_time(&row[i].end, "%H:%M");
+				if(i < row.size() - 1) out << ",";
+			}
+			out << "\n";
+		}
+	}
 
 
 	
@@ -207,7 +263,7 @@ namespace oct::sche
 				std::stringstream str(line);
 				std::getline(str,data,',');
 				Rooms::Row row;
-				std::cout << data << ",";
+				//std::cout << data << ",";
 				row.room = data;
 				ec::sche::Time time;					
 				row.push_back(time);
@@ -218,13 +274,13 @@ namespace oct::sche
 					strptime(strH.c_str(), "%H:%M",&time.begin);
 					std::getline(ssTime,strH,'-');
 					strptime(strH.c_str(), "%H:%M",&time.end);
-					std::cout << std::put_time(&time.begin, "%H:%M");
-					std::cout << "-";
-					std::cout << std::put_time(&time.end, "%H:%M");
-					std::cout << ",";
+					//std::cout << std::put_time(&time.begin, "%H:%M");
+					//std::cout << "-";
+					//std::cout << std::put_time(&time.end, "%H:%M");
+					//std::cout << ",";
 					rooms.push_back(row);
 				}
-				std::cout << "\n";
+				//std::cout << "\n";
 			}
 		}		
 		

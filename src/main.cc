@@ -16,6 +16,8 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
+
 #include "schedule.hh"
 
 int main()
@@ -24,6 +26,7 @@ int main()
 	oct::sche::Subjects subjects("tests/subjects.csv");
 	oct::sche::Rooms rooms("tests/rooms.csv");
 
+	teachers.print(std::cout);
 	
 	return 0;
 }

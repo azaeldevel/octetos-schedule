@@ -18,9 +18,10 @@ namespace oct::core
 		Person();
 
 		const Person& operator =(const std::string& name);
+		virtual void get_name(std::string&);
 
 	private:
-		std::list<std::string> names; 
+		std::vector<std::string> names; 
 	};
 }
 
@@ -36,6 +37,18 @@ namespace ec::sche
 			begin = {0};
 			end = {0};
 		}
+	};
+
+	class Target
+	{
+	public:
+		virtual const std::string& get_name() = 0;
+	};
+
+	struct Fragment
+	{
+		const Target* target;
+		Time time;
 	};
 }
 
@@ -72,34 +85,40 @@ namespace oct::sche
 		
 	
 
-	class Teacher : public oct::core::Person
+	class Teacher : public oct::core::Person, public ec::sche::Target
 	{
 	public:
 		Teacher(const std::string& name,const std::string& ap,const std::string& am);
 		Teacher(const std::string& name);
 		Teacher();
 		
-	private:
+		virtual const std::string& get_name();
 		
+	private:
+		std::string name;
 	};
 		
-	class Subject
+	class Subject : public ec::sche::Target
 	{
 	public:
 		Subject(const std::string& name);
 		Subject();
 
+		virtual const std::string& get_name();
+		
 	private:
 		std::string name;
 		Day day;
 	};
 	
-	class Room
+	class Room : public ec::sche::Target
 	{
 	public:
 		Room(const std::string& name);
 		Room();
 
+		virtual const std::string& get_name();
+		
 	private:
 		std::string name;
 	};
@@ -121,6 +140,7 @@ namespace oct::sche
 	public: 
 		Teachers(const std::string& fn);
 		void loadFile(const std::string& fn);
+		void print(std::ostream&);
 
 	private:
 		std::list<Row> teachers;
