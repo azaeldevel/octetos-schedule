@@ -28,7 +28,7 @@
 
 #include "schedule.hh"
 
-#ifdef _WIN32
+#ifdef _WIN32 || _WIN64
 
 extern "C" char* strptime(const char* s,
 	const char* f,

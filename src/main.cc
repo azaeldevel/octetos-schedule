@@ -22,7 +22,7 @@ int main()
 {
 	oct::sche::Teachers teachers("tests/teachers.csv");
 	oct::sche::Subjects subjects("tests/subjects.csv");
-	oct::sche::Rooms rooms("tests/rooms.csv");
+	//oct::sche::Rooms rooms("tests/rooms.csv");
 
 	
 	return 0;
