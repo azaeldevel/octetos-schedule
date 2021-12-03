@@ -20,5 +20,7 @@ missing
 Makefile.in
 src/Makefile.in
 test-driver
-
 .vs
+Output
+*.ico
+*.png

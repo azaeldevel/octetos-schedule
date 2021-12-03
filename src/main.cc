@@ -26,9 +26,9 @@ int main()
 	oct::sche::Subjects subjects("tests/subjects.csv");
 	//oct::sche::Rooms rooms("tests/rooms.csv");
 
-	//teachers.print(std::cout);
+	teachers.print(std::cout);
 	//subjects.print(std::cout);
-	rooms.print(std::cout);
+	//rooms.print(std::cout);
 	
 	return 0;
 }
