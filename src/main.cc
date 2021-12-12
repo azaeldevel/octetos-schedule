@@ -20,9 +20,11 @@
 #include <gtkmm.h>
 #include <iostream>
 
-#if defined(__GNUG__) && defined(__linux__)
+#if defined(__GNUG__) && defined(__linux__) && !defined(CODEBLOCKS)
     #include "config.h"
 #elif defined(__GNUG__) && (defined(_WIN32) || defined(_WIN64))
+
+#elif defined(__GNUG__) && defined(__linux__) && defined(CODEBLOCKS)
 
 #else
 	#error "Pltaforma desconocida"
@@ -34,7 +36,7 @@
 
 /* For testing propose use the local (not installed) ui file */
 /* #define UI_FILE PACKAGE_DATA_DIR"/ui/octetos_schedule.ui" */
-#define UI_FILE "src/octetos_schedule.ui"
+#define UI_FILE "src/schedule.ui"
 
 
 int
@@ -55,7 +57,7 @@ main (int argc, char *argv[])
 		return 1;
 	}
 	Gtk::Window* main_win = 0;
-	builder->get_widget("main_window", main_win);
+	builder->get_widget("main", main_win);
 
 
 	if (main_win)

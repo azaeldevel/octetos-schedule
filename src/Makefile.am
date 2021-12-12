@@ -1,10 +1,7 @@
-## Process this file with automake to produce Makefile.in
-
-## Created by Anjuta
 
 
 uidir = $(pkgdatadir)/ui
-ui_DATA = octetos_schedule.ui
+ui_DATA = schedule.ui
 
 
 AM_CPPFLAGS = \
@@ -17,14 +14,14 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
-bin_PROGRAMS = octetos_schedule
+bin_PROGRAMS = schedule
 
-octetos_schedule_SOURCES = \
-	main.cc
+schedule_SOURCES = \
+	main.cc 
 
-octetos_schedule_LDFLAGS = 
+schedule_LDFLAGS = 
 
-octetos_schedule_LDADD = $(OCTETOS_SCHEDULE_LIBS)
+schedule_LDADD = $(OCTETOS_SCHEDULE_LIBS)
 
 
 
