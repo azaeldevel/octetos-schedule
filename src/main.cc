@@ -1,18 +1,18 @@
-/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
+
 /*
  * main.cc
  * Copyright (C) 2021 Azael Reyes <azael.devel@gmail.com>
- * 
+ *
  * octetos-schedule is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * octetos-schedule is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,7 +20,14 @@
 #include <gtkmm.h>
 #include <iostream>
 
-#include "config.h"
+#if defined(__GNUG__) && defined(__linux__)
+    #include "config.h"
+#elif defined(__GNUG__) && (defined(_WIN32) || defined(_WIN64))
+
+#else
+	#error "Pltaforma desconocida"
+#endif
+
 
 
 
@@ -29,7 +36,7 @@
 /* #define UI_FILE PACKAGE_DATA_DIR"/ui/octetos_schedule.ui" */
 #define UI_FILE "src/octetos_schedule.ui"
 
-   
+
 int
 main (int argc, char *argv[])
 {
