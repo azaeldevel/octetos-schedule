@@ -36,7 +36,13 @@
 
 /* For testing propose use the local (not installed) ui file */
 /* #define UI_FILE PACKAGE_DATA_DIR"/ui/octetos_schedule.ui" */
-#define UI_FILE "src/schedule.ui"
+#if defined(CODEBLOCK) && defined(DEBUG)
+    #define UI_FILE "src/schedule.ui"
+#elif defined(CODEBLOCK) && defined(RELEASE)
+    #define UI_FILE "schedule.ui"
+#else
+    #define UI_FILE "src/schedule.ui"
+#endif // defined
 
 
 int

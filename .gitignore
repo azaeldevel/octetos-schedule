@@ -24,3 +24,6 @@ test-driver
 Output
 *.ico
 *.png
+.objs
+bin
+schedule.ui
