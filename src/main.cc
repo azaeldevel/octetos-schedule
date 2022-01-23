@@ -36,9 +36,7 @@
 
 /* For testing propose use the local (not installed) ui file */
 /* #define UI_FILE PACKAGE_DATA_DIR"/ui/octetos_schedule.ui" */
-#if defined(CODEBLOCK) && defined(DEBUG)
-    #define UI_FILE "src/schedule.ui"
-#elif defined(CODEBLOCK) && defined(RELEASE)
+#if defined(CODEBLOCK)
     #define UI_FILE "schedule.ui"
 #else
     #define UI_FILE "src/schedule.ui"
@@ -49,7 +47,6 @@ int
 main (int argc, char *argv[])
 {
 	Gtk::Main kit(argc, argv);
-
 
 	//Load the Glade file and instiate its widgets:
 	Glib::RefPtr<Gtk::Builder> builder;

@@ -1,7 +1,7 @@
 !include "MUI.nsh"
 
 !define NAME "schedule"
-!define VERSION "0.1.0"
+!define VERSION "0.2.0"
 !define PUBLISHER "Octetos"
 !define WEBSITE "https://github.com/azaeldevel/octetos-schedule.git"
 
@@ -43,7 +43,7 @@ Section
   File bin\Debug\octetos-core.dll
   File bin\Debug\octetos-EC.dll
   File schedule.ico
-  File schedule.ui
+  File src\schedule.ui
   
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
