@@ -42,11 +42,13 @@
     #define UI_FILE "src/schedule.ui"
 #endif // defined
 
+#include "Main.hh"
 
 int
 main (int argc, char *argv[])
 {
 	Gtk::Main kit(argc, argv);
+
 
 	//Load the Glade file and instiate its widgets:
 	Glib::RefPtr<Gtk::Builder> builder;
@@ -59,14 +61,16 @@ main (int argc, char *argv[])
 		std::cerr << ex.what() << std::endl;
 		return 1;
 	}
-	Gtk::Window* main_win = 0;
-	builder->get_widget("main", main_win);
+	
+	//Login* wndLogin = 0;
+	sche::Main* wndMain = 0;
+	builder->get_widget_derived("wndMain", wndMain);
 
-
-	if (main_win)
+	if (wndMain)
 	{
-		kit.run(*main_win);
+		kit.run(*wndMain);
 	}
+	
 	return 0;
 }
 
