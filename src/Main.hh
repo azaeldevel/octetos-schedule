@@ -38,6 +38,16 @@ namespace sche
 		AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
 	};
 
+	class Analyzer : public Gtk::Dialog
+	{
+	public:
+		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
+		
+	private:
+		const Glib::RefPtr<Gtk::Builder>& builder;
+		Gtk::ProgressBar* pb_main_pregress;
+	};
+
 	class Main : public Gtk::Window
 	{
 	public:
@@ -53,9 +63,13 @@ namespace sche
 		
 	protected:
 		void on_bt_main_open_clicked();
+		void on_bt_main_analize_clicked();
 	private:
 		const Glib::RefPtr<Gtk::Builder> builder;
 		Gtk::ToolButton* bt_main_open;
+		Gtk::ToolButton* bt_main_analize;
+		Gtk::Statusbar* status_bar;
+		Analyzer* dlg_analyzer;
 	};
 
 }

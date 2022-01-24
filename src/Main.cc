@@ -30,10 +30,22 @@
 namespace sche
 {
 
-AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : builder(refGlade)
+AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) :  Gtk::AboutDialog(cobject), builder(refGlade)
 {
 	
 }
+
+
+
+
+
+
+Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Dialog(cobject), builder(refGlade)
+{
+	
+}
+
+
 
 
 
@@ -46,7 +58,13 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 	
 	builder->get_widget("bt_main_open", bt_main_open);
 	bt_main_open->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_open_clicked));
-
+	
+	
+	builder->get_widget("bt_main_analize", bt_main_analize);
+	bt_main_analize->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_analize_clicked));
+		
+	builder->get_widget("status_bar", status_bar);
+	status_bar->push("Inicio..");
 }
 const char* Main::titleWindow()const
 {
@@ -81,6 +99,13 @@ void Main::on_bt_main_open_clicked()
 		g_free (tmpfilename);
 	}
 }
-
+void Main::on_bt_main_analize_clicked()
+{
+	dlg_analyzer = 0;
+	builder->get_widget_derived("dlg_analyzer", dlg_analyzer);
+	status_bar->push("Analizando..");
+	dlg_analyzer->run();
+	status_bar->pop();
+}
 
 }
