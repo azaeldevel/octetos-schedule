@@ -1,76 +1,87 @@
 
-/*
- * main.cc
- * Copyright (C) 2021 Azael Reyes <azael.devel@gmail.com>
+/**
  *
- * octetos-schedule is free software: you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  This file is part of schedule.
+ *  Copyright (C) 2018  Azael Reyes
  *
- * octetos-schedule is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  */
 
-#include <gtkmm.h>
 #include <iostream>
 
-#if defined(__GNUG__) && defined(__linux__) && !defined(CODEBLOCKS)
-    #include "config.h"
-#elif defined(__GNUG__) && (defined(_WIN32) || defined(_WIN64))
-
-#elif defined(__GNUG__) && defined(__linux__) && defined(CODEBLOCKS)
-
-#else
-	#error "Pltaforma desconocida"
-#endif
-
-
-
-
-
-/* For testing propose use the local (not installed) ui file */
-/* #define UI_FILE PACKAGE_DATA_DIR"/ui/octetos_schedule.ui" */
-#if defined(CODEBLOCK)
-    #define UI_FILE "schedule.ui"
-#else
-    #define UI_FILE "src/schedule.ui"
-#endif // defined
 
 #include "Main.hh"
 
-int
-main (int argc, char *argv[])
+
+namespace sche
 {
-	Gtk::Main kit(argc, argv);
 
-
-	//Load the Glade file and instiate its widgets:
-	Glib::RefPtr<Gtk::Builder> builder;
-	try
-	{
-		builder = Gtk::Builder::create_from_file(UI_FILE);
-	}
-	catch (const Glib::FileError & ex)
-	{
-		std::cerr << ex.what() << std::endl;
-		return 1;
-	}
+AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) :  Gtk::AboutDialog(cobject), builder(refGlade)
+{
 	
-	//Login* wndLogin = 0;
-	sche::Main* wndMain = 0;
-	builder->get_widget_derived("wndMain", wndMain);
-
-	if (wndMain)
-	{
-		kit.run(*wndMain);
-	}
-	
-	return 0;
 }
 
+Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Dialog(cobject), builder(refGlade)
+{
+	
+}
+
+
+Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder(refGlade)
+{
+	set_title(titleWindow());
+	
+	builder->get_widget("bt_main_open", bt_main_open);
+	bt_main_open->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_open_clicked));
+	
+	builder->get_widget("bt_main_analize", bt_main_analize);
+	bt_main_analize->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_analize_clicked));
+		
+	builder->get_widget("status_bar", status_bar);
+	status_bar->push("Inicio..");
+}
+const char* Main::titleWindow()const
+{
+	return "Schedule - Octetos";
+}
+const char* Main::systemName()const
+{
+	return "Schedule";
+}
+
+void Main::on_bt_main_open_clicked()
+{
+	char* tmpfilename;
+	GtkWidget *dialog;
+	
+	dialog = gtk_file_chooser_dialog_new("Seleccione directorio de Proyecto",NULL,GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,"_Cancel",GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+	{
+		char* tmpfilename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+		std::cout << "Directory : " << tmpfilename << "\n";
+		gtk_widget_destroy (dialog);
+		g_free (tmpfilename);
+	}  
+		
+	dialog = gtk_file_chooser_dialog_new("Seleccione directorio de Resultado",NULL,GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,"_Cancel",GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+	{
+		tmpfilename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+		std::cout << "Directory : " << tmpfilename << "\n";
+		gtk_widget_destroy (dialog);
+		g_free (tmpfilename);
+	}
+}
+void Main::on_bt_main_analize_clicked()
+{
+	dlg_analyzer = 0;
+	builder->get_widget_derived("dlg_analyzer", dlg_analyzer);
+	status_bar->push("Analizando..");
+	dlg_analyzer->run();
+	status_bar->pop();
+}
+
+}

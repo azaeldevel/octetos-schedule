@@ -17,7 +17,7 @@ AM_CFLAGS =\
 bin_PROGRAMS = schedule
 
 schedule_SOURCES = \
-	main.cc Main.cc
+	main.cc WndMain.cc
 
 schedule_LDFLAGS = 
 
