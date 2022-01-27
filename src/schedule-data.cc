@@ -1634,7 +1634,7 @@ namespace oct::ec::sche
 		int seconds_per_hour;
 		config.lookupValue("seconds",seconds_per_hour);
 		this->seconds_per_hour = (unsigned int)seconds_per_hour;
-		std::cout << "seconds = " << this->seconds_per_hour << "\n";
+		//std::cout << "seconds = " << this->seconds_per_hour << "\n";
 		
 		std::string out_dir = config.lookup("out");
 		this->out_dir = out_dir;
