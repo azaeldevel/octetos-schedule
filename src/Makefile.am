@@ -14,15 +14,21 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
-bin_PROGRAMS = schedule
+lib_LTLIBRARIES = liboctetos-schedule.la
 
-schedule_SOURCES = \
-	main.cc WndMain.cc Packing.cc
+liboctetos_schedule_la_SOURCES = schedule.cc  schedule-data.cc schedule-eval.cc    
+liboctetos_schedule_la_LDFLAGS = $(OCTETOS_SCHEDULE_CFLAGS) 
+liboctetos_schedule_la_LIBADD = $(OCTETOS_SCHEDULE_LIBS)
 
-schedule_LDFLAGS = 
+bin_PROGRAMS = ec-schedule schedule
 
-schedule_LDADD = $(OCTETOS_SCHEDULE_LIBS)
+schedule_SOURCES = main.cc WndMain.cc Packing.cc
+schedule_LDFLAGS = $(OCTETOS_SCHEDULE_CFLAGS) 
+schedule_LDADD = $(OCTETOS_SCHEDULE_LIBS) liboctetos-schedule.la
 
+ec_schedule_SOURCES = ec-schedule.cc
+ec_schedule_LDFLAGS = 
+ec_schedule_LDADD = liboctetos-schedule.la
 
 
 
