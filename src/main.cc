@@ -43,10 +43,12 @@
 #endif // defined
 
 #include "Main.hh"
+#include "Packing.hh"
 
-int
-main (int argc, char *argv[])
+int main (int argc, char *argv[])
 {
+	oct::pack::Zip zip;
+	zip.compress("tests/project","tests/compress/project.sche");
 	Gtk::Main kit(argc, argv);
 
 

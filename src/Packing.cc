@@ -47,7 +47,7 @@ void Zip::compress(const std::string& source,const std::string& dest)
 	}
 	
 	if(is_directory(source)) compres_walk_directory(source);
-	else add(source);
+	else add(source,source);
 	
 	zip_close(zipper);
 }
@@ -71,16 +71,16 @@ void Zip::compres_walk_directory(const std::string& source)
 		}
 		else
 		{
-			add(fn);
+			add(fn,dirp->d_name);
 		}
 	}
 	closedir(dp);
 }
-void Zip::add(const std::string& source)
+void Zip::add(const std::string& source, const std::string& name)
 {
 	zip_source_t *zip_file = zip_source_file(zipper,source.c_str(),0,0);
 	if(zip_file == NULL ) throw core::Exception("Fallo al agregar archivo a zip '" + source + "' : " + std::string(zip_strerror(zipper)),__FILE__,__LINE__);
-	if(zip_file_add(zipper,source.c_str(),zip_file,ZIP_FL_ENC_RAW) < 0) throw core::Exception("Fallo al agregar archivo a zip '" + source + "' : " + std::string(zip_strerror(zipper)),__FILE__,__LINE__);
+	if(zip_file_add(zipper,name.c_str(),zip_file,ZIP_FL_ENC_RAW) < 0) throw core::Exception("Fallo al agregar archivo a zip '" + source + "' : " + std::string(zip_strerror(zipper)),__FILE__,__LINE__);
 }
 
 void Zip::extract(const std::string& source,const std::string& dest)

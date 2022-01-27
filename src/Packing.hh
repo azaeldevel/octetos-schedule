@@ -29,7 +29,7 @@ public:
 	
 	virtual void compress(const std::string& source,const std::string& dest);
 	virtual void extract(const std::string& source,const std::string& dest);
-	virtual void add(const std::string& source);
+	virtual void add(const std::string& source,const std::string&);
 
 private:
 	void compres_walk_directory(const std::string& source);
