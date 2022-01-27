@@ -19,8 +19,8 @@ AC_PROG_CXX
 
 LT_INIT
 
-
-PKG_CHECK_MODULES(OCTETOS_SCHEDULE, [gtkmm-3.0 ])
+dnl TODO: mover zip a su propio projecto
+PKG_CHECK_MODULES(OCTETOS_SCHEDULE, [octetos-core gtkmm-3.0 libzip])
 
 
 

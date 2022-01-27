@@ -80,7 +80,7 @@ void Main::on_bt_main_analize_clicked()
 	dlg_analyzer = 0;
 	builder->get_widget_derived("dlg_analyzer", dlg_analyzer);
 	status_bar->push("Analizando..");
-	dlg_analyzer->run();
+	int response = dlg_analyzer->run();
 	status_bar->pop();
 }
 
