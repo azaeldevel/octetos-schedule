@@ -27,3 +27,4 @@ Output
 .objs
 bin
 schedule.ui
+tests/compress
