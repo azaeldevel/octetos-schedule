@@ -3,10 +3,11 @@
 	<tchar.h>
 	<windows.h>
 
-1642904609 source:c:\users\azael\documents\develop\octetos\schedule\src\main.cc
+1643001885 source:c:\users\azael\documents\develop\octetos\schedule\src\main.cc
 	<gtkmm.h>
 	<iostream>
 	"config.h"
+	"Main.hh"
 
 1630068660 c:\msys64\mingw64\include\gtkmm-3.0\gtkmm.h
 	<glibmm.h>
@@ -7278,4 +7279,11 @@
 	<glibmm/ustring.h>
 	<sigc++/sigc++.h>
 	<gtkmm/scalebutton.h>
+
+1642999281 c:\users\azael\documents\develop\octetos\schedule\src\main.hh
+	<gtkmm.h>
+
+1643001607 source:c:\users\azael\documents\develop\octetos\schedule\src\wndmain.cc
+	<iostream>
+	"Main.hh"
 
