@@ -3,6 +3,9 @@
 #include <dirent.h>
 #include <string.h>
 #include <iostream>
+#include <fstream>
+#include <fcntl.h>
+#include <unistd.h>
 #if defined(__GNUC__) && defined(__linux__)
 	#include <octetos/core/Exception.hh>
 #elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
@@ -113,6 +116,7 @@ void Zip::extract(const std::string& source,const std::string& dest)
 	int file_fd, bytes_read;
 	zip_file* file_zip;
 	char copy_buf[COPY_BUF_SIZE];
+	std::string directory,filename;
 	for(zip_int64_t i = 0; i < num_entries; i++)
     {
         if(zip_stat_index(zipper, i, 0, &file_stat)) throw core::Exception("Fallo al extraer el archivo '" + source + "'",__FILE__,__LINE__);
@@ -123,17 +127,43 @@ void Zip::extract(const std::string& source,const std::string& dest)
             continue;
         }
         std::cout << "Document : " << file_stat.name << std::endl;
-        /*if((file_fd = open(file_stat.name, O_CREAT | O_TRUNC | O_WRONLY, 0666)) == -1) throw core::Exception("Fallo al extraer el archivo '" + source + "' : " + zip_error_strerror(&ziperr),__FILE__,__LINE__);
-        if((file_zip = zip_fopen_index(zipper, i, 0)) == NULL) throw core::Exception("Fallo al extraer el archivo '" + source + "' : " + zip_error_strerror(&ziperr),__FILE__,__LINE__);
 
+		filename = dest + "/" + file_stat.name;
+		if((file_fd = open(filename.c_str(), O_CREAT | O_TRUNC | O_WRONLY,0666)) == -1)
+		{
+			zip_error_t ziperr;
+			std::string msg = "Fallo al leer el elemento '";
+			msg += file_stat.name;
+			msg += "'";
+			throw core::Exception(msg,__FILE__,__LINE__);
+		}
+
+        if((file_zip = zip_fopen_index(zipper, i, 0)) == NULL) 
+		{
+			zip_error_t ziperr;
+			std::string msg = "Fallo al leer el elemento '";
+			msg += file_stat.name;
+			msg += "' : ";
+			msg += zip_strerror(zipper);
+			throw core::Exception(msg,__FILE__,__LINE__);
+		}
+		
         do
         {
-            if((bytes_read = zip_fread(file_zip, copy_buf, COPY_BUF_SIZE)) == -1) throw core::Exception("Fallo al extraer el archivo '" + source + "' : " + zip_error_strerror(&ziperr),__FILE__,__LINE__);
-            if(bytes_read > 0) write(file_zip, copy_buf, bytes_read);
+            if((bytes_read = zip_fread(file_zip, copy_buf, COPY_BUF_SIZE)) == -1)
+            {
+				zip_error_t ziperr;
+				zip_error_init_with_code(&ziperr,err);
+				std::string msg = "Fallo al escribir el archivo '" ;
+				msg = msg + file_stat.name + "'";
+				throw core::Exception(msg,__FILE__,__LINE__);
+			}
+            if(bytes_read > 0) write(file_fd, copy_buf, bytes_read);
         }
         while(bytes_read > 0);
+        
         zip_fclose(file_zip);
-        close(file_fd);*/
+        close(file_fd);
     }
     zip_close(zipper);
 }
