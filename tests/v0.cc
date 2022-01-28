@@ -13,6 +13,9 @@
 #include <csignal>
 
 
+#include <Packing.hh>
+
+
 void schedule_devel();
 int schedule_init(void);
 int schedule_clean(void);
@@ -251,6 +254,26 @@ void time_devel()
 	}*/
 }
 
+void zip_devel()
+{
+    oct::core::Shell shell;
+    std::string compressed_file = "tests/compress/project.sche";
+    std::string extracted_file = "tests/compress/project.extract";
+
+	oct::pack::Zip zip;
+	if(!shell.exists(compressed_file)) zip.compress("tests/project",compressed_file);
+
+	if(shell.exists(compressed_file))
+    {
+        CU_ASSERT(true);
+    }
+    else
+    {
+        CU_ASSERT(false);
+    }
+
+    zip.extract(compressed_file,extracted_file);
+}
 int main(int argc, char *argv[])
 {
 	/* initialize the CUnit test registry */
@@ -274,6 +297,11 @@ int main(int argc, char *argv[])
 	}
 
 	if ((NULL == CU_add_test(pSuite, "Developing Time class", time_devel)))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if ((NULL == CU_add_test(pSuite, "Developing Zip class", zip_devel)))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();

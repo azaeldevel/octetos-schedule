@@ -6,13 +6,14 @@
 #include <ctime>
 #if defined(__GNUC__) && defined(__linux__)
     #include <execinfo.h>
+    #include <octetos/EC/ec.hh>
 #elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
-
+    #include <ec.hh>
 #else
     #error "Pltaforma desconocida"
 #endif
 
-#include <octetos/EC/ec.hh>
+
 
 
 namespace oct::core
@@ -84,7 +85,7 @@ namespace oct::core
 
 namespace oct::ec::sche
 {
-	
+
 
 	class Enviroment;
 	struct Data;
@@ -95,10 +96,10 @@ namespace oct::ec::sche
 
 	class Time : public oct::core::Time
 	{
-	
+
 	public:
 		static const std::time_t FIRST_SUNDAY;
-		
+
 	public:
 		Time();
 		Time(const std::tm&);
@@ -215,7 +216,7 @@ namespace oct::ec::sche
 		void sort(const Configuration&);
 
 		void add(const Block& );
-		
+
 		void add(const Day&);
 
 		void print_day(std::ostream&) const;

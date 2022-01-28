@@ -124,7 +124,7 @@ Enviroment::Enviroment(const std::string& log,const std::string& in_dir,const st
 	logDirectoryHistory = log;
 	logDirectorySolutions = log;
 	//logDirectory = log;
-	
+
 	//if(not shell.exists(in_dir)) shell.mkdir(in_dir,true);
 	if(not shell.exists(out_dir)) shell.mkdir(out_dir,true);
 
@@ -176,6 +176,7 @@ void Enviroment::init(const std::string& in_dir)
 	//schedule_max_hours = std::min((unsigned int)data.groups.get_list().size() * data.groups.get_max_lessons() * (Single::WEEK_HOURS/2), Single::WEEK_HOURS2) ;
 	//GAMMA = 1.0/real(SCHEDULE_MAX_HOURS * CRITERION);
 	//epsilon = 1.0 / real(std::pow(data.groups.get_list().size() * data.groups.get_max_lessons() * Single::WEEK_HOURS,2) * CRITERION);
+	echoPrecision = 20;
 }
 
 void Enviroment::initial()

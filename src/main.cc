@@ -20,11 +20,11 @@
 #include <gtkmm.h>
 #include <iostream>
 
-#if defined(__GNUG__) && defined(__linux__) && !defined(CODEBLOCKS)
+#if defined(__GNUG__) && defined(__linux__) && !defined(CODEBLOCK_IDE)
     #include "config.h"
 #elif defined(__GNUG__) && (defined(_WIN32) || defined(_WIN64))
 
-#elif defined(__GNUG__) && defined(__linux__) && defined(CODEBLOCKS)
+#elif defined(__GNUG__) && defined(__linux__) && defined(CODEBLOCK_IDE)
 
 #else
 	#error "Pltaforma desconocida"
@@ -36,21 +36,17 @@
 
 /* For testing propose use the local (not installed) ui file */
 /* #define UI_FILE PACKAGE_DATA_DIR"/ui/octetos_schedule.ui" */
-#if defined(CODEBLOCK)
+#if defined(CODEBLOCK_IDE)
     #define UI_FILE "schedule.ui"
 #else
     #define UI_FILE "src/schedule.ui"
 #endif // defined
 
 #include "Main.hh"
-#include "Packing.hh"
 
 int main (int argc, char *argv[])
 {
-	oct::pack::Zip zip;
-	zip.compress("tests/project","tests/compress/project.sche");
 	Gtk::Main kit(argc, argv);
-
 
 	//Load the Glade file and instiate its widgets:
 	Glib::RefPtr<Gtk::Builder> builder;
@@ -63,7 +59,7 @@ int main (int argc, char *argv[])
 		std::cerr << ex.what() << std::endl;
 		return 1;
 	}
-	
+
 	//Login* wndLogin = 0;
 	sche::Main* wndMain = 0;
 	builder->get_widget_derived("wndMain", wndMain);
@@ -72,7 +68,7 @@ int main (int argc, char *argv[])
 	{
 		kit.run(*wndMain);
 	}
-	
+
 	return 0;
 }
 

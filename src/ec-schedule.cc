@@ -48,9 +48,6 @@ int main(int argc, const char* argv[])
         #error "Pltaforma desconocida"
     #endif
 
-	std::cout.precision(20);	
-	std::cout << std::scientific;
-	
 	std::string strDay = std::to_string(oct::core::getDayID());
 	std::string strTime = std::to_string(oct::core::getTimeID());
 	std::string strid = strDay + "-" + strTime;

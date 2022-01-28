@@ -1498,7 +1498,7 @@ namespace oct::ec::sche
 	void Configuration::init()
 	{
 		hours_sigma = 0.085;
-				
+
 		/*schema_week = SchemaWeek::MF;
 		seconds_per_hour = 45 * 60;
 		out_dir = "logs/schedule";*/
@@ -1606,13 +1606,14 @@ namespace oct::ec::sche
 	{
 		return trys;
 	}
-	
+
 	void Configuration::load_file(const std::string& proyect)
 	{
 		libconfig::Config config;
-		
-		config.readFile(proyect.c_str());	  	
-	  	
+
+        //std::cout << "file = " << proyect << "\n";
+		config.readFile(proyect.c_str());
+
 	  	std::string schema_week = config.lookup("schema_week");
 		if(schema_week.compare("MF") == 0)
 		{
@@ -1628,17 +1629,17 @@ namespace oct::ec::sche
 		}
 		else
 		{
-			throw core::Exception("El valor de schema_week es desconocido.",__FILE__,__LINE__); 
+			throw core::Exception("El valor de schema_week es desconocido.",__FILE__,__LINE__);
 		}
-		
+
 		int seconds_per_hour;
 		config.lookupValue("seconds",seconds_per_hour);
 		this->seconds_per_hour = (unsigned int)seconds_per_hour;
 		//std::cout << "seconds = " << this->seconds_per_hour << "\n";
-		
+
 		std::string out_dir = config.lookup("out");
 		this->out_dir = out_dir;
-		
+
 		int trys;
 		config.lookupValue("trys",trys);
 		this->trys = trys;
@@ -1648,16 +1649,16 @@ namespace oct::ec::sche
 		load_file(proyect);
 		this->out_dir = out_dir;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
 
 
 	Target::Target() : config(NULL)
@@ -2440,13 +2441,13 @@ namespace oct::ec::sche
 	}
 	Data::Data(const std::string& in_dir) : config(in_dir+"/schedule.cfg")
 	{
-	}	
+	}
 	Data::Data(const std::string& in_dir,const std::string& out_dir)
 	{
 		std::string proy_dir= in_dir;
 		proy_dir += "/schedule.cfg";
 		config.load_file(proy_dir,out_dir);
-		
+
 		load(in_dir);
 	}
 	const std::map<Data::key_hbs, Data::HBRS>& Data::get_list_hbrs() const
@@ -2459,8 +2460,7 @@ namespace oct::ec::sche
 	}
 	void Data::load(const std::string& dir)
 	{
-		std::string fileproy = dir + "/schedule.cfg";
-		config.load_file(fileproy);
+		config.load_file(dir + "/schedule.cfg");
 		//TODO:validacion estricta delas entredas
 		((Targets&)teachers) = this;
 		teachers.load_file(dir + "/teachers.csv");
@@ -2671,12 +2671,12 @@ namespace oct::ec::sche
 		data = NULL;
 		week.clear_days();
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 
 	ClassRoom::ClassRoom()
 	{
@@ -2727,11 +2727,11 @@ namespace oct::ec::sche
 		}
 	}
 	void ClassRoom::juncting_choose_one_lesson(const ClassRoom& g2)
-	{	
+	{
 		if(g2.size() != size()) throw core::Exception("EL tamano de los registros no coincide.",__FILE__,__LINE__);
 		if(g2.size() == 0) throw core::Exception("No hay lecciones",__FILE__,__LINE__);
-		
-		std::uniform_int_distribution<> distrib(0,g2.size() - 1); 
+
+		std::uniform_int_distribution<> distrib(0,g2.size() - 1);
 		unsigned int i = distrib(gen);
 		at(i).clear();
 		at(i) = g2[i];
@@ -2740,10 +2740,10 @@ namespace oct::ec::sche
 	{
 		if(g2.size() != size()) throw core::Exception("EL tamano de los registros no coincide.",__FILE__,__LINE__);
 		if(g2.size() == 0) throw core::Exception("No hay lecciones",__FILE__,__LINE__);
-		
-		std::uniform_int_distribution<> distrib_choose(0,g2.size() - 1); 
-		unsigned int choose = distrib_choose(gen);	
-		real prob = 1.0/real(choose);	
+
+		std::uniform_int_distribution<> distrib_choose(0,g2.size() - 1);
+		unsigned int choose = distrib_choose(gen);
+		real prob = 1.0/real(choose);
 		std::bernoulli_distribution distrib_selection(prob);
 		for(unsigned int i = 0; i < g2.size(); i++)
 		{
@@ -2872,7 +2872,7 @@ namespace oct::ec::sche
 		if(s1.size() != s2.size()) throw core::Exception("Los tamanos de horaios no coincide",__FILE__,__LINE__);
 		if(s1.size() == 0) throw core::Exception("Hoario vacio",__FILE__,__LINE__);
 		if(s2.size() == 0) throw core::Exception("Hoario vacio",__FILE__,__LINE__);
-		
+
 		unsigned int step = s1.size()/2;
 		unsigned int i;
 		for(i = 0; i < step; i++)
@@ -2883,7 +2883,7 @@ namespace oct::ec::sche
 		{
 			at(i) = s2.at(i);
 		}
-	}	
+	}
 	void Schedule::juncting_choose_one_lesson(const Schedule& s1,const Schedule& s2)
 	{
 		if(s1.size() != s2.size()) throw core::Exception("Los tamanos de horaios no coincide",__FILE__,__LINE__);
@@ -2894,19 +2894,19 @@ namespace oct::ec::sche
 		{
 			at(i) = s1.at(i);
 		}
-		
-		std::uniform_int_distribution<> distrib(0,s2.size() - 1); 
+
+		std::uniform_int_distribution<> distrib(0,s2.size() - 1);
 		unsigned int i = distrib(gen);
 		at(i).juncting_choose_one_lesson(s2[i]);
-	}	
+	}
 	void Schedule::juncting_choose_random_lesson(const Schedule& s1,const Schedule& s2)
 	{
 		if(s1.size() != s2.size()) throw core::Exception("Los tamanos de horaios no coincide",__FILE__,__LINE__);
 		if(s1.size() == 0) throw core::Exception("Hoario vacio",__FILE__,__LINE__);
 		if(s2.size() == 0) throw core::Exception("Hoario vacio",__FILE__,__LINE__);
 
-		std::uniform_int_distribution<> distrib_choose(0,size() - 1); 
-		unsigned int choose = distrib_choose(gen);		
+		std::uniform_int_distribution<> distrib_choose(0,size() - 1);
+		unsigned int choose = distrib_choose(gen);
 		real prob = 1.0/real(choose);
 		std::bernoulli_distribution distrib(prob);
 		for(unsigned int i = 0; i < s1.size(); i++)
