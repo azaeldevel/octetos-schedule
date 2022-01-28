@@ -274,8 +274,26 @@ void zip_devel()
     {
         CU_ASSERT(false);
     }
+    
+    if(shell.exists(extracted_file)) 
+    {
+    	shell.rm(extracted_file,true);
+    	shell.mkdir(extracted_file);
+    }
 
+	if(not shell.exists(extracted_file)) shell.mkdir(extracted_file);
     zip.extract(compressed_file,extracted_file);
+    std::list<std::string> files1;
+    shell.cd(extracted_file);
+    shell.ls(files1);
+    if(files1.size() == 6)
+   	{
+        CU_ASSERT(true);
+    }
+    else
+    {
+        CU_ASSERT(false);
+    }
 }
 int main(int argc, char *argv[])
 {

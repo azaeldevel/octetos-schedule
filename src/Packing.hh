@@ -14,6 +14,9 @@ namespace oct::pack
 class Package
 {
 public:
+	/**
+	*\brief Si es un directerio, comprime su contenido en el archivo destino
+	*/
 	virtual void compress(const std::string& source,const std::string& dest) = 0;
 	virtual void extract(const std::string& source,const std::string& dest) = 0;
 	//virtual void add(const std::string& source) = 0;
