@@ -260,6 +260,8 @@ void zip_devel()
     std::string compressed_file = "tests/compress/project.sche";
     std::string extracted_file = "tests/compress/project.extract";
 
+    //if(shell.exists(compressed_file)) shell.remove(compressed_file);
+
 	oct::pack::Zip zip;
 	if(!shell.exists(compressed_file)) zip.compress("tests/project",compressed_file);
 
