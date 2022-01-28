@@ -5,6 +5,7 @@
 
 #include <string>
 #include <zip.h>
+#include <octetos/core/shell.hh>
 
 namespace oct::pack
 {
@@ -35,6 +36,7 @@ private:
 	void compres_walk_directory(const std::string& source);
 	
 	zip_t* zipper;
+	oct::core::Shell shell;
 };
 
 

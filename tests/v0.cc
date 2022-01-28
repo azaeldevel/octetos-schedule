@@ -257,13 +257,14 @@ void time_devel()
 void zip_devel()
 {
     oct::core::Shell shell;
-    std::string compressed_file = "tests/compress/project.sche";
-    std::string extracted_file = "tests/compress/project.extract";
+    std::string oring_file = "../../tests/project";
+    std::string compressed_file = "compress/project.sche";
+    std::string extracted_file = "compress/project.extract";
 
-    //if(shell.exists(compressed_file)) shell.remove(compressed_file);
+    if(shell.exists(compressed_file)) shell.rm(compressed_file);
 
 	oct::pack::Zip zip;
-	if(!shell.exists(compressed_file)) zip.compress("tests/project",compressed_file);
+	zip.compress(oring_file,compressed_file);
 
 	if(shell.exists(compressed_file))
     {

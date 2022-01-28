@@ -51,8 +51,15 @@ void Zip::compress(const std::string& source,const std::string& dest)
 		throw core::Exception("Fallo al abrir el archivo '" + dest + "' : " + zip_error_strerror(&ziperr),__FILE__,__LINE__);
 	}
 
-	if(is_directory(source)) compres_walk_directory(source);
-	else add(source,source);
+	if(shell.exists(source))
+	{
+		if(is_directory(source)) compres_walk_directory(source);
+		else add(source,source);
+	}
+	else
+	{
+		throw core::Exception("No se encontro '" + source + "'",__FILE__,__LINE__);
+	}
 
 	zip_close(zipper);
 	zipper = NULL;
@@ -111,7 +118,7 @@ void Zip::extract(const std::string& source,const std::string& dest)
         if(zip_stat_index(zipper, i, 0, &file_stat)) throw core::Exception("Fallo al extraer el archivo '" + source + "'",__FILE__,__LINE__);
         if((file_stat.name[0] != '\0') && (file_stat.name[strlen(file_stat.name)-1] == '/'))
         {
-            if(mkdir(file_stat.name) && (errno != EEXIST)) throw core::Exception("Fallo al extraer el archivo '" + source + "'",__FILE__,__LINE__);
+            if(mkdir(file_stat.name,0777) && (errno != EEXIST)) throw core::Exception("Fallo al extraer el archivo '" + source + "'",__FILE__,__LINE__);
             std::cout << "Directory : " << file_stat.name << std::endl;
             continue;
         }
