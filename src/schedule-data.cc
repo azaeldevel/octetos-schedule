@@ -2113,7 +2113,7 @@ namespace oct::ec::sche
 				else
 				{
 					std::string msg = "Archivo '";
-					msg += fn + "', el maestro '" + data + "', no esta registrada en su correpondiente archivo.";
+					msg += fn + "', no tiene registro de el maestro '" + data + "', no esta registrada en su correpondiente archivo.";
 					throw core::Exception(msg,__FILE__,__LINE__);
 				}
 				//std::cout << data << ",";

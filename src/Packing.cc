@@ -26,7 +26,7 @@ Zip::Zip() : zipper(NULL)
 {
 }
 
-void Zip::compress(const std::filesystem::path& source,const std::filesystem::path& dest)
+bool Zip::compress(const std::filesystem::path& source,const std::filesystem::path& dest)
 {
 	int err;
 	zipper = zip_open(dest.string().c_str(),ZIP_CREATE|ZIP_EXCL,&err);
@@ -54,6 +54,7 @@ void Zip::compress(const std::filesystem::path& source,const std::filesystem::pa
 
 	zip_close(zipper);
 	zipper = NULL;
+	return true;
 }
 void Zip::compres_walk_directory(const std::filesystem::path& source)
 {
@@ -93,7 +94,7 @@ void Zip::add(const std::filesystem::path& source)
 }
 
 #define COPY_BUF_SIZE 2048
-void Zip::extract(const std::filesystem::path& source,const std::filesystem::path& dest)
+bool Zip::extract(const std::filesystem::path& source,const std::filesystem::path& dest)
 {
     if(not std::filesystem::exists(dest)) throw core::Exception("No existe el directorio destino " + dest.string() ,__FILE__,__LINE__);
     //std::cout << "dest = " << dest << "\n";
@@ -163,6 +164,8 @@ void Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
         close(file_fd);
     }
     zip_close(zipper);
+
+    return true;
 }
 
 }

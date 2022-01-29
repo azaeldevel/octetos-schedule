@@ -25,8 +25,8 @@ public:
 	/**
 	*\brief Si es un directerio, comprime su contenido en el archivo destino
 	*/
-	virtual void compress(const std::filesystem::path& source,const std::filesystem::path& dest) = 0;
-	virtual void extract(const std::filesystem::path& source,const std::filesystem::path& dest) = 0;
+	virtual bool compress(const std::filesystem::path& source,const std::filesystem::path& dest) = 0;
+	virtual bool extract(const std::filesystem::path& source,const std::filesystem::path& dest) = 0;
 };
 
 
@@ -35,8 +35,8 @@ class Zip : public Package
 public:
 	Zip();
 
-	virtual void compress(const std::filesystem::path& source,const std::filesystem::path& dest);
-	virtual void extract(const std::filesystem::path& source,const std::filesystem::path& dest);
+	virtual bool compress(const std::filesystem::path& source,const std::filesystem::path& dest);
+	virtual bool extract(const std::filesystem::path& source,const std::filesystem::path& dest);
 	virtual void add(const std::filesystem::path& source);
 
 private:

@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#if defined(__GNUC__) && defined(__linux__)
+    #include <octetos/core/Exception.hh>
+#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
+    #include <Exception.hh>
+#else
+    #error "Pltaforma desconocida"
+#endif
 
 #include "Project.hh"
 
@@ -10,47 +17,51 @@ namespace sche
 {
 
 
-Project::Project() : project_filename_temp(NULL)
+Project::Project()
 {
 }
 Project::~Project()
 {
-    if(not project_filename_temp)
-    {
-        rmdir(project_filename_temp);
-        project_filename_temp = NULL;
-    }
 }
 
 
-void Project::open(const std::string& project, const std::string& output)
+bool Project::open(const std::filesystem::path& project, const std::filesystem::path& output)
 {
-    char tmpfn[] = "/tmp/tmpdir.XXXXXX";
-    project_filename_temp = mktemp(tmpfn);
-    if(project_filename_temp == NULL) throw oct::core::Exception("Fallo la apertura del archivo de projecto",__FILE__,__LINE__);
+    project_filename_temp = std::tmpnam(nullptr);
+    if(not std::filesystem::create_directory(project_filename_temp))
+    {
+        std::string msg = "No se encontro el directorio temporal ";
+        msg += project_filename_temp.string();
+        throw oct::core::Exception(msg,__FILE__,__LINE__);
+    }
 
 	oct::pack::Zip zip;
 	zip.extract(project,project_filename_temp);
+	for (auto const& dir_entry : std::filesystem::directory_iterator{project_filename_temp})
+    {
+        std::cout << "project_filename_temp : " << dir_entry << "\n";
+    }
 
-    evprog.init(output,project_filename_temp,output);
+    evprog.init(output.string(),project_filename_temp.string(),output.string());
+
+    return true;
 }
-void Project::open(const std::string& project, const std::string& output,oct::ec::echo echo, unsigned int level,bool create_session)
+bool Project::open(const std::filesystem::path& project, const std::filesystem::path& output,oct::ec::echo echo, unsigned int level,bool create_session)
 {
-    open(project,output);
+    if(not open(project,output)) return false;
     evprog.enableEcho(echo,level);
     if(create_session) evprog.create_session();
+
+    return true;
 }
 bool Project::run()
 {
     return evprog.run();
 }
-bool Project::save(const std::string& source,const std::string& destino)
+bool Project::save(const std::filesystem::path& source,const std::filesystem::path& destino)
 {
     oct::pack::Zip zip;
-	zip.compress(source,destino);
-    if(not shell.exists(destino)) return false;
-
-    return true;
+	return zip.compress(source,destino);
 }
 
 }
