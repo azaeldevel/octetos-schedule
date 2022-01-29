@@ -26,7 +26,6 @@ public:
 	*/
 	virtual void compress(const std::string& source,const std::string& dest) = 0;
 	virtual void extract(const std::string& source,const std::string& dest) = 0;
-	//virtual void add(const std::string& source) = 0;
 
 protected:
 	static bool is_directory(const std::string&);
