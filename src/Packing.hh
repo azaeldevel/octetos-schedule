@@ -37,7 +37,7 @@ public:
 
 	virtual void compress(const std::filesystem::path& source,const std::filesystem::path& dest);
 	virtual void extract(const std::filesystem::path& source,const std::filesystem::path& dest);
-	virtual void add(const std::filesystem::path& source,const std::filesystem::path&);
+	virtual void add(const std::filesystem::path& source);
 
 private:
 	void compres_walk_directory(const std::filesystem::path& source);

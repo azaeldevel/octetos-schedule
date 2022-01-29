@@ -259,15 +259,17 @@ void time_devel()
 
 void zip_devel()
 {
-    std::filesystem::path oring_file = std::filesystem::absolute("../../tests/project");
+    std::filesystem::path oring_file = "../../tests/project";
     std::filesystem::path compressed_directory = "compress";
-    std::filesystem::path compressed_file = std::filesystem::absolute(compressed_directory / "project.sche");
-    std::filesystem::path extracted_file = std::filesystem::absolute(compressed_directory / "project.extract");
-    /*std::filesystem::path path_origin = oring_file;
-    std::cout << "lexically_normal : " << path_origin.lexically_normal() << "\n";
+    std::filesystem::path compressed_file = compressed_directory / "project.sche";
+    std::filesystem::path extracted_file = compressed_directory / "project.extract";
+    std::filesystem::path path_origin = oring_file;
+    /*std::cout << "lexically_normal : " << path_origin.lexically_normal() << "\n";
     std::cout << "parent_path : " << path_origin.parent_path() << "\n";
     std::cout << "root_directory : " << path_origin.root_directory() << "\n";
-    std::cout << "absolute : " << std::filesystem::absolute(path_origin) << "\n";*/
+    std::cout << "absolute : " << std::filesystem::absolute(path_origin) << "\n";
+    std::cout << "fn : " << compressed_file.filename() << "\n";
+    */
     /*
     for (auto const& dir_entry : std::filesystem::directory_iterator{oring_file})
     {
@@ -291,19 +293,11 @@ void zip_devel()
     }
 
 
-    if(std::filesystem::exists(extracted_file))std::filesystem::remove(extracted_file);
+    if(std::filesystem::exists(extracted_file))std::filesystem::remove_all(extracted_file);
 	if(not std::filesystem::exists(extracted_file)) std::filesystem::create_directory(extracted_file);
+	std::cout << "extracted_file = " << extracted_file << "\n";
     zip.extract(compressed_file,extracted_file);
 
-    /*shell.ls(files1);
-    if(files1.size() == 6)
-   	{
-        CU_ASSERT(true);
-    }
-    else
-    {
-        CU_ASSERT(false);
-    }*/
 }
 
 void project_devel()
