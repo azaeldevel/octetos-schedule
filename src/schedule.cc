@@ -150,7 +150,7 @@ void Enviroment::init(const std::string& in_dir)
 		throw oct::core::Exception("Deve asignar el archivo de proyecto.",__FILE__,__LINE__);
 	}
 
-	CRITERION = 4;
+	CRITERION = 3;
 	//SCHEDULE_ERROR = 0;
 	schedule_overlap_max = data.groups.get_list().size() * data.groups.get_max_lessons() * Single::WEEK_HOURS/2;
 	schedule_overlap_max2 = std::pow(schedule_overlap_max,2);

@@ -6,16 +6,16 @@
 
 namespace oct::ec::sche
 {
-	
+
 	const unsigned int Single::WEEK_HOURS = 168;
 	const unsigned int Single::WEEK_HOURS2 = std::pow(Single::WEEK_HOURS,2);
 	const unsigned int Single::WEEK_HOURS3 = std::pow(Single::WEEK_HOURS,3);
 
-	
+
 	/**
 	** Criterios:
 	** 		El mismo maestro no puede tener materias diferentes a la misma hora :
-	** 		El mismo maestro no puede tener la misma materia diferentes a la misma hora : 
+	** 		El mismo maestro no puede tener la misma materia diferentes a la misma hora :
 	** 		Diferentes materias no pueden tener el mismo salon a la misma hora : No traslape de clase
 	** 		La misma materias no pueden tener el mismo salon a la misma hora :
 	** 		La misma materias no pueden tener el diferentes salones a la misma hora : No traslape de clase
@@ -28,21 +28,21 @@ namespace oct::ec::sche
 	void Single::eval()
 	{
 		fitness = 0;
-		
-		//std::cout << "Step 1\n";	
+
+		//std::cout << "Step 1\n";
 		overlap_by_teacher();
-		
+
 		//std::cout << "Step 2\n";
-		cover();	
-			
+		cover();
+
 		//std::cout << "Step 3\n";
-		not_empty();//un horarion con 0 horas no es util.
+		//not_empty();//un horarion con 0 horas no es util.
 		//std::cout << "\tfiteness = " << fitness << "\n";
-		
+
 		//std::cout << "Step 4\n";
 		sigma_hours();
 		//std::cout << "\tfiteness = " << fitness << "\n";
-		
+
 		//TODO:Evaluar la opcion 'Menor cantidad de dias', 'Mayor cantidad de dias'
 	}
 
@@ -54,7 +54,7 @@ namespace oct::ec::sche
 		for(unsigned int i = 0; i < size() - 1; i++)//horaios
 		{
 			for(unsigned int j = 0; j < at(i).size() - 1; j++)//dias de la semana
-			{			
+			{
 				for(unsigned int k = i + 1; k < size(); k++)//horaios
 				{
 					for(unsigned int l = j + 1; l < at(k).size(); l++)//dias de la semana
@@ -66,26 +66,26 @@ namespace oct::ec::sche
 				}
 			}
 		}
-		
+
 		if(count >  ((Enviroment&)*env).get_overlap_max2()) throw oct::core::Exception("El conteo de horas no deve exceder WEEK_OVERLAP_MAX",__FILE__,__LINE__);
 		//if(count > ((Enviroment&)*env).get_schedule_max_hours()) throw oct::core::Exception("El conteo de horas errones execdio el maximo esperado",__FILE__,__LINE__);
-		if(count == 0) 
+		if(count == 0)
 		{
 			//std::cout << "\toverlap_by_teacher count = " << count << "\n";
 			fitness += 1.0/((Enviroment&)*env).get_criterion();
 		}
 		else
-		{			
+		{
 			count = std::pow(((Enviroment&)*env).get_overlap_max() - count,2);
 			real f = real(count)/ real(((Enviroment&)*env).get_criterion() * ((Enviroment&)*env).get_overlap_max2());
 			fitness += f;
 		}
 	}
-			
-	//Deve dar una mejor califacion al horaio que se acerca mas 
+
+	//Deve dar una mejor califacion al horaio que se acerca mas
 	//a la hora exacta de clases por semana,deve cubir las hora de materia por semana sin pasarse o flatarle
 	void Single::cover()
-	{		
+	{
 		unsigned int count = 0;
 		unsigned int countClass = 0;
 		for(const ClassRoom& classroom : *this)
@@ -95,14 +95,14 @@ namespace oct::ec::sche
 				for(const Day day : classroom[i].week)
 				{
 					//la diferencia entre las horas disponibles y las necesesrias
-					if(day.size() > 0) 
+					if(day.size() > 0)
 					{
-						count += std::abs((int)classroom[i].subject->get_time() - (int)day.size());			
+						count += std::abs((int)classroom[i].subject->get_time() - (int)day.size());
 					}
 				}
 			}
 		}
-		
+
 		if(count >  ((Enviroment&)*env).get_cover_max2()) throw oct::core::Exception("El conteo de horas no deve exceder SCHEDULE_COVER_MAX",__FILE__,__LINE__);
 		if(count == 0)
 		{
@@ -128,10 +128,10 @@ namespace oct::ec::sche
 				}
 			}
 		}
-		
+
 		//
 		if(count >  ((Enviroment&)*env).get_empty_max()) throw oct::core::Exception("El conteo de horas no deve exceder SCHEDULE_EMPTY_MAX",__FILE__,__LINE__);
-		if(count == 0) 
+		if(count == 0)
 		{
 			//std::cout << "\tnot empty count = " << count << "\n";
 			fitness += 1.0/((Enviroment&)*env).get_criterion();
@@ -142,7 +142,7 @@ namespace oct::ec::sche
 			fitness += real(count)/ real(((Enviroment&)*env).get_criterion() * ((Enviroment&)*env).get_empty_max());
 		}
 	}
-	
+
 	void Single::sigma_hours()
 	{
 		real f = 0;
@@ -173,7 +173,7 @@ namespace oct::ec::sche
 		for(Lesson l : cr)
 		{
 			f += sigma_hours(l);
-		}		
+		}
 		f /= real(cr.size());
 		//std::cout << "\t\tsignam_hours classroom " << f << "\n";
 		return f;
@@ -193,7 +193,7 @@ namespace oct::ec::sche
 		if(count == 0) return 0.0;
 		mean /= real(count);
 		//std::cout << "\t\tsignam_hours mean " << mean << "\n";
-		
+
 		real sigma = 0;
 		for(const Day& day : l.week)
 		{
@@ -203,7 +203,7 @@ namespace oct::ec::sche
 			}
 		}
 		sigma /= real(count);
-		
+
 		//std::cout << "\t\tsignam_hours lesson " << sigma << "\n";
 		return sigma;
 	}
