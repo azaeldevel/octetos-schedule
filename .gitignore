@@ -29,3 +29,4 @@ bin
 schedule.ui
 tests/compress
 schedule.depend
+logs
