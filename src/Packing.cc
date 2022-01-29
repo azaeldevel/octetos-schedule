@@ -116,14 +116,13 @@ void Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
 	for(zip_int64_t i = 0; i < num_entries; i++)
     {
         if(zip_stat_index(zipper, i, 0, &file_stat)) throw core::Exception("Fallo al extraer el archivo '" + source.string() + "'",__FILE__,__LINE__);
+        filename = dest / std::filesystem::path(file_stat.name);
         if((file_stat.name[0] != '\0') && (file_stat.name[strlen(file_stat.name)-1] == '/'))
         {
-            filename = dest / std::filesystem::path(file_stat.name);
             if(not std::filesystem::create_directory(filename)) throw core::Exception("Fallo al extraer el archivo '" + source.string() + "'",__FILE__,__LINE__);
             continue;
         }
 
-		filename = dest / std::filesystem::path(file_stat.name);
 		std::cout << "filename = " << filename.string() << "\n" ;
 		if((file_fd = open(filename.string().c_str(), O_CREAT | O_TRUNC | O_WRONLY,0666)) == -1)
 		{

@@ -49,6 +49,7 @@
 				<Option object_output=".objs/Debug/" />
 				<Option type="1" />
 				<Option compiler="msys2_x86_64_gcc" />
+				<Option parameters="C:\Users\Azael\Desktop\project.sche C:\Users\Azael\Desktop\logs\schedule" />
 				<Compiler>
 					<Add directory="../core/src" />
 					<Add directory="../EC/src" />
@@ -73,6 +74,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config libconfig++ --libs`" />
+					<Add option="`pkg-config libzip --libs`" />
 					<Add library="octetos-core" />
 					<Add library="octetos-EC" />
 					<Add directory="bin/Debug" />
@@ -81,6 +83,26 @@
 					<Add before="cmd /c copy /y ..\core\bin\Debug\octetos-core.dll bin\Debug\" />
 					<Add before="cmd /c copy /y ..\EC\bin\Debug\octetos-EC.dll bin\Debug\" />
 				</ExtraCommands>
+			</Target>
+			<Target title="tests-v0">
+				<Option output="bin/Debug/tests-v0" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug/" />
+				<Option object_output=".objs/Debug/" />
+				<Option type="1" />
+				<Option compiler="msys2_x86_64_gcc" />
+				<Option parameters="C:\Users\Azael\Desktop\project.sche C:\Users\Azael\Desktop\logs\schedule" />
+				<Compiler>
+					<Add directory="../core/src" />
+					<Add directory="../EC/src" />
+					<Add directory="src" />
+				</Compiler>
+				<Linker>
+					<Add option="`pkg-config cunit --libs`" />
+					<Add library="octetos-core" />
+					<Add library="octetos-EC" />
+					<Add library="octetos-schedule" />
+					<Add directory="bin/Debug" />
+				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
@@ -92,6 +114,18 @@
 			<Add library="kernel32" />
 			<Add library="comctl32" />
 		</Linker>
+		<Unit filename="src/Packing.cc">
+			<Option target="liboctetos-schedule-dbg" />
+		</Unit>
+		<Unit filename="src/Packing.hh">
+			<Option target="liboctetos-schedule-dbg" />
+		</Unit>
+		<Unit filename="src/Project.cc">
+			<Option target="liboctetos-schedule-dbg" />
+		</Unit>
+		<Unit filename="src/Project.hh">
+			<Option target="liboctetos-schedule-dbg" />
+		</Unit>
 		<Unit filename="src/WndMain.cc">
 			<Option target="schedule-dbg" />
 			<Option target="Release" />
@@ -117,6 +151,15 @@
 		</Unit>
 		<Unit filename="src/schedule.cc">
 			<Option target="liboctetos-schedule-dbg" />
+		</Unit>
+		<Unit filename="src/schedule.hh">
+			<Option target="liboctetos-schedule-dbg" />
+		</Unit>
+		<Unit filename="tests/v0-schedule.cc">
+			<Option target="tests-v0" />
+		</Unit>
+		<Unit filename="tests/v0.cc">
+			<Option target="tests-v0" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
