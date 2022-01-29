@@ -11,9 +11,12 @@
 #include <time.h>
 #include <chrono>
 #include <csignal>
+#include <filesystem>
 
 
 #include <Packing.hh>
+#include <Project.hh>
+
 
 
 void schedule_devel();
@@ -256,17 +259,29 @@ void time_devel()
 
 void zip_devel()
 {
-    oct::core::Shell shell;
-    std::string oring_file = "../../tests/project";
-    std::string compressed_file = "compress/project.sche";
-    std::string extracted_file = "compress/project.extract";
+    std::filesystem::path oring_file = std::filesystem::absolute("../../tests/project");
+    std::filesystem::path compressed_directory = "compress";
+    std::filesystem::path compressed_file = std::filesystem::absolute(compressed_directory / "project.sche");
+    std::filesystem::path extracted_file = std::filesystem::absolute(compressed_directory / "project.extract");
+    /*std::filesystem::path path_origin = oring_file;
+    std::cout << "lexically_normal : " << path_origin.lexically_normal() << "\n";
+    std::cout << "parent_path : " << path_origin.parent_path() << "\n";
+    std::cout << "root_directory : " << path_origin.root_directory() << "\n";
+    std::cout << "absolute : " << std::filesystem::absolute(path_origin) << "\n";*/
+    /*
+    for (auto const& dir_entry : std::filesystem::directory_iterator{oring_file})
+    {
+        std::cout << "origin : " << dir_entry << "\n";
+    }
+    */
 
-    if(shell.exists(compressed_file)) shell.rm(compressed_file);
+    if(std::filesystem::exists(compressed_file)) std::filesystem::remove(compressed_file);
 
 	oct::pack::Zip zip;
+	if(not std::filesystem::exists(compressed_directory)) std::filesystem::create_directory(compressed_directory);
 	zip.compress(oring_file,compressed_file);
 
-	if(shell.exists(compressed_file))
+	if(std::filesystem::exists(compressed_file))
     {
         CU_ASSERT(true);
     }
@@ -274,19 +289,52 @@ void zip_devel()
     {
         CU_ASSERT(false);
     }
-    
-    if(shell.exists(extracted_file)) 
+
+    if(std::filesystem::exists(extracted_file))
     {
-    	shell.rm(extracted_file,true);
-    	shell.mkdir(extracted_file);
+    	std::filesystem::remove(extracted_file);
+    	std::filesystem::create_directory(extracted_file);
     }
 
-	if(not shell.exists(extracted_file)) shell.mkdir(extracted_file);
+	if(not std::filesystem::exists(extracted_file)) std::filesystem::create_directory(extracted_file);
     zip.extract(compressed_file,extracted_file);
-    std::list<std::string> files1;
-    shell.cd(extracted_file);
-    shell.ls(files1);
+
+    /*shell.ls(files1);
     if(files1.size() == 6)
+   	{
+        CU_ASSERT(true);
+    }
+    else
+    {
+        CU_ASSERT(false);
+    }*/
+}
+
+void project_devel()
+{
+    oct::core::Shell shell;
+    std::string oring_file = "../../tests/project";
+    std::string compressed_directory = "compress";
+    std::string compressed_file = compressed_directory + "/project-sche.sche";
+    std::string extracted_file = compressed_directory + "/project-sche.extract";
+
+    if(not shell.exists(compressed_directory)) shell.mkdir(compressed_directory);
+    if(shell.exists(compressed_file)) shell.rm(compressed_file);
+    if(shell.exists(extracted_file)) shell.rm(extracted_file,true);
+
+    sche::Project project;
+    project.save(oring_file,compressed_file);
+    if(shell.exists(compressed_file))
+   	{
+        CU_ASSERT(true);
+    }
+    else
+    {
+        CU_ASSERT(false);
+    }
+
+    project.open(compressed_file,extracted_file);
+    if(shell.exists(extracted_file))
    	{
         CU_ASSERT(true);
     }
@@ -327,6 +375,11 @@ int main(int argc, char *argv[])
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+	/*if ((NULL == CU_add_test(pSuite, "Developing Project class", project_devel)))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}*/
 
 	if ((NULL == CU_add_test(pSuite, "Developing Schedule", schedule_devel)))
 	{

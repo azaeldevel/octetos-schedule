@@ -5,6 +5,7 @@
 
 #include <string>
 #include <zip.h>
+#include <filesystem>
 #if defined(__GNUC__) && defined(__linux__)
     #include <octetos/core/shell.hh>
 #elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
@@ -24,11 +25,8 @@ public:
 	/**
 	*\brief Si es un directerio, comprime su contenido en el archivo destino
 	*/
-	virtual void compress(const std::string& source,const std::string& dest) = 0;
-	virtual void extract(const std::string& source,const std::string& dest) = 0;
-
-protected:
-	static bool is_directory(const std::string&);
+	virtual void compress(const std::filesystem::path& source,const std::filesystem::path& dest) = 0;
+	virtual void extract(const std::filesystem::path& source,const std::filesystem::path& dest) = 0;
 };
 
 
@@ -37,12 +35,12 @@ class Zip : public Package
 public:
 	Zip();
 
-	virtual void compress(const std::string& source,const std::string& dest);
-	virtual void extract(const std::string& source,const std::string& dest);
-	virtual void add(const std::string& source,const std::string&);
+	virtual void compress(const std::filesystem::path& source,const std::filesystem::path& dest);
+	virtual void extract(const std::filesystem::path& source,const std::filesystem::path& dest);
+	virtual void add(const std::filesystem::path& source,const std::filesystem::path&);
 
 private:
-	void compres_walk_directory(const std::string& source);
+	void compres_walk_directory(const std::filesystem::path& source);
 
 	zip_t* zipper;
 	oct::core::Shell shell;
@@ -50,5 +48,6 @@ private:
 
 
 
-#endif
 }
+
+#endif

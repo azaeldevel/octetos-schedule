@@ -44,5 +44,13 @@ bool Project::run()
 {
     return evprog.run();
 }
+bool Project::save(const std::string& source,const std::string& destino)
+{
+    oct::pack::Zip zip;
+	zip.compress(source,destino);
+    if(not shell.exists(destino)) return false;
+
+    return true;
+}
 
 }
