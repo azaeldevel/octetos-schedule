@@ -95,6 +95,8 @@ void Zip::add(const std::filesystem::path& source, const std::filesystem::path& 
 #define COPY_BUF_SIZE 2048
 void Zip::extract(const std::filesystem::path& source,const std::filesystem::path& dest)
 {
+    if(not std::filesystem::exists(dest)) throw core::Exception("No existe el directorio destino " + dest.string() ,__FILE__,__LINE__);
+
     int err;
     zipper = zip_open(source.string().c_str(), 0, &err);
     if(zipper == NULL)
@@ -105,20 +107,24 @@ void Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
 	}
 
 	zip_int64_t  num_entries = zip_get_num_entries(zipper, 0);
+	std::cout << "num_entries = " << num_entries << "\n" ;
 	struct zip_stat file_stat;
 	int file_fd, bytes_read;
 	zip_file* file_zip;
 	char copy_buf[COPY_BUF_SIZE];
-	std::filesystem::path directory,filename;
+	std::filesystem::path filename;
 	for(zip_int64_t i = 0; i < num_entries; i++)
     {
-        if(zip_stat_index(zipper, i, 0, &file_stat)) throw core::Exception("Fallo al extraer el archivo '" + ((const std::string&)source) + "'",__FILE__,__LINE__);
+        if(zip_stat_index(zipper, i, 0, &file_stat)) throw core::Exception("Fallo al extraer el archivo '" + source.string() + "'",__FILE__,__LINE__);
         if((file_stat.name[0] != '\0') && (file_stat.name[strlen(file_stat.name)-1] == '/'))
         {
-
-        if(not std::filesystem::create_directory(file_stat.name)) throw core::Exception("Fallo al extraer el archivo '" + ((const std::string&)source) + "'",__FILE__,__LINE__);
+            filename = dest / std::filesystem::path(file_stat.name);
+            if(not std::filesystem::create_directory(filename)) throw core::Exception("Fallo al extraer el archivo '" + source.string() + "'",__FILE__,__LINE__);
+            continue;
+        }
 
 		filename = dest / std::filesystem::path(file_stat.name);
+		std::cout << "filename = " << filename.string() << "\n" ;
 		if((file_fd = open(filename.string().c_str(), O_CREAT | O_TRUNC | O_WRONLY,0666)) == -1)
 		{
 			zip_error_t ziperr;
@@ -156,8 +162,6 @@ void Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
         close(file_fd);
     }
     zip_close(zipper);
-    }
-
 }
 
 }

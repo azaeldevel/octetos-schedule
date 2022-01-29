@@ -290,12 +290,8 @@ void zip_devel()
         CU_ASSERT(false);
     }
 
-    if(std::filesystem::exists(extracted_file))
-    {
-    	std::filesystem::remove(extracted_file);
-    	std::filesystem::create_directory(extracted_file);
-    }
 
+    if(std::filesystem::exists(extracted_file))std::filesystem::remove(extracted_file);
 	if(not std::filesystem::exists(extracted_file)) std::filesystem::create_directory(extracted_file);
     zip.extract(compressed_file,extracted_file);
 
