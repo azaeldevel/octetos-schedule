@@ -32,6 +32,7 @@
 #endif
 
 #include "schedule.hh"
+#include "Project.hh"
 
 void echo(const char* text)
 {
@@ -48,18 +49,15 @@ int main(int argc, const char* argv[])
         #error "Pltaforma desconocida"
     #endif
 
-	std::string strDay = std::to_string(oct::core::getDayID());
-	std::string strTime = std::to_string(oct::core::getTimeID());
-	std::string strid = strDay + "-" + strTime;
-	std::string log_dir = "logs/schedule/";
-	log_dir += strid;
-	oct::ec::sche::Enviroment* sche = new oct::ec::sche::Enviroment(log_dir,"tests/project",log_dir);
-	sche->enableEcho(&echo,2);
+    if(argc != 3)
+    {
+        std::cout << "Uso : ec-schedule archivo_proyecto directorio_salida\n";
+        return EXIT_FAILURE;
+    }
 
-	bool ret;
-	ret = sche->run();
-
-	delete sche;
+    sche::Project project;
+    project.open(argv[1],argv[2],&echo,2,true);
+    bool ret = project.run();
 
 	return ret? EXIT_SUCCESS : EXIT_FAILURE;
 }

@@ -118,22 +118,30 @@ namespace oct::ec::sche
 
 
 
-
-Enviroment::Enviroment(const std::string& log,const std::string& in_dir,const std::string& out_dir) : data(in_dir,out_dir)
+Enviroment::Enviroment()
+{
+}
+Enviroment::Enviroment(const std::string& log,const std::string& in,const std::string& out) : data(in,out)
+{
+	init(log,in,out);
+}
+Enviroment::~Enviroment()
+{
+}
+void Enviroment::init(const std::string& log,const std::string& in,const std::string& out)
 {
 	logDirectoryHistory = log;
 	logDirectorySolutions = log;
 	//logDirectory = log;
 
 	//if(not shell.exists(in_dir)) shell.mkdir(in_dir,true);
-	if(not shell.exists(out_dir)) shell.mkdir(out_dir,true);
+	if(not shell.exists(out)) shell.mkdir(out,true);
 
-	init(in_dir);
-}
-Enviroment::~Enviroment()
-{
+    data.load(in);
 
+	init(in);
 }
+
 void Enviroment::init(const std::string& in_dir)
 {
 	mutableProb = 0.05;

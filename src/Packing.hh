@@ -5,7 +5,14 @@
 
 #include <string>
 #include <zip.h>
-#include <octetos/core/shell.hh>
+#if defined(__GNUC__) && defined(__linux__)
+    #include <octetos/core/shell.hh>
+#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
+    #include <shell.hh>
+#else
+    #error "Pltaforma desconocida"
+#endif
+
 
 namespace oct::pack
 {
@@ -30,14 +37,14 @@ class Zip : public Package
 {
 public:
 	Zip();
-	
+
 	virtual void compress(const std::string& source,const std::string& dest);
 	virtual void extract(const std::string& source,const std::string& dest);
 	virtual void add(const std::string& source,const std::string&);
 
 private:
 	void compres_walk_directory(const std::string& source);
-	
+
 	zip_t* zipper;
 	oct::core::Shell shell;
 };
@@ -45,4 +52,4 @@ private:
 
 
 #endif
-} 
+}

@@ -117,11 +117,15 @@ namespace oct::ec::sche
 		/**
 		*\brief Constructor que recive un directorio para guardar estadisticas
 		*/
-		Enviroment(const std::string& log,const std::string& dir,const std::string& out_dir);
+		Enviroment(const std::string& log,const std::string& project_dir,const std::string& output_dir);
+		Enviroment();
+
 		/**
 		*\brief Inicia las variables
 		*/
 		void init(const std::string&);
+
+		void init(const std::string& log,const std::string& project_dir,const std::string& output_dir);
 
 		~Enviroment();
 

@@ -122,7 +122,14 @@ void Zip::extract(const std::string& source,const std::string& dest)
         if(zip_stat_index(zipper, i, 0, &file_stat)) throw core::Exception("Fallo al extraer el archivo '" + source + "'",__FILE__,__LINE__);
         if((file_stat.name[0] != '\0') && (file_stat.name[strlen(file_stat.name)-1] == '/'))
         {
-            if(mkdir(file_stat.name,0777) && (errno != EEXIST)) throw core::Exception("Fallo al extraer el archivo '" + source + "'",__FILE__,__LINE__);
+
+#if defined(__GNUC__) && defined(__linux__)
+        if(mkdir(file_stat.name,0777) && (errno != EEXIST)) throw core::Exception("Fallo al extraer el archivo '" + source + "'",__FILE__,__LINE__);
+#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
+        if(mkdir(file_stat.name) && (errno != EEXIST)) throw core::Exception("Fallo al extraer el archivo '" + source + "'",__FILE__,__LINE__);
+#else
+    #error "Pltaforma desconocida"
+#endif
             std::cout << "Directory : " << file_stat.name << std::endl;
             continue;
         }
@@ -138,7 +145,7 @@ void Zip::extract(const std::string& source,const std::string& dest)
 			throw core::Exception(msg,__FILE__,__LINE__);
 		}
 
-        if((file_zip = zip_fopen_index(zipper, i, 0)) == NULL) 
+        if((file_zip = zip_fopen_index(zipper, i, 0)) == NULL)
 		{
 			zip_error_t ziperr;
 			std::string msg = "Fallo al leer el elemento '";
@@ -147,7 +154,7 @@ void Zip::extract(const std::string& source,const std::string& dest)
 			msg += zip_strerror(zipper);
 			throw core::Exception(msg,__FILE__,__LINE__);
 		}
-		
+
         do
         {
             if((bytes_read = zip_fread(file_zip, copy_buf, COPY_BUF_SIZE)) == -1)
@@ -161,7 +168,7 @@ void Zip::extract(const std::string& source,const std::string& dest)
             if(bytes_read > 0) write(file_fd, copy_buf, bytes_read);
         }
         while(bytes_read > 0);
-        
+
         zip_fclose(file_zip);
         close(file_fd);
     }
