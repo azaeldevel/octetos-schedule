@@ -96,9 +96,8 @@ void Zip::add(const std::filesystem::path& source)
 void Zip::extract(const std::filesystem::path& source,const std::filesystem::path& dest)
 {
     if(not std::filesystem::exists(dest)) throw core::Exception("No existe el directorio destino " + dest.string() ,__FILE__,__LINE__);
-
-    std::cout << "dest = " << dest << "\n";
-    std::cout << "source = " << source << "\n";
+    //std::cout << "dest = " << dest << "\n";
+    //std::cout << "source = " << source << "\n";
 
     int err;
     zipper = zip_open(source.string().c_str(), 0, &err);
@@ -110,7 +109,7 @@ void Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
 	}
 
 	zip_int64_t  num_entries = zip_get_num_entries(zipper, 0);
-	std::cout << "num_entries = " << num_entries << "\n" ;
+	//std::cout << "num_entries = " << num_entries << "\n" ;
 	struct zip_stat file_stat;
 	int file_fd, bytes_read;
 	zip_file* file_zip;
@@ -119,7 +118,7 @@ void Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
 	for(zip_int64_t i = 0; i < num_entries; i++)
     {
         if(zip_stat_index(zipper, i, 0, &file_stat)) throw core::Exception("Fallo al extraer el archivo '" + source.string() + "'",__FILE__,__LINE__);
-        std::cout << "file_stat.name = " << file_stat.name << "\n" ;
+        //std::cout << "file_stat.name = " << file_stat.name << "\n" ;
         filename = dest / file_stat.name;
         if((file_stat.name[0] != '\0') && (file_stat.name[strlen(file_stat.name)-1] == '/'))
         {

@@ -295,7 +295,7 @@ void zip_devel()
 
     if(std::filesystem::exists(extracted_file))std::filesystem::remove_all(extracted_file);
 	if(not std::filesystem::exists(extracted_file)) std::filesystem::create_directory(extracted_file);
-	std::cout << "extracted_file = " << extracted_file << "\n";
+	//std::cout << "extracted_file = " << extracted_file << "\n";
     zip.extract(compressed_file,extracted_file);
 
 }
