@@ -28,3 +28,4 @@ Output
 bin
 schedule.ui
 tests/compress
+schedule.depend
