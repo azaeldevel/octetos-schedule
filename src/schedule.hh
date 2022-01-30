@@ -117,15 +117,15 @@ namespace oct::ec::sche
 		/**
 		*\brief Constructor que recive un directorio para guardar estadisticas
 		*/
-		Enviroment(const std::string& log,const std::string& project_dir,const std::string& output_dir);
+		Enviroment(const std::filesystem::path& log,const std::filesystem::path& project_dir,const std::filesystem::path& output_dir);
 		Enviroment();
 
 		/**
 		*\brief Inicia las variables
 		*/
-		void init(const std::string&);
+		void init(const std::filesystem::path&);
 
-		void init(const std::string& log,const std::string& project_dir,const std::string& output_dir);
+		void init(const std::filesystem::path& log,const std::filesystem::path& project_dir,const std::filesystem::path& output_dir);
 
 		~Enviroment();
 
@@ -162,9 +162,9 @@ namespace oct::ec::sche
 		//unsigned int counter()const;
 
 	private:
-		std::string input_directory;
+		std::filesystem::path input_directory;
 		Data data;
-		std::string strid;
+		std::filesystem::path strid;
 
 		unsigned int CRITERION;
 		//real PORTION;

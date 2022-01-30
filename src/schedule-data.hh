@@ -412,7 +412,7 @@ namespace oct::ec::sche
 	public:
 		void init();
 		Configuration();
-		Configuration(const std::string& name);
+		Configuration(const std::filesystem::path& name);
 		unsigned int to_hours(double )const;
 		//unsigned int get_time_per_hour() const;
 		std::time_t get_seconds_per_hour() const;
@@ -424,7 +424,7 @@ namespace oct::ec::sche
 		//FormatDT get_format_dt()const;
 		int get_begin_day() const;
 		real get_hours_sigma()const;
-		const std::string get_out_directory()const;
+		const std::filesystem::path& get_out_directory()const;
 		unsigned int get_trys()const;
 
 		/**
@@ -443,8 +443,8 @@ namespace oct::ec::sche
 		*/
 		void rest(const Time& dt, unsigned int hours, Time& result);
 
-		void load_file(const std::string& project);
-		void load_file(const std::string& project,const std::string& out_dir);
+		void load_file(const std::filesystem::path& project);
+		void load_file(const std::filesystem::path& project,const std::filesystem::path& out_dir);
 
 		//
 		unsigned int _id;
@@ -454,7 +454,7 @@ namespace oct::ec::sche
 		//Schema schema;
 		//FormatDT format;
 		real hours_sigma;
-		std::string out_dir;
+		std::filesystem::path out_dir;
 		unsigned int trys;
 	public:
 		static const std::string formats_dt_hour;
@@ -552,7 +552,7 @@ namespace oct::ec::sche
 		const Data* set(const Data*);
 
 	protected:
-		void fetch_times(Target&,std::stringstream&,unsigned int ,const std::string& );
+		void fetch_times(Target&,std::stringstream&,unsigned int ,const std::filesystem::path& );
 	protected:
 		const Data* dataObject;
 	};
@@ -563,10 +563,10 @@ namespace oct::ec::sche
 
 	public:
 		Teachers();
-		Teachers(const std::string& fn);
+		Teachers(const std::filesystem::path& fn);
 		const std::list<Teacher>& get_list() const;
 
-		void load_file(const std::string& fn);
+		void load_file(const std::filesystem::path& fn);
 		void print(std::ostream&);
 		const Teacher* search(const std::string&) const;
 
@@ -584,9 +584,9 @@ namespace oct::ec::sche
 	public:
 
 	public:
-		Subjects(const std::string& fn, const Data* );
+		Subjects(const std::filesystem::path& fn, const Data* );
 		Subjects();
-		void load_file(const std::string& fn);
+		void load_file(const std::filesystem::path& fn);
 		void print(std::ostream&)const;
 		const Subject* search(const std::string&) const;
 		const std::list<Subject>& get_list() const;
@@ -613,8 +613,8 @@ namespace oct::ec::sche
 
 	public:
 		Teachers_Subjects();
-		Teachers_Subjects(const std::string& fn,const Data* data);
-		void load_file(const std::string& fn);
+		Teachers_Subjects(const std::filesystem::path& fn,const Data* data);
+		void load_file(const std::filesystem::path& fn);
 		void print(std::ostream&)const;
 
 		const std::list<Row>& get_list() const;
@@ -647,7 +647,7 @@ namespace oct::ec::sche
 		Rooms(const std::string& fn);
 		const std::list<Room>& get_list() const;
 
-		void load_file(const std::string& fn);
+		void load_file(const std::filesystem::path& fn);
 		void print(std::ostream&)const;
 
 		const Room* search(const std::string&)const;
@@ -685,12 +685,12 @@ namespace oct::ec::sche
 
 	public:
 		Groups();
-		Groups(const std::string& fn,const Data* data);
+		Groups(const std::filesystem::path& fn,const Data* data);
 		const std::list<Group>& get_list() const;
 		std::list<Group>& get_list();
 		unsigned int get_max_lessons()const;
 
-		void load_file(const std::string& fn);
+		void load_file(const std::filesystem::path& fn);
 		void print(std::ostream&)const;
 
 		const Group* search_name(const std::string&)const;
@@ -755,10 +755,10 @@ namespace oct::ec::sche
 		Groups groups;
 
 		Data();
-		Data(const std::string& in_dir);
-		Data(const std::string& in_dir,const std::string& out_dir);
+		Data(const std::filesystem::path& in_dir);
+		Data(const std::filesystem::path& in_dir,const std::filesystem::path& out_dir);
 
-		void load(const std::string& dir);
+		void load(const std::filesystem::path& dir);
 
 		const std::map<key_hbs, HBRS>& get_list_hbrs() const;
 		const std::map<std::string, Data::HBS>& get_hbs()const;
@@ -835,7 +835,7 @@ namespace oct::ec::sche
 
 		void mutate();
 
-		void save_csv(const Configuration&,const std::string&) const;
+		void save_csv(const Configuration&,const std::filesystem::path&) const;
 	private:
 
 	private:

@@ -62,9 +62,9 @@ namespace oct::ec::sche
 		{
 			const Configuration& config = ((Enviroment*)env)->get_data().config;
 
-			std::string dir = config.get_out_directory() + "/" + std::to_string(env->getIterationActual()) + "/" + std::to_string(getID());
+			std::filesystem::path dir = config.get_out_directory() / std::to_string(env->getIterationActual()) / std::to_string(getID());
 
-			env->shell.mkdir(dir);
+			std::filesystem::create_directory(dir);
 			save_csv(config,dir);
 			if(env->getIterationActual() < 100) jump_saver = 10;
 			else if(env->getIterationActual() < 1000) jump_saver = 100;
@@ -121,28 +121,28 @@ namespace oct::ec::sche
 Enviroment::Enviroment()
 {
 }
-Enviroment::Enviroment(const std::string& log,const std::string& in,const std::string& out) : data(in,out)
+Enviroment::Enviroment(const std::filesystem::path& log,const std::filesystem::path& in,const std::filesystem::path& out) : data(in,out)
 {
 	init(log,in,out);
 }
 Enviroment::~Enviroment()
 {
 }
-void Enviroment::init(const std::string& log,const std::string& in,const std::string& out)
+void Enviroment::init(const std::filesystem::path& log,const std::filesystem::path& in,const std::filesystem::path& out)
 {
 	logDirectoryHistory = log;
 	logDirectorySolutions = log;
 	//logDirectory = log;
 
 	//if(not shell.exists(in_dir)) shell.mkdir(in_dir,true);
-	if(not shell.exists(out)) shell.mkdir(out,true);
+	if(not std::filesystem::exists(out)) std::filesystem::create_directory(out);
 
     data.load(in);
 
 	init(in);
 }
 
-void Enviroment::init(const std::string& in_dir)
+void Enviroment::init(const std::filesystem::path& in_dir)
 {
 	mutableProb = 0.05;
 

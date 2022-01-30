@@ -1507,7 +1507,7 @@ namespace oct::ec::sche
 	{
 		init();
 	}
-	Configuration::Configuration(const std::string& file)
+	Configuration::Configuration(const std::filesystem::path& file)
 	{
 		load_file(file);
 	}
@@ -1598,7 +1598,7 @@ namespace oct::ec::sche
 		dt_t -= hours * get_time_per_hour() * 60;
 		result = *localtime(&dt_t);
 	}*/
-	const std::string Configuration::get_out_directory()const
+	const std::filesystem::path& Configuration::get_out_directory()const
 	{
 		return out_dir;
 	}
@@ -1607,12 +1607,12 @@ namespace oct::ec::sche
 		return trys;
 	}
 
-	void Configuration::load_file(const std::string& proyect)
+	void Configuration::load_file(const std::filesystem::path& proyect)
 	{
 		libconfig::Config config;
 
         //std::cout << "file = " << proyect << "\n";
-		config.readFile(proyect.c_str());
+		config.readFile(proyect.string().c_str());
 
 	  	std::string schema_week = config.lookup("schema_week");
 		if(schema_week.compare("MF") == 0)
@@ -1644,7 +1644,7 @@ namespace oct::ec::sche
 		config.lookupValue("trys",trys);
 		this->trys = trys;
 	}
-	void Configuration::load_file(const std::string& proyect,const std::string& out_dir)
+	void Configuration::load_file(const std::filesystem::path& proyect,const std::filesystem::path& out_dir)
 	{
 		load_file(proyect);
 		this->out_dir = out_dir;
@@ -1821,7 +1821,7 @@ namespace oct::ec::sche
 		dataObject = d;
 		return d;
 	}
-	void Targets::fetch_times(Target& target,std::stringstream& ssline, unsigned int line,const std::string& fn)
+	void Targets::fetch_times(Target& target,std::stringstream& ssline, unsigned int line,const std::filesystem::path& fn)
 	{
 		ec::sche::IntervalTime time;
 		std::string data,strH;
@@ -1856,13 +1856,13 @@ namespace oct::ec::sche
 			if(time.begin.tm_wday != time.end.tm_wday)
 			{
 				std::string msg = "El intervalode tiempo se deve referir al mimso dia ";
-				msg += "'" + fn + "':" + std::to_string(line);
+				msg += "'" + fn.string() + "':" + std::to_string(line);
 				throw core::Exception(msg, __FILE__,__LINE__);
 			}
 			if(time.begin.tm_hour >= time.end.tm_hour)
 			{
 				std::string msg = "La hora de inicio deve ser menor que la hora final ";
-				msg += "'" + fn + "':" + std::to_string(line);
+				msg += "'" + fn.string() + "':" + std::to_string(line);
 				throw core::Exception(msg, __FILE__,__LINE__);
 			}
 			day.clear();
@@ -1892,7 +1892,7 @@ namespace oct::ec::sche
 
 
 
-	Teachers::Teachers(const std::string& fn)
+	Teachers::Teachers(const std::filesystem::path& fn)
 	{
 		load_file(fn);
 	}
@@ -1904,7 +1904,7 @@ namespace oct::ec::sche
 	{
 		return teachers;
 	}
-	void Teachers::load_file(const std::string& fn)
+	void Teachers::load_file(const std::filesystem::path& fn)
 	{
 		if(not dataObject) throw core::Exception("dataObject no asignado.", __FILE__,__LINE__);
 
@@ -1936,7 +1936,7 @@ namespace oct::ec::sche
 		else
 		{
 			std::string msg = "Fallo la aperturade '";
-			msg += fn + "'";
+			msg += fn.string() + "'";
 			throw core::Exception(msg,__FILE__,__LINE__);
 		}
 	}
@@ -1970,14 +1970,14 @@ namespace oct::ec::sche
 
 
 
-	Subjects::Subjects(const std::string& fn, const Data* d) : Targets(d)
+	Subjects::Subjects(const std::filesystem::path& fn, const Data* d) : Targets(d)
 	{
 		load_file(fn);
 	}
 	Subjects::Subjects()
 	{
 	}
-	void Subjects::load_file(const std::string& fn)
+	void Subjects::load_file(const std::filesystem::path& fn)
 	{
 		if(not dataObject) throw core::Exception("dataObject no asignado.", __FILE__,__LINE__);
 
@@ -2026,7 +2026,7 @@ namespace oct::ec::sche
 		else
 		{
 			std::string msg = "Fallo la aperturade '";
-			msg += fn + "'";
+			msg += fn.string() + "'";
 			throw core::Exception(msg,__FILE__,__LINE__);
 		}
 	}
@@ -2078,7 +2078,7 @@ namespace oct::ec::sche
 			out << s->get_name() << ",";
 		}
 	}
-	Teachers_Subjects::Teachers_Subjects(const std::string& fn,const Data* d) : Targets(d)
+	Teachers_Subjects::Teachers_Subjects(const std::filesystem::path& fn,const Data* d) : Targets(d)
 	{
 		load_file(fn);
 	}
@@ -2090,7 +2090,7 @@ namespace oct::ec::sche
 	{
 		return teachers_subjects;
 	}
-	void Teachers_Subjects::load_file(const std::string& fn)
+	void Teachers_Subjects::load_file(const std::filesystem::path& fn)
 	{
 
 		if(not dataObject) throw core::Exception("dataObject no asignado.", __FILE__,__LINE__);
@@ -2113,7 +2113,7 @@ namespace oct::ec::sche
 				else
 				{
 					std::string msg = "Archivo '";
-					msg += fn + "', no tiene registro de el maestro '" + data + "', no esta registrada en su correpondiente archivo.";
+					msg += fn.string() + "', no tiene registro de el maestro '" + data + "', no esta registrada en su correpondiente archivo.";
 					throw core::Exception(msg,__FILE__,__LINE__);
 				}
 				//std::cout << data << ",";
@@ -2128,7 +2128,7 @@ namespace oct::ec::sche
 					else
 					{
 						std::string msg = "Archivo '";
-						msg += fn + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
+						msg += fn.string() + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
 						throw core::Exception(msg,__FILE__,__LINE__);
 					}
 				}
@@ -2141,7 +2141,7 @@ namespace oct::ec::sche
 		else
 		{
 			std::string msg = "Fallo la aperturade '";
-			msg += fn + "'";
+			msg += fn.string() + "'";
 			throw core::Exception(msg,__FILE__,__LINE__);
 		}
 	}
@@ -2221,7 +2221,7 @@ namespace oct::ec::sche
 		return rooms;
 	}
 
-	void Rooms::load_file(const std::string& fn)
+	void Rooms::load_file(const std::filesystem::path& fn)
 	{
 		if(not dataObject) throw core::Exception("dataObject no asignado.", __FILE__,__LINE__);
 
@@ -2250,7 +2250,7 @@ namespace oct::ec::sche
 		else
 		{
 			std::string msg = "Fallo la aperturade '";
-			msg += fn + "'";
+			msg += fn.string() + "'";
 			throw core::Exception(msg,__FILE__,__LINE__);
 		}
 	}
@@ -2306,7 +2306,7 @@ namespace oct::ec::sche
 
 		return false;
 	}
-	Groups::Groups(const std::string& fn,const Data* d) : Targets(d)
+	Groups::Groups(const std::filesystem::path& fn,const Data* d) : Targets(d)
 	{
 		load_file(fn);
 	}
@@ -2324,7 +2324,7 @@ namespace oct::ec::sche
 	}
 
 
-	void Groups::load_file(const std::string& fn)
+	void Groups::load_file(const std::filesystem::path& fn)
 	{
 
 		if(not dataObject) throw core::Exception("dataObject no asignado.", __FILE__,__LINE__);
@@ -2349,7 +2349,7 @@ namespace oct::ec::sche
 				else
 				{
 					std::string msg = "Archivo '";
-					msg += fn + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
+					msg += fn.string() + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
 					throw core::Exception(msg,__FILE__,__LINE__);
 				}
 
@@ -2364,7 +2364,7 @@ namespace oct::ec::sche
 					else
 					{
 						std::string msg = "Archivo '";
-						msg += fn + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
+						msg += fn.string() + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
 						throw core::Exception(msg,__FILE__,__LINE__);
 					}
 				}
@@ -2380,7 +2380,7 @@ namespace oct::ec::sche
 		else
 		{
 			std::string msg = "Fallo la aperturade '";
-			msg += fn + "'";
+			msg += fn.string()  + "'";
 			throw core::Exception(msg,__FILE__,__LINE__);
 		}
 	}
@@ -2439,13 +2439,12 @@ namespace oct::ec::sche
 	Data::Data()
 	{
 	}
-	Data::Data(const std::string& in_dir) : config(in_dir+"/schedule.cfg")
+	Data::Data(const std::filesystem::path& in_dir) : config(in_dir/"schedule.cfg")
 	{
 	}
-	Data::Data(const std::string& in_dir,const std::string& out_dir)
+	Data::Data(const std::filesystem::path& in_dir,const std::filesystem::path& out_dir)
 	{
-		std::string proy_dir= in_dir;
-		proy_dir += "/schedule.cfg";
+		std::filesystem::path proy_dir= in_dir / "schedule.cfg";
 		config.load_file(proy_dir,out_dir);
 
 		load(in_dir);
@@ -2458,21 +2457,21 @@ namespace oct::ec::sche
 	{
 		return hbs_by_subject;
 	}
-	void Data::load(const std::string& dir)
+	void Data::load(const std::filesystem::path& dir)
 	{
-		config.load_file(dir + "/schedule.cfg");
+		config.load_file(dir / "schedule.cfg");
 		//TODO:validacion estricta delas entredas
 		((Targets&)teachers) = this;
-		teachers.load_file(dir + "/teachers.csv");
+		teachers.load_file(dir / "teachers.csv");
 		((Targets&)subjects) = this;
-		subjects.load_file(dir + "/subjects.csv");
+		subjects.load_file(dir / "subjects.csv");
 		((Targets&)rooms) = this;
-		rooms.load_file(dir + "/rooms.csv");
+		rooms.load_file(dir / "rooms.csv");
 		//
 		((Targets&)teachers_subjects) = this;
-		teachers_subjects.load_file(dir + "/teachers-subjects.csv");
+		teachers_subjects.load_file(dir / "teachers-subjects.csv");
 		((Targets&)groups) = this;
-		groups.load_file(dir + "/groups.csv");
+		groups.load_file(dir / "groups.csv");
 
 		build();
 	}
@@ -2929,13 +2928,13 @@ namespace oct::ec::sche
 		at(distrib(gen)).mutate();
 	}
 
-	void Schedule::save_csv(const Configuration& config,const std::string& dir) const
+	void Schedule::save_csv(const Configuration& config,const std::filesystem::path& dir) const
 	{
 		std::ofstream out_csv;
-		std::string fn;
+		std::filesystem::path fn;
 		for(const ClassRoom& cr : *this)
 		{
-			fn = dir + "/" + cr[0].group->name + ".csv";
+			fn = dir / std::filesystem::path(cr[0].group->name + ".csv");
 			//std::cout << "Open Schedule : " << fn << "\n";
 			out_csv.open(fn);
 			if(out_csv.is_open())
@@ -2947,7 +2946,7 @@ namespace oct::ec::sche
 			else
 			{
 				std::string msg = "Fallo la apertura de '";
-				msg += fn + "'";
+				msg += fn.string() + "'";
 				throw core::Exception(msg,__FILE__,__LINE__);
 			}
 		}

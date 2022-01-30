@@ -42,7 +42,7 @@ bool Project::open(const std::filesystem::path& project, const std::filesystem::
         std::cout << "project_filename_temp : " << dir_entry << "\n";
     }
 
-    evprog.init(output.string(),project_filename_temp.string(),output.string());
+    evprog.init(output,project_filename_temp,output);
 
     return true;
 }
