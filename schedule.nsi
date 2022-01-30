@@ -1,8 +1,8 @@
 !include "MUI.nsh"
 
-!define NAME "schedule"
-!define VERSION "0.2.0"
-!define PUBLISHER "Octetos"
+!define NAME "sche"
+!define VERSION "0.6.0-12"
+!define PUBLISHER "Azael Reyes Inc."
 !define WEBSITE "https://github.com/azaeldevel/octetos-schedule.git"
 
 
@@ -30,6 +30,7 @@ InstallDir $PROGRAMFILES64\${NAME}
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "Spanish"
 
+
 LangString Uninstall ${LANG_ENGLISH} "Uninstall"
 LangString Uninstall ${LANG_SPANISH} "Desintalador"
 
@@ -42,6 +43,8 @@ Section
   File bin\Debug\libgcc_s_seh-1.dll
   File bin\Debug\octetos-core.dll
   File bin\Debug\octetos-EC.dll
+  File bin\Debug\octetos-schedule.dll
+  File ec-schedule.bat
   File schedule.ico
   File src\schedule.ui
   
@@ -50,20 +53,9 @@ Section
   CreateDirectory "$SMPROGRAMS\${NAME}"
   CreateShortCut "$SMPROGRAMS\${NAME}\$(Uninstall).lnk" "$INSTDIR\Uninstall.exe" 
   CreateShortCut "$SMPROGRAMS\${NAME}\Schedule.lnk" "$INSTDIR\schedule.exe" " $INSTDIR\schedule.ico"
+  CreateShortCut "$SMPROGRAMS\${NAME}\ec-schedule.lnk" "$INSTDIR\ec-schedule.bat"
+  
 
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "DisplayName" "${NAME}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "DisplayVersion" "${VERSION}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "DisplayIcon" "$INSTDIR\${NAME}.ico"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "UninstallString" "$INSTDIR\Uninstall.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "Publisher" "${PUBLISHER}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "HelpLink" "${WEBSITE}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "URLInfoAbout" "${WEBSITE}"
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "NoModify" 1
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "NoRepair" 1
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "InstallLocation" "$INSTDIR"
-  ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
-  IntFmt $0 "0x%08X" $0
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "EstimatedSize" $0
 SectionEnd
 
 Section "Uninstall"
@@ -72,7 +64,7 @@ Section "Uninstall"
   Delete "$INSTDIR\schedule.exe"
   Delete "$INSTDIR\libgcc_s_seh-1.dll"
   Delete "$INSTDIR\octetos-core.dll"
-  Delete "$INSTDIR\server.xsd"
+  Delete "$INSTDIR\octetos-schedule.dll"
   Delete "$INSTDIR\octetos-EC.dll"
   Delete "$INSTDIR\schedule.ico"
   Delete "$INSTDIR\schedule.ui"
@@ -80,6 +72,7 @@ Section "Uninstall"
   RMDir "$INSTDIR"
   Delete "$SMPROGRAMS\${NAME}\$(Uninstall).lnk"
   Delete "$SMPROGRAMS\${NAME}\Schedule.lnk"
+  Delete "$SMPROGRAMS\${NAME}\ec-schedule.lnk"
   RMDir "$SMPROGRAMS\${NAME}"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
+  
 SectionEnd

@@ -7363,12 +7363,15 @@
 	<typeindex>
 	"schedule.hh"
 
-1643506093 source:c:\users\azael\documents\develop\octetos\schedule\src\ec-schedule.cc
+1643518474 source:c:\users\azael\documents\develop\octetos\schedule\src\ec-schedule.cc
 	<fstream>
 	<string>
 	<csignal>
+	<filesystem>
 	<octetos/core/shell.hh>
 	<shell.hh>
+	<windows.h>
+	<shlobj.h>
 	"schedule.hh"
 	"Project.hh"
 
@@ -7450,4 +7453,12 @@
 	<octetos/core/Exception.hh>
 	<Exception.hh>
 	"Project.hh"
+
+1643518584 source:c:\users\azael\documents\develop\octetos\schedule\src\ec-schedule-win.cc
+	<fstream>
+	<string>
+	<csignal>
+	<filesystem>
+	<windows.h>
+	<shlobj.h>
 

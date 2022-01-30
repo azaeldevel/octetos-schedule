@@ -20,13 +20,12 @@
 
 #include <fstream>
 #include <string>
-#include <csignal>
-
+#include <filesystem>
 
 #if defined(__GNUC__) && defined(__linux__)
-    #include <octetos/core/shell.hh>
+    #include <csignal>
 #elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
-    #include <shell.hh>
+
 #else
     #error "Pltaforma desconocida"
 #endif
@@ -34,10 +33,12 @@
 #include "schedule.hh"
 #include "Project.hh"
 
+
 void echo(const char* text)
 {
 	std::cout << text;
 }
+
 int main(int argc, const char* argv[])
 {
     #if defined(__GNUC__) && defined(__linux__)
@@ -49,12 +50,42 @@ int main(int argc, const char* argv[])
         #error "Pltaforma desconocida"
     #endif
 
+
+    if(argc == 1)
+    {
+        std::cout << "Eliga el modo de operacion :\n";
+        std::cout << "\t\tec-schedule --enable-develop/--enable-user";
+    }
+    std::filesystem::path root_directory;
+    std::filesystem::path schedule_directory;
+    for(unsigned int i = 0; i < argc; i++)
+    {
+        if(strcmp(argv[i],"--enable-develop") == 0)
+        {
+            root_directory = std::filesystem::current_path();
+            schedule_directory = root_directory / "tests/schedule";
+        }
+        else if(strcmp(argv[i],"--enable-user") == 0)
+        {
+            root_directory = std::getenv("USERPROFILE");
+            schedule_directory = root_directory / "Desktop/schedule";
+        }
+        else
+        {
+            std::cout << "Opcion desconocida : " << argv[i] << "\n";
+        }
+    }
+
+    std::cout << "Schedule Directory : " << schedule_directory << "\n";
 	std::string strDay = std::to_string(oct::core::getDayID());
 	std::string strTime = std::to_string(oct::core::getTimeID());
 	std::string strid = strDay + "-" + strTime;
-	std::string log_dir = "schedule/logs/";
-	log_dir += strid;
-	oct::ec::sche::Enviroment* sche = new oct::ec::sche::Enviroment(log_dir,"schedule/project",log_dir);
+	std::string strlog = "logs/" + strid;
+	std::filesystem::path log_directory = schedule_directory / strlog;
+
+	std::filesystem::path project_directory = schedule_directory / "project";
+
+	oct::ec::sche::Enviroment* sche = new oct::ec::sche::Enviroment(log_directory,project_directory,log_directory);
 	sche->enableEcho(&echo,2);
 
 	bool ret;
