@@ -19,6 +19,7 @@
 
 
 #include <fstream>
+#include <string.h>
 #include <string>
 #include <filesystem>
 
