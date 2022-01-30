@@ -16,7 +16,7 @@ AM_CFLAGS =\
 
 lib_LTLIBRARIES = liboctetos-schedule.la
 
-liboctetos_schedule_la_SOURCES = schedule.cc  schedule-data.cc schedule-eval.cc  Packing.cc  
+liboctetos_schedule_la_SOURCES = schedule.cc  schedule-data.cc schedule-eval.cc  Packing.cc  Project.cc
 liboctetos_schedule_la_LDFLAGS = $(OCTETOS_SCHEDULE_CFLAGS) 
 liboctetos_schedule_la_LIBADD = $(OCTETOS_SCHEDULE_LIBS)
 

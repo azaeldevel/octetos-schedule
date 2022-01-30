@@ -259,7 +259,7 @@ void time_devel()
 
 void zip_devel()
 {
-    std::filesystem::path oring_file = "../../tests/project";
+    std::filesystem::path oring_file = "../../tests/schedule/project";
     std::filesystem::path compressed_directory = "compress";
     std::filesystem::path compressed_file = compressed_directory / "project.sche";
     std::filesystem::path extracted_file = compressed_directory / "project.extract";
@@ -302,7 +302,7 @@ void zip_devel()
 
 void project_devel()
 {
-    std::filesystem::path oring_file = "../../tests/project";
+    std::filesystem::path oring_file = "../../tests/schedule/project";
     std::filesystem::path compressed_directory = "compress";
     std::filesystem::path compressed_file = compressed_directory / "project-scedule.sche";
     std::filesystem::path extracted_file = compressed_directory / "project-schedule.extract";

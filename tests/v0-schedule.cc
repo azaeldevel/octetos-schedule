@@ -11,9 +11,9 @@
 #include <time.h>
 
 #if CODEBLOCKS_IDE
-    #define DATA_DIR "tests/project"
+    #define DATA_DIR "tests/schedule/project"
 #else
-    #define DATA_DIR "../../tests/project"
+    #define DATA_DIR "../../tests/schedule/project"
 #endif
 
 using namespace oct::ec::sche;
