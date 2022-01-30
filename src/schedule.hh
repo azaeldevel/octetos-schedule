@@ -162,7 +162,7 @@ namespace oct::ec::sche
 		//unsigned int counter()const;
 
 	private:
-		std::filesystem::path input_directory;
+		//std::filesystem::path input_directory;
 		Data data;
 		std::filesystem::path strid;
 

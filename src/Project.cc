@@ -37,10 +37,10 @@ bool Project::open(const std::filesystem::path& project, const std::filesystem::
 
 	oct::pack::Zip zip;
 	zip.extract(project,project_filename_temp);
-	for (auto const& dir_entry : std::filesystem::directory_iterator{project_filename_temp})
+	/*for (auto const& dir_entry : std::filesystem::directory_iterator{project_filename_temp})
     {
         std::cout << "project_filename_temp : " << dir_entry << "\n";
-    }
+    }*/
 
     evprog.init(output,project_filename_temp,output);
 

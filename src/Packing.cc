@@ -99,7 +99,6 @@ bool Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
     if(not std::filesystem::exists(dest)) throw core::Exception("No existe el directorio destino " + dest.string() ,__FILE__,__LINE__);
     //std::cout << "dest = " << dest << "\n";
     //std::cout << "source = " << source << "\n";
-
     int err;
     zipper = zip_open(source.string().c_str(), 0, &err);
     if(zipper == NULL)

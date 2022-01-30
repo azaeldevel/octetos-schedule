@@ -121,7 +121,7 @@ namespace oct::ec::sche
 Enviroment::Enviroment()
 {
 }
-Enviroment::Enviroment(const std::filesystem::path& log,const std::filesystem::path& in,const std::filesystem::path& out) : data(in,out)
+Enviroment::Enviroment(const std::filesystem::path& log,const std::filesystem::path& in,const std::filesystem::path& out)
 {
 	init(log,in,out);
 }
@@ -148,7 +148,7 @@ void Enviroment::init(const std::filesystem::path& in_dir)
 
 	if(not in_dir.empty())
 	{
-		input_directory = in_dir;
+		//input_directory = in_dir;
 		initPopulation = data.config.get_trys() / 10;
 		maxProgenitor = initPopulation;
 		maxPopulation = data.config.get_trys();

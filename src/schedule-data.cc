@@ -2112,8 +2112,7 @@ namespace oct::ec::sche
 				}
 				else
 				{
-					std::string msg = "Archivo '";
-					msg += fn.string() + "', no tiene registro de el maestro '" + data + "', no esta registrada en su correpondiente archivo.";
+					std::string msg = "Archivo '" + fn.string() + "', no tiene registro de el maestro '" + data + "', no esta registrada en su correpondiente archivo.";
 					throw core::Exception(msg,__FILE__,__LINE__);
 				}
 				//std::cout << data << ",";
@@ -2127,8 +2126,7 @@ namespace oct::ec::sche
 					}
 					else
 					{
-						std::string msg = "Archivo '";
-						msg += fn.string() + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
+						std::string msg = "Archivo '" + fn.string() + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
 						throw core::Exception(msg,__FILE__,__LINE__);
 					}
 				}
@@ -2459,6 +2457,7 @@ namespace oct::ec::sche
 	}
 	void Data::load(const std::filesystem::path& dir)
 	{
+        std::cout << "Data::load\n";
 		config.load_file(dir / "schedule.cfg");
 		//TODO:validacion estricta delas entredas
 		((Targets&)teachers) = this;
