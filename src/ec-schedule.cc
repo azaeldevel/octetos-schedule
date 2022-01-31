@@ -39,7 +39,13 @@ void echo(const char* text)
 {
 	std::cout << text;
 }
-
+enum Mode
+{
+	UNKNOW,
+	DEVELOP,
+	USER,
+	COMMAND
+};
 int main(int argc, const char* argv[])
 {
     #if defined(__GNUC__) && defined(__linux__)
@@ -55,43 +61,69 @@ int main(int argc, const char* argv[])
     if(argc == 1)
     {
         std::cout << "Eliga el modo de operacion :\n";
-        std::cout << "\t\tec-schedule --enable-develop/--enable-user";
+        std::cout << "\t\tec-schedule --develop|--local-processes|--project-file";
     }
+    Mode mode = Mode::UNKNOW;
+    sche::Project* project;
     std::filesystem::path root_directory;
     std::filesystem::path schedule_directory;
-    for(unsigned int i = 0; i < argc; i++)
+    std::filesystem::path log_directory;
+    std::filesystem::path project_directory;
+    std::filesystem::path project_file;
+    for(unsigned int i = 1; i < argc; i++)
     {
-        if(strcmp(argv[i],"--enable-develop") == 0)
+        if(strcmp(argv[i],"--develop") == 0)
         {
             root_directory = std::filesystem::current_path();
             schedule_directory = root_directory / "tests/schedule";
+            mode = Mode::DEVELOP;
         }
-        else if(strcmp(argv[i],"--enable-user") == 0)
+        else if(strcmp(argv[i],"--local-processes") == 0)
         {
             root_directory = std::getenv("USERPROFILE");
             schedule_directory = root_directory / "Desktop/schedule";
+            mode = Mode::USER;
+        }
+        else if(strcmp(argv[i],"--project-file") == 0)
+        {
+            project_file = argv[++i];
+            mode = Mode::COMMAND;
+        }
+        else if(strcmp(argv[i],"--out-directory") == 0)
+        {
+            log_directory = argv[++i];
         }
         else
         {
             std::cout << "Opcion desconocida : " << argv[i] << "\n";
         }
     }
+        
+        
+    if(mode == Mode::USER or mode == Mode::DEVELOP)
+    {
+        std::cout << "Schedule Directory : " << schedule_directory << "\n";
+		std::string strDay = std::to_string(oct::core::getDayID());
+		std::string strTime = std::to_string(oct::core::getTimeID());
+		std::string strid = strDay + "-" + strTime;
+		std::string strlog = "logs/" + strid;
+		log_directory = schedule_directory / strlog;
 
-    std::cout << "Schedule Directory : " << schedule_directory << "\n";
-	std::string strDay = std::to_string(oct::core::getDayID());
-	std::string strTime = std::to_string(oct::core::getTimeID());
-	std::string strid = strDay + "-" + strTime;
-	std::string strlog = "logs/" + strid;
-	std::filesystem::path log_directory = schedule_directory / strlog;
-
-	std::filesystem::path project_directory = schedule_directory / "project";
+		project_directory = schedule_directory / "project";
+    }
+    else if(mode == Mode::COMMAND)
+    {
+    	if(log_directory.empty()) throw oct::core::Exception("Se deve asignar un directory de resultado '--out-directory'",__FILE__,__LINE__);
+	  	project = new sche::Project();
+	  	project_directory = project->open(project_file);
+  	}
 
 	oct::ec::sche::Enviroment* sche = new oct::ec::sche::Enviroment(log_directory,project_directory,log_directory);
 	sche->enableEcho(&echo,2);
 
-	bool ret;
-	ret = sche->run();
+	bool ret = sche->run();
 
+	if(mode == Mode::COMMAND) delete project;
 	delete sche;
 
 	return ret? EXIT_SUCCESS : EXIT_FAILURE;

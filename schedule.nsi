@@ -1,7 +1,7 @@
 !include "MUI.nsh"
 
 !define NAME "sche"
-!define VERSION "0.7.0-1"
+!define VERSION "0.8.0-1"
 !define PUBLISHER "Azael Reyes Inc."
 !define WEBSITE "https://github.com/azaeldevel/octetos-schedule.git"
 
@@ -44,7 +44,7 @@ Section
   File bin\Debug\octetos-core.dll
   File bin\Debug\octetos-EC.dll
   File bin\Debug\octetos-schedule.dll
-  File ec-schedule.bat
+  File src\ec-schedule.bat
   File schedule.ico
   File src\schedule.ui
   

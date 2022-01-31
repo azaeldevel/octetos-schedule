@@ -371,7 +371,7 @@ void project_devel()
         CU_ASSERT(false);
     }
 
-    if(project.open(compressed_file,output_directory))
+    if(not project.open(compressed_file).empty())
    	{
         CU_ASSERT(true);
     }
