@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
-	<ActiveTarget name="tests-v0" />
+	<ActiveTarget name="ec-schedule-dbg" />
+	<File name="src\schedule.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1042" topLine="30" />
+		</Cursor>
+	</File>
+	<File name="src\schedule.hh" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4627" topLine="144" />
+		</Cursor>
+	</File>
+	<File name="src\Packing.cc" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2947" topLine="132" />
+		</Cursor>
+	</File>
+	<File name="src\Packing.hh" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="99" topLine="9" />
+		</Cursor>
+	</File>
+	<File name="tests\v0.cc" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6014" topLine="308" />
+		</Cursor>
+	</File>
 	<File name="src\schedule-data.hh" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="293" topLine="48" />
+			<Cursor1 position="10609" topLine="423" />
+		</Cursor>
+	</File>
+	<File name="src\Project.hh" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="612" topLine="7" />
+		</Cursor>
+	</File>
+	<File name="src\Project.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="851" topLine="30" />
+		</Cursor>
+	</File>
+	<File name="src\schedule-eval.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1256" topLine="54" />
 		</Cursor>
 	</File>
 	<File name="src\main.cc" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -14,37 +54,12 @@
 	</File>
 	<File name="src\ec-schedule.cc" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1579" topLine="37" />
+			<Cursor1 position="1969" topLine="51" />
 		</Cursor>
 	</File>
-	<File name="src\schedule-eval.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tests\v0-schedule.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1256" topLine="54" />
-		</Cursor>
-	</File>
-	<File name="src\Project.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1242" topLine="29" />
-		</Cursor>
-	</File>
-	<File name="src\Project.hh" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="660" topLine="3" />
-		</Cursor>
-	</File>
-	<File name="src\Packing.cc" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4056" topLine="102" />
-		</Cursor>
-	</File>
-	<File name="src\schedule.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7975" topLine="234" />
-		</Cursor>
-	</File>
-	<File name="src\schedule-data.cc" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="42072" topLine="1607" />
+			<Cursor1 position="11266" topLine="556" />
 		</Cursor>
 	</File>
 	<File name="src\WndMain.cc" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -52,19 +67,9 @@
 			<Cursor1 position="418" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="tests\v0.cc" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\schedule-data.cc" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4221" topLine="258" />
-		</Cursor>
-	</File>
-	<File name="src\Packing.hh" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="696" topLine="24" />
-		</Cursor>
-	</File>
-	<File name="src\schedule.hh" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="270" topLine="6" />
+			<Cursor1 position="63952" topLine="2509" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
