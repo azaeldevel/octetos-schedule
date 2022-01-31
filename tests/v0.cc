@@ -305,10 +305,10 @@ void project_devel()
     std::filesystem::path oring_file = "../../tests/schedule/project";
     std::filesystem::path compressed_directory = "compress";
     std::filesystem::path compressed_file = compressed_directory / "project-scedule.sche";
-    std::filesystem::path extracted_file = compressed_directory / "project-schedule.extract";
+    std::filesystem::path output_directory = compressed_directory / "output";
 
     if(std::filesystem::exists(compressed_file)) std::filesystem::remove(compressed_file);
-    if(std::filesystem::exists(extracted_file)) std::filesystem::remove_all(extracted_file);
+    if(std::filesystem::exists(output_directory)) std::filesystem::remove_all(output_directory);
 
     sche::Project project;
     project.save(oring_file,compressed_file);
@@ -321,7 +321,7 @@ void project_devel()
         CU_ASSERT(false);
     }
 
-    if(project.open(compressed_file,extracted_file))
+    if(project.open(compressed_file,output_directory))
    	{
         CU_ASSERT(true);
     }
