@@ -2458,7 +2458,7 @@ namespace oct::ec::sche
 	}
 	void Data::load(const std::filesystem::path& dir)
 	{
-        std::cout << "Data::load\n";
+        //std::cout << "Data::load\n";
 		config.load_file(dir / "schedule.cfg");
 		//TODO:validacion estricta delas entredas
 		((Targets&)teachers) = this;
