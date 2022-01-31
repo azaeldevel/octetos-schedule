@@ -314,16 +314,17 @@ void zip_devel()
         {
             CU_ASSERT(false);
         }
+        extracted_stream.open(extracted_file/dir_entry.path().filename());
         if(extracted_stream.is_open())
         {
             CU_ASSERT(true);
         }
         else
         {
+        	std::cout << "Fallo partura de  : " << extracted_file/dir_entry << "\n";
             CU_ASSERT(false);
         }
-        extracted_stream.open(extracted_file/dir_entry.path().filename());
-        std::cout << "Procesando : " << dir_entry << "\n";
+        //std::cout << "Procesando : " << dir_entry << "\n";
         line = 0;
         while(not origin_stream.eof())
         {
@@ -344,7 +345,7 @@ void zip_devel()
                 CU_ASSERT(false);
             }
         }
-        std::cout << "\n";
+        //std::cout << "\n";
     }
 
 }
@@ -370,7 +371,7 @@ void project_devel()
         CU_ASSERT(false);
     }
 
-    if(project.open(compressed_file,output_directory))
+    if(not project.open(compressed_file).empty())
    	{
         CU_ASSERT(true);
     }

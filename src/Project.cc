@@ -28,7 +28,7 @@ Project::~Project()
 }
 
 
-bool Project::open(const std::filesystem::path& project, const std::filesystem::path& output)
+std::filesystem::path Project::open(const std::filesystem::path& project)
 {
 	project_filename_temp = std::filesystem::temp_directory_path()/"XXXXXX";
 	char* temple_project_filename_temp = (char*)malloc(project_filename_temp.string().size() + 1);
@@ -59,22 +59,22 @@ bool Project::open(const std::filesystem::path& project, const std::filesystem::
         std::cout << "project_filename_temp : " << dir_entry << "\n";
     }*/
 
-    evprog.init(output,project_filename_temp,output);
+    //evprog.init(output,project_filename_temp,output);
 
-    return true;
+    return project_filename_temp;
 }
-bool Project::open(const std::filesystem::path& project, const std::filesystem::path& output,oct::ec::echo echo, unsigned int level,bool create_session)
+/*bool Project::open(const std::filesystem::path& project, const std::filesystem::path& output,oct::ec::echo echo, unsigned int level,bool create_session)
 {
     if(not open(project,output)) return false;
     evprog.enableEcho(echo,level);
     if(create_session) evprog.create_session();
 
     return true;
-}
-bool Project::run()
+}*/
+/*bool Project::run()
 {
     return evprog.run();
-}
+}*/
 bool Project::save(const std::filesystem::path& source,const std::filesystem::path& destino)
 {
     oct::pack::Zip zip;
