@@ -2126,7 +2126,8 @@ namespace oct::ec::sche
 					}
 					else
 					{
-						std::string msg = "Archivo '" + fn.string() + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
+						std::string msg = "Archivo '";
+						msg += fn.string() + "', la materia '" + data + "', no esta registrada en su correpondiente archivo.";
 						throw core::Exception(msg,__FILE__,__LINE__);
 					}
 				}

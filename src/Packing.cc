@@ -111,10 +111,11 @@ bool Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
 	zip_int64_t  num_entries = zip_get_num_entries(zipper, 0);
 	//std::cout << "num_entries = " << num_entries << "\n" ;
 	struct zip_stat file_stat;
-	int file_fd, bytes_read;
+	int bytes_read;
 	zip_file* file_zip;
 	char copy_buf[COPY_BUF_SIZE];
 	std::filesystem::path filename;
+	FILE *file_out;
 	for(zip_int64_t i = 0; i < num_entries; i++)
     {
         if(zip_stat_index(zipper, i, 0, &file_stat)) throw core::Exception("Fallo al extraer el archivo '" + source.string() + "'",__FILE__,__LINE__);
@@ -126,7 +127,8 @@ bool Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
             continue;
         }
 
-		if((file_fd = open(filename.string().c_str(), O_CREAT | O_TRUNC | O_WRONLY,0666)) == -1)
+        file_out = fopen(filename.string().c_str(), "w");
+		if(not file_out)
 		{
 			zip_error_t ziperr;
 			std::string msg = "Fallo al leer el elemento '";
@@ -147,7 +149,8 @@ bool Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
 
         do
         {
-            if((bytes_read = zip_fread(file_zip, copy_buf, COPY_BUF_SIZE)) == -1)
+            bytes_read = zip_fread(file_zip, copy_buf, COPY_BUF_SIZE);
+            if( bytes_read == -1)
             {
 				zip_error_t ziperr;
 				zip_error_init_with_code(&ziperr,err);
@@ -155,12 +158,20 @@ bool Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
 				msg = msg + file_stat.name + "'";
 				throw core::Exception(msg,__FILE__,__LINE__);
 			}
-            if(bytes_read > 0) write(file_fd, copy_buf, bytes_read);
+			if( bytes_read > COPY_BUF_SIZE)
+            {
+				zip_error_t ziperr;
+				zip_error_init_with_code(&ziperr,err);
+				std::string msg = "Se excedio el buffer de datos '" ;
+				msg = msg + file_stat.name + "'";
+				throw core::Exception(msg,__FILE__,__LINE__);
+			}
+            if(bytes_read > 0) fwrite(&copy_buf,bytes_read,1,file_out);
         }
         while(bytes_read > 0);
 
         zip_fclose(file_zip);
-        close(file_fd);
+        fclose(file_out);
     }
     zip_close(zipper);
 

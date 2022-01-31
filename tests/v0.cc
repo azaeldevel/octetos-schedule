@@ -12,7 +12,7 @@
 #include <chrono>
 #include <csignal>
 #include <filesystem>
-
+#include <fstream>
 
 #include <Packing.hh>
 #include <Project.hh>
@@ -259,11 +259,11 @@ void time_devel()
 
 void zip_devel()
 {
-    std::filesystem::path oring_file = "../../tests/schedule/project";
+    std::filesystem::path oring_directory = "../../tests/schedule";
+    std::filesystem::path oring_project = oring_directory / "project";
     std::filesystem::path compressed_directory = "compress";
     std::filesystem::path compressed_file = compressed_directory / "project.sche";
     std::filesystem::path extracted_file = compressed_directory / "project.extract";
-    std::filesystem::path path_origin = oring_file;
     /*std::cout << "lexically_normal : " << path_origin.lexically_normal() << "\n";
     std::cout << "parent_path : " << path_origin.parent_path() << "\n";
     std::cout << "root_directory : " << path_origin.root_directory() << "\n";
@@ -281,7 +281,7 @@ void zip_devel()
 
 	oct::pack::Zip zip;
 	if(not std::filesystem::exists(compressed_directory)) std::filesystem::create_directory(compressed_directory);
-	zip.compress(oring_file,compressed_file);
+	zip.compress(oring_project,compressed_file);
 
 	if(std::filesystem::exists(compressed_file))
     {
@@ -297,6 +297,55 @@ void zip_devel()
 	if(not std::filesystem::exists(extracted_file)) std::filesystem::create_directory(extracted_file);
 	//std::cout << "extracted_file = " << extracted_file << "\n";
     zip.extract(compressed_file,extracted_file);
+
+    //comparando resultado
+    std::cout << "\n";
+    std::fstream origin_stream, extracted_stream;
+    char string_origin[256], string_extracted[256];
+    unsigned int line;
+	for (auto const& dir_entry : std::filesystem::directory_iterator{oring_project})
+    {
+        origin_stream.open(dir_entry.path());
+        if(origin_stream.is_open())
+        {
+            CU_ASSERT(true);
+        }
+        else
+        {
+            CU_ASSERT(false);
+        }
+        if(extracted_stream.is_open())
+        {
+            CU_ASSERT(true);
+        }
+        else
+        {
+            CU_ASSERT(false);
+        }
+        extracted_stream.open(extracted_file/dir_entry.path().filename());
+        std::cout << "Procesando : " << dir_entry << "\n";
+        line = 0;
+        while(not origin_stream.eof())
+        {
+            line++;
+            origin_stream.getline(string_origin,256);
+            extracted_stream.getline(string_extracted,256);
+            if(strcmp(string_origin,string_extracted) == 0)
+            {
+                CU_ASSERT(true);
+            }
+            else
+            {
+                std::cout << "Origin : " << dir_entry << "\n";
+                std::cout << "\tString : -->" << string_origin << "<--\n";
+                std::cout << "Extracted : " << extracted_file/dir_entry.path().filename() << "\n";
+                std::cout << "\tString : -->" << string_extracted << "<--\n";
+                std::cout << "\n";
+                CU_ASSERT(false);
+            }
+        }
+        std::cout << "\n";
+    }
 
 }
 

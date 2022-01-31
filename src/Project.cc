@@ -5,8 +5,10 @@
 #include <string.h>
 #if defined(__GNUC__) && defined(__linux__)
     #include <octetos/core/Exception.hh>
+    #define MK_TEMP_DIR mkdtemp
 #elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
     #include <Exception.hh>
+    #define MK_TEMP_DIR mktemp
 #else
     #error "Pltaforma desconocida"
 #endif
@@ -31,7 +33,7 @@ bool Project::open(const std::filesystem::path& project, const std::filesystem::
 	project_filename_temp = std::filesystem::temp_directory_path()/"XXXXXX";
 	char* temple_project_filename_temp = (char*)malloc(project_filename_temp.string().size() + 1);
 	strcpy(temple_project_filename_temp,project_filename_temp.string().c_str());
-	char *str_project_filename_temp = mkdtemp(temple_project_filename_temp);
+	char *str_project_filename_temp = MK_TEMP_DIR(temple_project_filename_temp);
 	if(not str_project_filename_temp)
 	{
         std::string msg = "Fallo la creacion de directorio temporal ";
@@ -39,6 +41,9 @@ bool Project::open(const std::filesystem::path& project, const std::filesystem::
         throw oct::core::Exception(msg,__FILE__,__LINE__);
     }
     project_filename_temp = str_project_filename_temp;
+#if defined(_WIN32) || defined(_WIN64)
+    std::filesystem::create_directory(project_filename_temp);
+#endif
     if(not std::filesystem::exists(project_filename_temp))
     {
         std::string msg = "No se encontro el directorio temporal ";
