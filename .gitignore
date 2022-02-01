@@ -30,3 +30,4 @@ schedule.ui
 tests/compress
 schedule.depend
 logs
+src/resources.c

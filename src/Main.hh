@@ -28,6 +28,7 @@
 #include "schedule.hh"
 
 using namespace oct::ec::sche;
+
 namespace sche
 {
 
@@ -43,11 +44,12 @@ namespace sche
 	class Analyzer : public Gtk::Dialog
 	{
 	public:
-		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
+		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade,Enviroment*);
 		
 	private:
 		const Glib::RefPtr<Gtk::Builder>& builder;
 		Gtk::ProgressBar* pb_main_pregress;
+		Enviroment* enviroment;
 	};
 
 	class Main : public Gtk::Window
@@ -57,7 +59,8 @@ namespace sche
 		/**
 		*
 		**/
-		Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);		
+		Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);	
+		~Main();	
 		bool on_button_press(GdkEventButton* event);		
 		const char* titleWindow()const;
 		const char* systemName()const;

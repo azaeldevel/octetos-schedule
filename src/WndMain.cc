@@ -24,7 +24,7 @@ AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builde
 	
 }
 
-Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Dialog(cobject), builder(refGlade)
+Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade,Enviroment*) : Gtk::Dialog(cobject), builder(refGlade)
 {
 	
 }
@@ -41,6 +41,10 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 	bt_main_analize->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_analize_clicked));
 	
 	evprog = NULL;
+}
+Main::~Main()
+{
+	delete evprog;
 }
 const char* Main::titleWindow()const
 {
@@ -98,8 +102,17 @@ void Main::on_bt_main_open_clicked()
 void Main::on_bt_main_analize_clicked()
 {
 	dlg_analyzer = 0;
-	builder->get_widget_derived("dlg_analyzer", dlg_analyzer);
-	int response = dlg_analyzer->run();
+	if(evprog)
+	{
+		builder->get_widget_derived("dlg_analyzer", dlg_analyzer,evprog);
+		int response = dlg_analyzer->run();
+	}
+	else
+	{
+		Gtk::MessageDialog dialog(*this, "Informacion incompleta",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+  		dialog.set_secondary_text("Es necesario abrir el proyecto antes comenzar el analizis");
+  		dialog.run();
+	}
 }
 
 }
