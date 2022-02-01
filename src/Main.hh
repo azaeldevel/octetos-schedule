@@ -25,7 +25,9 @@
 
 #include <gtkmm.h>
 
+#include "schedule.hh"
 
+using namespace oct::ec::sche;
 namespace sche
 {
 
@@ -59,17 +61,19 @@ namespace sche
 		bool on_button_press(GdkEventButton* event);		
 		const char* titleWindow()const;
 		const char* systemName()const;
-		//carga de gui no gestionadna por glade
 		
 	protected:
 		void on_bt_main_open_clicked();
 		void on_bt_main_analize_clicked();
+		
 	private:
 		const Glib::RefPtr<Gtk::Builder> builder;
 		Gtk::ToolButton* bt_main_open;
 		Gtk::ToolButton* bt_main_analize;
-		Gtk::Statusbar* status_bar;
 		Analyzer* dlg_analyzer;
+		Enviroment* evprog;
+		std::filesystem::path project_path;
+		std::filesystem::path result_path;
 	};
 
 }

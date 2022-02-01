@@ -299,12 +299,13 @@ void zip_devel()
     zip.extract(compressed_file,extracted_file);
 
     //comparando resultado
-    std::cout << "\n";
+    //std::cout << "\n";
     std::fstream origin_stream, extracted_stream;
     char string_origin[256], string_extracted[256];
     unsigned int line;
 	for (auto const& dir_entry : std::filesystem::directory_iterator{oring_project})
     {
+    
         origin_stream.open(dir_entry.path());
         if(origin_stream.is_open())
         {
