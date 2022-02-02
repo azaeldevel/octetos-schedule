@@ -2934,6 +2934,7 @@ namespace oct::ec::sche
 		std::filesystem::path fn;
 		for(const ClassRoom& cr : *this)
 		{
+			std::cout << "Open Schedule : " << fn << "\n";
 			fn = dir / std::filesystem::path(cr[0].group->name + ".csv");
 			//std::cout << "Open Schedule : " << fn << "\n";
 			out_csv.open(fn);

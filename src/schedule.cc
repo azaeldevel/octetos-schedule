@@ -62,8 +62,8 @@ namespace oct::ec::sche
 		{
 			const Configuration& config = ((Enviroment*)env)->get_data().config;
 
-			std::filesystem::path dir = config.get_out_directory() / std::to_string(env->getIterationActual()) / std::to_string(getID());
-
+			std::filesystem::path dir = env->getLogDirectory() / std::to_string(env->getIterationActual()) / std::to_string(getID());
+			std::cout << "dir : " << dir << "\n";
 			std::filesystem::create_directory(dir);
 			save_csv(config,dir);
 			if(env->getIterationActual() < 100) jump_saver = 10;
@@ -185,6 +185,7 @@ void Enviroment::init(const std::filesystem::path& in_dir)
 	//GAMMA = 1.0/real(SCHEDULE_MAX_HOURS * CRITERION);
 	//epsilon = 1.0 / real(std::pow(data.groups.get_list().size() * data.groups.get_max_lessons() * Single::WEEK_HOURS,2) * CRITERION);
 	echoPrecision = 20;
+	create_session();
 }
 
 void Enviroment::initial()

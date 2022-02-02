@@ -25,6 +25,9 @@
 
 #include <gtkmm.h>
 
+#include "schedule.hh"
+
+using namespace oct::ec::sche;
 
 namespace sche
 {
@@ -41,11 +44,19 @@ namespace sche
 	class Analyzer : public Gtk::Dialog
 	{
 	public:
-		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
+		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade,Enviroment*);
 		
+	protected:
+		void on_bt_ok_clicked();
 	private:
+		//
+		bool update_progress(int);
+
+		//
 		const Glib::RefPtr<Gtk::Builder>& builder;
 		Gtk::ProgressBar* pb_main_pregress;
+		Enviroment* evprog;
+		Gtk::Button* bt_ok;
 	};
 
 	class Main : public Gtk::Window
@@ -55,21 +66,24 @@ namespace sche
 		/**
 		*
 		**/
-		Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);		
+		Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);	
+		~Main();	
 		bool on_button_press(GdkEventButton* event);		
 		const char* titleWindow()const;
 		const char* systemName()const;
-		//carga de gui no gestionadna por glade
 		
 	protected:
 		void on_bt_main_open_clicked();
 		void on_bt_main_analize_clicked();
+		
 	private:
 		const Glib::RefPtr<Gtk::Builder> builder;
 		Gtk::ToolButton* bt_main_open;
 		Gtk::ToolButton* bt_main_analize;
-		Gtk::Statusbar* status_bar;
-		Analyzer* dlg_analyzer;
+		Analyzer* dlgAnalyzer;
+		Enviroment* evprog;
+		std::filesystem::path project_path;
+		std::filesystem::path result_path;
 	};
 
 }

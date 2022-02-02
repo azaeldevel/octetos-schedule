@@ -98,8 +98,8 @@ int main(int argc, const char* argv[])
             std::cout << "Opcion desconocida : " << argv[i] << "\n";
         }
     }
-        
-        
+  	
+  	
     if(mode == Mode::USER or mode == Mode::DEVELOP)
     {
         std::cout << "Schedule Directory : " << schedule_directory << "\n";
