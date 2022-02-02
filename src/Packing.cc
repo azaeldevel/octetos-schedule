@@ -130,7 +130,6 @@ bool Zip::extract(const std::filesystem::path& source,const std::filesystem::pat
         file_out = fopen(filename.string().c_str(), "w");
 		if(not file_out)
 		{
-			zip_error_t ziperr;
 			std::string msg = "Fallo al leer el elemento '";
 			msg += file_stat.name;
 			msg += "'";

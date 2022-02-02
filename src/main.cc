@@ -52,7 +52,12 @@ int main (int argc, char *argv[])
 	Glib::RefPtr<Gtk::Builder> builder;
 	try
 	{
-		builder = Gtk::Builder::create_from_resource("/sche/schedule.ui");
+
+		#if defined(CODEBLOCK_IDE)
+            builder = Gtk::Builder::create_from_file(UI_FILE);
+        #else
+            builder = Gtk::Builder::create_from_resource("/sche/schedule.ui");
+        #endif // defined
 	}
 	catch (const Glib::FileError & ex)
 	{
