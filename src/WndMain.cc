@@ -24,10 +24,6 @@ AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builde
 	
 }
 
-Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade,Enviroment*) : Gtk::Dialog(cobject), builder(refGlade)
-{
-	
-}
 
 
 Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder(refGlade)
@@ -90,7 +86,9 @@ void Main::on_bt_main_open_clicked()
 	
 	if(not project_path.empty() and not result_path.empty())
 	{
-		evprog = new Enviroment(project_path,project_path,project_path);
+		evprog = new Enviroment(result_path,project_path,result_path);
+		evprog->stopperMinSolutions(1);
+		std::cout << "Enviroment created\n";
 	}
 	else
 	{
@@ -101,11 +99,11 @@ void Main::on_bt_main_open_clicked()
 }
 void Main::on_bt_main_analize_clicked()
 {
-	dlg_analyzer = 0;
+	dlgAnalyzer = 0;
 	if(evprog)
 	{
-		builder->get_widget_derived("dlg_analyzer", dlg_analyzer,evprog);
-		int response = dlg_analyzer->run();
+		builder->get_widget_derived("dlgAnalyzer", dlgAnalyzer,evprog);
+		int response = dlgAnalyzer->run();
 	}
 	else
 	{
