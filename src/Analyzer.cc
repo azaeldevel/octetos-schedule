@@ -6,9 +6,19 @@ namespace sche
 
 	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL)
 	{
-		bt_ok = 0;
-		builder->get_widget("bt_Analyzer_OK", bt_ok);
-		bt_ok->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_ok_clicked));
+		bt_apply = 0;
+		builder->get_widget("bt_Analyzer_Apply", bt_apply);
+		bt_apply->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_apply_clicked));
+				
+		bt_stop = 0;
+		builder->get_widget("bt_Analyzer_Stop", bt_stop);
+		bt_stop->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_stop_clicked));
+		bt_stop->set_sensitive(false);
+		
+		bt_close = 0;
+		builder->get_widget("bt_Analyzer_Close", bt_close);
+		bt_close->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_close_clicked));
+		
 		pg_evprog = 0;
 		builder->get_widget("pg_evprog", pg_evprog);
 	}
@@ -25,7 +35,7 @@ namespace sche
         ((Enviroment*)obj)->run();
         //std::cout << "Step th_run : 2\n";
     }
-	void Analyzer::on_bt_ok_clicked()
+	void Analyzer::on_bt_apply_clicked()
 	{
 		/*
 		auto update_progress = [this]() -> bool
@@ -44,9 +54,23 @@ namespace sche
 		run_evprog = new std::thread(th_run,evprog);
 		//std::cout << "Step 4\n";
 		//evprog->run();
-		bt_ok->set_sensitive(false);
+		bt_apply->set_sensitive(false);
+		bt_close->set_sensitive(false);
+		bt_stop->set_sensitive(true);
 	}
 
+	void Analyzer::on_bt_stop_clicked()
+	{
+		evprog->stop();
+		bt_apply->set_sensitive(true);
+		bt_close->set_sensitive(true);
+	}
+	
+	void Analyzer::on_bt_close_clicked()
+	{
+		close();
+	}
+	
 	bool Analyzer::update_progress(int )
 	{
 		if(evprog->isRunning())
@@ -55,8 +79,8 @@ namespace sche
 			std::string str_display;
 
 			progress = evprog->getProgress();
-			progress = round(double(1000000) * progress);
-			progress /= double(1000000);
+			progress = round(double(100000000) * progress);
+			progress /= double(100000000);
 			percen = progress * double(100);
 			str_display = std::to_string(percen) + "%";
 			pg_evprog->set_fraction(progress);
@@ -70,4 +94,6 @@ namespace sche
 
 		return true;
 	}
+	
+	
 }

@@ -16,11 +16,13 @@
             <property name="can-focus">False</property>
             <property name="layout-style">end</property>
             <child>
-              <object class="GtkButton">
-                <property name="label" translatable="yes">button</property>
+              <object class="GtkButton" id="bt_Analyzer_Stop">
+                <property name="label">gtk-stop</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -29,18 +31,34 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="bt_Analyzer_OK">
-                <property name="label">gtk-ok</property>
-                <property name="name">bt_Analyzer_OK</property>
+              <object class="GtkButton" id="bt_Analyzer_Apply">
+                <property name="label">gtk-apply</property>
+                <property name="name">bt_Analyzer_Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="bt_Analyzer_Close">
+                <property name="label">gtk-close</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
@@ -57,7 +75,7 @@
             <child>
               <object class="GtkProgressBar" id="pg_evprog">
                 <property name="name">pg_evprog</property>
-                <property name="width-request">293</property>
+                <property name="width-request">408</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="text" translatable="yes">Analizando..</property>
@@ -74,8 +92,8 @@
                 <property name="height-request">80</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Se recomienda que se ejecute en un computadora 
-dedicada, ya que el analisis puede durar dias</property>
+                <property name="label" translatable="yes">Se recomienda que se ejecute en un computadora dedicada, ya que el 
+analisis puede durar dias</property>
               </object>
               <packing>
                 <property name="x">7</property>
