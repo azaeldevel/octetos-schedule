@@ -42,7 +42,6 @@ namespace sche
 		AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
 	};
 
-	void th_run(void* obj);
 	class Analyzer : public Gtk::Dialog
 	{
 	public:
@@ -56,10 +55,10 @@ namespace sche
 
 		//
 		const Glib::RefPtr<Gtk::Builder>& builder;
-		Gtk::ProgressBar* pb_main_pregress;
 		Enviroment* evprog;
 		Gtk::Button* bt_ok;
 		std::thread* run_evprog;
+		Gtk::ProgressBar* pg_evprog;
 	};
 
 	class Main : public Gtk::Window
