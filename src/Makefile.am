@@ -30,8 +30,8 @@ ec_schedule_SOURCES = ec-schedule.cc
 ec_schedule_LDFLAGS = 
 ec_schedule_LDADD = liboctetos-schedule.la
 
-$(top_srcdir)/src/resources.c : $(top_srcdir)/src/resources.xml $(top_srcdir)/src/schedule.ui
-	cd $(top_srcdir)/src && glib-compile-resources --target=resources.c --generate-source $(top_srcdir)/src/resources.xml
+$(top_builddir)/src/resources.c : $(top_srcdir)/src/resources.xml $(top_srcdir)/src/schedule.ui
+	cd $(top_builddir)/src && glib-compile-resources --target=resources.c --generate-source $(top_srcdir)/src/resources.xml
 
 EXTRA_DIST = $(ui_DATA)
 
