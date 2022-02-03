@@ -22,7 +22,7 @@ liboctetos_schedule_la_LIBADD = $(OCTETOS_SCHEDULE_LIBS)
 
 bin_PROGRAMS = ec-schedule schedule
 
-schedule_SOURCES = main.cc WndMain.cc resources.c Analyzer.cc
+schedule_SOURCES = main.cc WndMain.cc $(top_builddir)/src/resources.c Analyzer.cc
 schedule_LDFLAGS = $(OCTETOS_SCHEDULE_CFLAGS) 
 schedule_LDADD = $(OCTETOS_SCHEDULE_LIBS) liboctetos-schedule.la
 
@@ -31,7 +31,7 @@ ec_schedule_LDFLAGS =
 ec_schedule_LDADD = liboctetos-schedule.la
 
 $(top_builddir)/src/resources.c : $(top_srcdir)/src/resources.xml $(top_srcdir)/src/schedule.ui
-	cd $(top_builddir)/src && glib-compile-resources --target=resources.c --generate-source $(top_srcdir)/src/resources.xml
+	glib-compile-resources --target=$(top_builddir)/src/resources.c --generate-source $(top_srcdir)/src/resources.xml
 
 EXTRA_DIST = $(ui_DATA)
 
