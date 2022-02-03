@@ -49,8 +49,24 @@ namespace sche
 
 	bool Analyzer::update_progress(int )
 	{
-		std::cout << "Progress : " << evprog->getProgress() << "\n";
-		pg_evprog->set_fraction(evprog->getProgress());
+		if(evprog->isRunning())
+		{
+			double progress,percen;
+			std::string str_display;
+
+			progress = evprog->getProgress();
+			progress = round(double(1000000) * progress);
+			progress /= double(1000000);
+			percen = progress * double(100);
+			str_display = std::to_string(percen) + "%";
+			pg_evprog->set_fraction(progress);
+			pg_evprog->set_text(str_display);
+		}
+		else
+		{
+			pg_evprog->set_fraction(0);
+			pg_evprog->set_text("Analisis Fase 1..");
+		}
 
 		return true;
 	}

@@ -57,15 +57,29 @@
             <child>
               <object class="GtkProgressBar" id="pg_evprog">
                 <property name="name">pg_evprog</property>
+                <property name="width-request">293</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="fraction">0.29999999999999999</property>
                 <property name="text" translatable="yes">Analizando..</property>
                 <property name="show-text">True</property>
               </object>
               <packing>
-                <property name="x">69</property>
-                <property name="y">78</property>
+                <property name="x">10</property>
+                <property name="y">10</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="width-request">100</property>
+                <property name="height-request">80</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Se recomienda que se ejecute en un computadora 
+dedicada, ya que el analisis puede durar dias</property>
+              </object>
+              <packing>
+                <property name="x">7</property>
+                <property name="y">36</property>
               </packing>
             </child>
           </object>
