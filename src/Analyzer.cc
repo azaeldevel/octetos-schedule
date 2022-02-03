@@ -21,13 +21,6 @@ namespace sche
     }
 	void Analyzer::on_bt_ok_clicked()
 	{
-		/*auto update_progress = [this]() -> bool
-		{
-			std::cout << "Progress : " << evprog->getProgress() << "\n";
-			pb_main_pregress->set_fraction(evprog->getProgress());
-			return true;
-		};*/
-		//sigc::slot<bool> tslot = sigc::ptr_fun(&update_progress);
 		sigc::slot<bool()> slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
 		Glib::signal_timeout().connect(slot, 1000);
 		run_evprog = new std::thread(th_run,&evprog);
