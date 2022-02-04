@@ -1,7 +1,7 @@
 
 
 schedir = $(pkgdatadir)/sche
-sche_DATA = schedule.ui schedule.png sche.desktop
+sche_DATA = schedule.ui $(top_builddir)/src/schedule.png sche.desktop
 
 
 AM_CPPFLAGS = \
@@ -38,6 +38,6 @@ EXTRA_DIST = $(sche_DATA)
 
 # Remove ui directory on uninstall
 uninstall-local:
-	-rm -r $(uidir)
+	-rm -r $(schedir)
 	-rm -r $(pkgdatadir)
 
