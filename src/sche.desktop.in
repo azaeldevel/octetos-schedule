@@ -2,8 +2,8 @@
 Name=Schedule
 GenericName=sche
 Type=Application
-Comment=Generacion de Horaios Escolar
-Icon=@prefix@/shere/sche/schedule.png
-Exec=@prefix@/bin/schedule %F
+Comment=Generacion de Horarios Escolar
+Icon=schedule.png
+Exec=schedule %F
 Terminal=false
-Categories=Development;
+Categories=Office;
