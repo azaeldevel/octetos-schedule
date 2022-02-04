@@ -1,7 +1,7 @@
 
 
-uidir = $(pkgdatadir)/ui
-ui_DATA = schedule.ui
+schedir = $(pkgdatadir)/sche
+sche_DATA = schedule.ui schedule.png sche.desktop
 
 
 AM_CPPFLAGS = \
@@ -33,7 +33,8 @@ ec_schedule_LDADD = liboctetos-schedule.la
 $(top_builddir)/src/resources.c : $(top_srcdir)/src/resources.xml $(top_srcdir)/src/schedule.ui
 	glib-compile-resources --target=$(top_builddir)/src/resources.c --generate-source $(top_srcdir)/src/resources.xml
 
-EXTRA_DIST = $(ui_DATA)
+EXTRA_DIST = $(sche_DATA)
+
 
 # Remove ui directory on uninstall
 uninstall-local:

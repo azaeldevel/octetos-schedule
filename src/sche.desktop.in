@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Schedule
+GenericName=sche
+Type=Application
+Comment=Generacion de Horaios Escolar
+Icon=@prefix@/shere/sche/schedule.png
+Exec=@prefix@/bin/schedule %F
+Terminal=false
+Categories=Development;

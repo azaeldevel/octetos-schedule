@@ -36,15 +36,11 @@ namespace sche
         //std::cout << "Step th_run : 2\n";
     }
 	void Analyzer::on_bt_apply_clicked()
-	{
-		/*
-		auto update_progress = [this]() -> bool
+	{		
+		/*auto th_run = [&evprog]() mutable
 		{
-			std::cout << "Progress : " << evprog->getProgress() << "\n";
-			pb_main_pregress->set_fraction(evprog->getProgress());
-			return true;
-		};
-		*/
+			evprog->run();
+		};*/		
 		//sigc::slot<bool> tslot = sigc::ptr_fun(&update_progress);
 		//std::cout << "Step 1\n";
 		sigc::slot<bool()> slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
