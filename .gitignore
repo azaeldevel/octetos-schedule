@@ -22,8 +22,6 @@ src/Makefile.in
 test-driver
 .vs
 Output
-*.ico
-*.png
 .objs
 bin
 schedule.ui

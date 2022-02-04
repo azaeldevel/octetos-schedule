@@ -1,7 +1,7 @@
 
 
 schedir = $(pkgdatadir)/sche
-sche_DATA = schedule.ui $(top_builddir)/src/schedule.png sche.desktop
+sche_DATA = schedule.ui schedule.png sche.desktop
 
 
 AM_CPPFLAGS = \
