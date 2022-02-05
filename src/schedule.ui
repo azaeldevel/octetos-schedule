@@ -150,7 +150,20 @@ analisis puede durar dias</property>
                 <property name="tooltip-text" translatable="yes">Iniciar proceso de analisis</property>
                 <property name="label" translatable="yes">Analizar</property>
                 <property name="use-underline">True</property>
-                <property name="icon-name">application-x-executable</property>
+                <property name="stock-id">gtk-execute</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="bt_main_new">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Nuevo</property>
+                <property name="use-underline">True</property>
+                <property name="stock-id">gtk-new</property>
               </object>
               <packing>
                 <property name="expand">False</property>
