@@ -4,7 +4,7 @@ AC_INIT(octetos-schedule, 0.12.6-alpha, azael.devel@gmail.com)
 
 AC_CONFIG_HEADERS([config.h])
 
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE = subdir-objects
 
 
 AM_SILENT_RULES([yes])

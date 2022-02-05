@@ -22,34 +22,16 @@ namespace sche
 		pg_evprog = 0;
 		builder->get_widget("pg_evprog", pg_evprog);
 	}
-	/*
-	bool update_progress()
-	{
 
-		return true;
-	}
-	*/
 	void th_run(void* obj)
 	{
-		//std::cout << "Step th_run : 1\n";
         ((Enviroment*)obj)->run();
-        //std::cout << "Step th_run : 2\n";
     }
 	void Analyzer::on_bt_apply_clicked()
-	{		
-		/*auto th_run = [&evprog]() mutable
-		{
-			evprog->run();
-		};*/		
-		//sigc::slot<bool> tslot = sigc::ptr_fun(&update_progress);
-		//std::cout << "Step 1\n";
+	{
 		sigc::slot<bool()> slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
-		//std::cout << "Step 2\n";
 		Glib::signal_timeout().connect(slot, 1000);
-		//std::cout << "Step 3\n";
 		run_evprog = new std::thread(th_run,evprog);
-		//std::cout << "Step 4\n";
-		//evprog->run();
 		bt_apply->set_sensitive(false);
 		bt_close->set_sensitive(false);
 		bt_stop->set_sensitive(true);
@@ -90,6 +72,8 @@ namespace sche
 
 		return true;
 	}
+	
+	
 	
 	
 }

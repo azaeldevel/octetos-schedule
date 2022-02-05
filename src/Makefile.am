@@ -29,8 +29,12 @@ ec_schedule_SOURCES = ec-schedule.cc
 ec_schedule_LDFLAGS = 
 ec_schedule_LDADD = liboctetos-schedule.la
 
-$(top_builddir)/src/resources.c : $(top_srcdir)/src/resources.xml $(top_srcdir)/src/schedule.ui
-	glib-compile-resources --target=$(top_builddir)/src/resources.c --generate-source $(top_srcdir)/src/resources.xml
+$(top_srcdir)/src/resources.c : $(top_srcdir)/src/resources.xml $(top_srcdir)/src/schedule.ui $(top_srcdir)/src/schedule.png
+	glib-compile-resources --target=$(top_srcdir)/src/resources.c --generate-source $(top_srcdir)/src/resources.xml
+
+$(top_srcdir)/src/schedule.png : $(top_srcdir)/src/schedule.svg
+	rsvg-convert $(top_srcdir)/src/schedule.svg -w 256 -h 256 -f png -o $(top_srcdir)/src/schedule.png
+
 
 EXTRA_DIST = schedule.ui schedule.png sche.desktop
 

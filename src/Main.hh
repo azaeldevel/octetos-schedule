@@ -75,6 +75,7 @@ namespace sche
 		**/
 		Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
 		~Main();
+
 		bool on_button_press(GdkEventButton* event);
 		const char* titleWindow()const;
 		const char* systemName()const;
