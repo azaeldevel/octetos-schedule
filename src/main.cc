@@ -52,7 +52,6 @@ int main (int argc, char *argv[])
 	Glib::RefPtr<Gtk::Builder> builder;
 	try
 	{
-
 		#if defined(CODEBLOCK_IDE)
             builder = Gtk::Builder::create_from_file(UI_FILE);
         #else

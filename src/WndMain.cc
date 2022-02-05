@@ -21,7 +21,7 @@ namespace sche
 
 AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) :  Gtk::AboutDialog(cobject), builder(refGlade)
 {
-	
+
 }
 
 
@@ -29,14 +29,26 @@ AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builde
 Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder(refGlade)
 {
 	set_title(titleWindow());
-	
+
 	builder->get_widget("bt_main_open", bt_main_open);
 	bt_main_open->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_open_clicked));
-	
+
 	builder->get_widget("bt_main_analize", bt_main_analize);
 	bt_main_analize->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_analize_clicked));
-	
+
 	evprog = NULL;
+
+#if defined(__linux__)
+
+#elif (defined(_WIN32) || defined(_WIN64))
+    #if defined(CODEBLOCKS_IDE)
+        set_icon_name("src/schedule.ico");
+    #else
+
+    #endif
+#else
+        #error "Pltaforma desconocida"
+#endif
 }
 Main::~Main()
 {
@@ -55,7 +67,7 @@ void Main::on_bt_main_open_clicked()
 {
 	char* tmpfilename;
 	GtkWidget *dialog;
-	
+
 	dialog = gtk_file_chooser_dialog_new("Seleccione directorio de Proyecto",NULL,GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,"_Cancel",GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
 	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
 	{
@@ -64,12 +76,12 @@ void Main::on_bt_main_open_clicked()
 		gtk_widget_destroy (dialog);
 		project_path = tmpfilename;
 		g_free (tmpfilename);
-	}  
+	}
 	else
 	{
 		gtk_widget_destroy (dialog);
 	}
-		
+
 	dialog = gtk_file_chooser_dialog_new("Seleccione directorio de Resultado",NULL,GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,"_Cancel",GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
 	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
 	{
@@ -78,12 +90,12 @@ void Main::on_bt_main_open_clicked()
 		gtk_widget_destroy (dialog);
 		result_path = tmpfilename;
 		g_free (tmpfilename);
-	} 
+	}
 	else
 	{
 		gtk_widget_destroy (dialog);
 	}
-	
+
 	if(not project_path.empty() and not result_path.empty())
 	{
 		evprog = new Enviroment(result_path,project_path,result_path);

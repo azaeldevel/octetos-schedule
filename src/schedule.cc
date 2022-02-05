@@ -185,6 +185,7 @@ void Enviroment::init(const std::filesystem::path& in_dir)
 	//GAMMA = 1.0/real(SCHEDULE_MAX_HOURS * CRITERION);
 	//epsilon = 1.0 / real(std::pow(data.groups.get_list().size() * data.groups.get_max_lessons() * Single::WEEK_HOURS,2) * CRITERION);
 	echoPrecision = 20;
+	maxMutation = 4;
 	create_session();
 }
 

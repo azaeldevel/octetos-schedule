@@ -1,7 +1,7 @@
 !include "MUI.nsh"
 
 !define NAME "sche"
-!define VERSION "0.11.0-1"
+!define VERSION "0.13.0-alpha1"
 !define PUBLISHER "Azael Reyes Inc."
 !define WEBSITE "https://github.com/azaeldevel/octetos-schedule.git"
 
@@ -38,12 +38,12 @@ LangString Uninstall ${LANG_SPANISH} "Desintalador"
 Section
   SetOutPath $INSTDIR\
     
-  File bin\Debug\ec-schedule.exe
-  File bin\Debug\schedule.exe
-  File bin\Debug\libgcc_s_seh-1.dll
-  File bin\Debug\octetos-core.dll
-  File bin\Debug\octetos-EC.dll
-  File bin\Debug\octetos-schedule.dll
+  File bin\Release\ec-schedule.exe
+  File bin\Release\schedule.exe
+  File bin\Release\libgcc_s_seh-1.dll
+  File bin\Release\octetos-core.dll
+  File bin\Release\octetos-EC.dll
+  File bin\Release\octetos-schedule.dll
   File src\ec-schedule.bat
   File schedule.ico
   File src\schedule.ui
