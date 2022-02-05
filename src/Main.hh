@@ -48,7 +48,10 @@ namespace sche
 		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade,Enviroment*);
 
 	protected:
-		void on_bt_ok_clicked();
+		void on_bt_apply_clicked();
+		void on_bt_stop_clicked();
+		void on_bt_close_clicked();
+
 	private:
 		//
 		bool update_progress(int);
@@ -56,7 +59,9 @@ namespace sche
 		//
 		const Glib::RefPtr<Gtk::Builder>& builder;
 		Enviroment* evprog;
-		Gtk::Button* bt_ok;
+		Gtk::Button* bt_apply;
+		Gtk::Button* bt_stop;
+		Gtk::Button* bt_close;
 		std::thread* run_evprog;
 		Gtk::ProgressBar* pg_evprog;
 	};
@@ -70,6 +75,7 @@ namespace sche
 		**/
 		Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
 		~Main();
+
 		bool on_button_press(GdkEventButton* event);
 		const char* titleWindow()const;
 		const char* systemName()const;

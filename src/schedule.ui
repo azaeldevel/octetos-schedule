@@ -16,11 +16,13 @@
             <property name="can-focus">False</property>
             <property name="layout-style">end</property>
             <child>
-              <object class="GtkButton">
-                <property name="label" translatable="yes">button</property>
+              <object class="GtkButton" id="bt_Analyzer_Stop">
+                <property name="label">gtk-stop</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -29,18 +31,34 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="bt_Analyzer_OK">
-                <property name="label">gtk-ok</property>
-                <property name="name">bt_Analyzer_OK</property>
+              <object class="GtkButton" id="bt_Analyzer_Apply">
+                <property name="label">gtk-apply</property>
+                <property name="name">bt_Analyzer_Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="bt_Analyzer_Close">
+                <property name="label">gtk-close</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
@@ -57,15 +75,29 @@
             <child>
               <object class="GtkProgressBar" id="pg_evprog">
                 <property name="name">pg_evprog</property>
+                <property name="width-request">408</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="fraction">0.29999999999999999</property>
                 <property name="text" translatable="yes">Analizando..</property>
                 <property name="show-text">True</property>
               </object>
               <packing>
-                <property name="x">69</property>
-                <property name="y">78</property>
+                <property name="x">10</property>
+                <property name="y">10</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="width-request">100</property>
+                <property name="height-request">80</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Se recomienda que se ejecute en un computadora dedicada, ya que el 
+analisis puede durar dias</property>
+              </object>
+              <packing>
+                <property name="x">7</property>
+                <property name="y">36</property>
               </packing>
             </child>
           </object>
@@ -85,6 +117,7 @@
     <property name="title" translatable="yes">Horarios - Octetos</property>
     <property name="default-width">500</property>
     <property name="default-height">400</property>
+    <property name="icon">sche/schedule.png</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -117,7 +150,20 @@
                 <property name="tooltip-text" translatable="yes">Iniciar proceso de analisis</property>
                 <property name="label" translatable="yes">Analizar</property>
                 <property name="use-underline">True</property>
-                <property name="icon-name">application-x-executable</property>
+                <property name="stock-id">gtk-execute</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="bt_main_new">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Nuevo</property>
+                <property name="use-underline">True</property>
+                <property name="stock-id">gtk-new</property>
               </object>
               <packing>
                 <property name="expand">False</property>

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Schedule
+GenericName=sche
+Type=Application
+Comment=Generacion de Horarios Escolar
+Icon=schedule.png
+Exec=schedule %F
+Terminal=false
+Categories=Office;

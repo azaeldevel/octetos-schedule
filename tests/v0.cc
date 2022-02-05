@@ -304,8 +304,7 @@ void zip_devel()
     char string_origin[256], string_extracted[256];
     unsigned int line;
 	for (auto const& dir_entry : std::filesystem::directory_iterator{oring_project})
-    {
-    
+    {    
         origin_stream.open(dir_entry.path());
         if(origin_stream.is_open())
         {
