@@ -64,23 +64,24 @@ namespace sche
 			progress /= double(100000000);
 			percen = progress * double(100);
 			str_display = std::to_string(percen) + "%";
-			for(;count < 5; count++)
+			if(count < 6)
             {
+                count++;
                 switch(count)
                 {
-                case 0:
+                case 1:
                     str_display += ".";
                     break;
-                case 1:
+                case 2:
                     str_display += "..";
                     break;
-                case 2:
+                case 3:
                     str_display += "...";
                     break;
-                case 3:
+                case 4:
                     str_display += "....";
                     break;
-                case 4:
+                case 5:
                     str_display += ".....";
                     count = 0;
                     break;
