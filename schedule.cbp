@@ -14,9 +14,16 @@
 				<Compiler>
 					<Add option="-g  `pkg-config gtkmm-3.0 --cflags`" />
 					<Add option="-DCODEBLOCK" />
+					<Add directory="../core/src" />
+					<Add directory="../EC/src" />
+					<Add directory="src" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config gtkmm-3.0 --libs`" />
+					<Add library="octetos-core" />
+					<Add library="octetos-EC" />
+					<Add library="octetos-schedule" />
+					<Add directory="bin/Debug" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='cmd /c COPY /Y &quot;C:\msys64\mingw64\bin\libgcc_s_seh-1.dll&quot; bin\Debug' />
@@ -25,23 +32,28 @@
 					<Add before="cmd /c copy /y src\schedule.ui schedule.ui" />
 				</ExtraCommands>
 			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/schedule" prefix_auto="1" extension_auto="1" />
+			<Target title="liboctetos-schedule-r">
+				<Option output="bin/Release/octetos-schedule" imp_lib="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs/Release/" />
-				<Option type="0" />
+				<Option type="3" />
 				<Option compiler="msys2_x86_64_gcc" />
 				<Compiler>
 					<Add option="-O2 `pkg-config gtkmm-3.0 --cflags`" />
 					<Add option="-DCODEBLOCK" />
+					<Add directory="../core/src" />
+					<Add directory="../EC/src" />
+					<Add directory="src" />
 				</Compiler>
 				<Linker>
-					<Add option="-s `pkg-config gtkmm-3.0 --libs`" />
+					<Add option="`pkg-config libconfig++ --libs`" />
+					<Add option="`pkg-config libzip --libs`" />
+					<Add library="octetos-core" />
+					<Add library="octetos-EC" />
+					<Add directory="bin/Release" />
 				</Linker>
 				<ExtraCommands>
-					<Add before='cmd /c COPY /Y &quot;C:\msys64\mingw64\bin\libgcc_s_seh-1.dll&quot; bin\Debug' />
-					<Add before="cmd /c copy /y ..\core\bin\Debug\octetos-core.dll bin\Debug\" />
-					<Add before="cmd /c copy /y ..\EC\bin\Debug\octetos-EC.dll bin\Debug\" />
-					<Add before="cmd /c copy /y ..\EC\bin\Debug\ec-schedule.exe bin\Debug\cmd /c copy /y src\schedule.ui schedule.ui" />
+					<Add before="cmd /c copy /y ..\core\bin\Release\octetos-core.dll bin\Release\" />
+					<Add before="cmd /c copy /y ..\EC\bin\Release\octetos-EC.dll bin\Release\" />
 				</ExtraCommands>
 			</Target>
 			<Target title="ec-schedule-dbg">
@@ -49,7 +61,6 @@
 				<Option object_output=".objs/Debug/" />
 				<Option type="1" />
 				<Option compiler="msys2_x86_64_gcc" />
-				<Option parameters="C:\Users\Azael\Desktop\project.sche C:\Users\Azael\Desktop\logs\schedule" />
 				<Compiler>
 					<Add directory="../core/src" />
 					<Add directory="../EC/src" />
@@ -84,7 +95,53 @@
 					<Add before="cmd /c copy /y ..\EC\bin\Debug\octetos-EC.dll bin\Debug\" />
 				</ExtraCommands>
 			</Target>
-			<Target title="tests-v0">
+			<Target title="tests-v0-dbg">
+				<Option output="bin/Debug/tests-v0" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug/" />
+				<Option object_output=".objs/Debug/" />
+				<Option type="1" />
+				<Option compiler="msys2_x86_64_gcc" />
+				<Option parameters="C:\Users\Azael\Desktop\project.sche C:\Users\Azael\Desktop\logs\schedule" />
+				<Compiler>
+					<Add directory="../core/src" />
+					<Add directory="../EC/src" />
+					<Add directory="src" />
+				</Compiler>
+				<Linker>
+					<Add option="`pkg-config cunit --libs`" />
+					<Add library="octetos-core" />
+					<Add library="octetos-EC" />
+					<Add library="octetos-schedule" />
+					<Add directory="bin/Debug" />
+				</Linker>
+			</Target>
+			<Target title="schedule-r">
+				<Option output="bin/Release/schedule" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/bin/Release/" />
+				<Option type="0" />
+				<Option compiler="msys2_x86_64_gcc" />
+				<Compiler>
+					<Add option="-g  `pkg-config gtkmm-3.0 --cflags`" />
+					<Add option="-DCODEBLOCK" />
+					<Add directory="../core/src" />
+					<Add directory="../EC/src" />
+					<Add directory="src" />
+				</Compiler>
+				<Linker>
+					<Add option="`pkg-config gtkmm-3.0 --libs`" />
+					<Add library="octetos-core" />
+					<Add library="octetos-EC" />
+					<Add library="octetos-schedule" />
+					<Add directory="bin/Release" />
+				</Linker>
+				<ExtraCommands>
+					<Add before='cmd /c COPY /Y &quot;C:\msys64\mingw64\bin\libgcc_s_seh-1.dll&quot; bin\Debug' />
+					<Add before="cmd /c copy /y ..\core\bin\Debug\octetos-core.dll bin\Debug\" />
+					<Add before="cmd /c copy /y ..\EC\bin\Debug\octetos-EC.dll bin\Debug\" />
+					<Add before="cmd /c copy /y src\schedule.ui schedule.ui" />
+				</ExtraCommands>
+			</Target>
+			<Target title="tests-v0-r">
 				<Option output="bin/Debug/tests-v0" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/Debug/" />
 				<Option object_output=".objs/Debug/" />
@@ -114,52 +171,68 @@
 			<Add library="kernel32" />
 			<Add library="comctl32" />
 		</Linker>
+		<Unit filename="src/Analyzer.cc">
+			<Option target="schedule-r" />
+			<Option target="schedule-dbg" />
+		</Unit>
 		<Unit filename="src/Packing.cc">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="src/Packing.hh">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="src/Project.cc">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="src/Project.hh">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="src/WndMain.cc">
 			<Option target="schedule-dbg" />
-			<Option target="Release" />
+			<Option target="schedule-r" />
 		</Unit>
 		<Unit filename="src/ec-schedule.cc">
 			<Option target="ec-schedule-dbg" />
 		</Unit>
 		<Unit filename="src/main.cc">
 			<Option target="schedule-dbg" />
-			<Option target="Release" />
+			<Option target="schedule-r" />
 		</Unit>
 		<Unit filename="src/schedule-data.cc">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="src/schedule-data.hh">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="src/schedule-eval.cc">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="src/schedule-output.cc">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="src/schedule.cc">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="src/schedule.hh">
 			<Option target="liboctetos-schedule-dbg" />
+			<Option target="liboctetos-schedule-r" />
 		</Unit>
 		<Unit filename="tests/v0-schedule.cc">
-			<Option target="tests-v0" />
+			<Option target="tests-v0-dbg" />
+			<Option target="tests-v0-r" />
 		</Unit>
 		<Unit filename="tests/v0.cc">
-			<Option target="tests-v0" />
+			<Option target="tests-v0-dbg" />
+			<Option target="tests-v0-r" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
