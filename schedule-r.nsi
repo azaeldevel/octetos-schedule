@@ -1,7 +1,7 @@
 !include "MUI.nsh"
 
 !define NAME "sche"
-!define VERSION "0.13.0-alpha1"
+!define VERSION "0.13.1-alpha1"
 !define PUBLISHER "Azael Reyes Inc."
 !define WEBSITE "https://github.com/azaeldevel/octetos-schedule.git"
 
@@ -13,7 +13,7 @@
 !insertmacro VersionCompare
 
 Name "Schedule (Octetos)"
-OutFile "bin\Debug\Installer-${NAME}-${VERSION}.exe"
+OutFile "bin\Release\Installer-${NAME}-${VERSION}.exe"
 RequestExecutionLevel admin
 SetCompressor bzip2
 InstallDir $PROGRAMFILES64\${NAME}

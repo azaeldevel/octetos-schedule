@@ -9,18 +9,20 @@ namespace sche
 		bt_apply = 0;
 		builder->get_widget("bt_Analyzer_Apply", bt_apply);
 		bt_apply->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_apply_clicked));
-				
+
 		bt_stop = 0;
 		builder->get_widget("bt_Analyzer_Stop", bt_stop);
 		bt_stop->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_stop_clicked));
 		bt_stop->set_sensitive(false);
-		
+
 		bt_close = 0;
 		builder->get_widget("bt_Analyzer_Close", bt_close);
 		bt_close->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_close_clicked));
-		
+
 		pg_evprog = 0;
 		builder->get_widget("pg_evprog", pg_evprog);
+
+		count = 0;
 	}
 
 	void th_run(void* obj)
@@ -43,14 +45,15 @@ namespace sche
 		bt_apply->set_sensitive(true);
 		bt_close->set_sensitive(true);
 	}
-	
+
 	void Analyzer::on_bt_close_clicked()
 	{
 		close();
 	}
-	
+
 	bool Analyzer::update_progress(int )
 	{
+
 		if(evprog->isRunning())
 		{
 			double progress,percen;
@@ -61,6 +64,28 @@ namespace sche
 			progress /= double(100000000);
 			percen = progress * double(100);
 			str_display = std::to_string(percen) + "%";
+			for(;count < 5; count++)
+            {
+                switch(count)
+                {
+                case 0:
+                    str_display += ".";
+                    break;
+                case 1:
+                    str_display += "..";
+                    break;
+                case 2:
+                    str_display += "...";
+                    break;
+                case 3:
+                    str_display += "....";
+                    break;
+                case 4:
+                    str_display += ".....";
+                    count = 0;
+                    break;
+                }
+            }
 			pg_evprog->set_fraction(progress);
 			pg_evprog->set_text(str_display);
 		}
@@ -72,8 +97,8 @@ namespace sche
 
 		return true;
 	}
-	
-	
-	
-	
+
+
+
+
 }

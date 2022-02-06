@@ -64,6 +64,7 @@ namespace sche
 		Gtk::Button* bt_close;
 		std::thread* run_evprog;
 		Gtk::ProgressBar* pg_evprog;
+		unsigned int count;
 	};
 
 	class Main : public Gtk::Window

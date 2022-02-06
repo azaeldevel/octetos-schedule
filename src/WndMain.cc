@@ -37,17 +37,12 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 	bt_main_analize->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_analize_clicked));
 
 	evprog = NULL;
-
-#if defined(__linux__)
-
-#elif (defined(_WIN32) || defined(_WIN64))
-    #if defined(CODEBLOCKS_IDE)
+#if defined(_WIN32) || defined(_WIN64)
+    #if defined(DEBUG)
         set_icon_name("src/schedule.ico");
     #else
-
+        set_icon_name("schedule.ico");
     #endif
-#else
-        #error "Pltaforma desconocida"
 #endif
 }
 Main::~Main()
