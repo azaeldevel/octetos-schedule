@@ -45,7 +45,8 @@ namespace sche
 	class Analyzer : public Gtk::Dialog
 	{
 	public:
-		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade,Enviroment*);
+		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade,Enviroment* const);
+		~Analyzer();
 
 	protected:
 		void on_bt_apply_clicked();
@@ -58,7 +59,7 @@ namespace sche
 
 		//
 		const Glib::RefPtr<Gtk::Builder>& builder;
-		Enviroment* evprog;
+		Enviroment* const evprog;
 		Gtk::Button* bt_apply;
 		Gtk::Button* bt_stop;
 		Gtk::Button* bt_close;

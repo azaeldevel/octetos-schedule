@@ -425,7 +425,10 @@ namespace oct::ec::sche
 		int get_begin_day() const;
 		real get_hours_sigma()const;
 		const std::filesystem::path& get_out_directory()const;
-		unsigned int get_trys()const;
+		unsigned int get_max_population()const;
+		unsigned int get_max_progenitor()const;
+		unsigned int get_mutable_prob()const;
+		unsigned int get_max_mutation()const;
 
 		/**
 		*\brief Agrega a la hora indicada, la cantidad de horas indicas y coloca el resultado el variable de retorno
@@ -455,7 +458,11 @@ namespace oct::ec::sche
 		//FormatDT format;
 		real hours_sigma;
 		std::filesystem::path out_dir;
-		unsigned int trys;
+		//unsigned int trys;
+		real mutable_prob;
+		unsigned int max_mutation;
+		Population max_population;
+		Population max_progenitor;
 	public:
 		static const std::string formats_dt_hour;
 		static const std::string formats_dt_day_hour;

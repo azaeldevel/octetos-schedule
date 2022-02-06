@@ -20,6 +20,7 @@ public:
 	std::filesystem::path open(const std::filesystem::path& project_filename);
 	bool run();
 	bool save(const std::filesystem::path& source,const std::filesystem::path& destino);
+	bool create(const std::filesystem::path& destino);
 	
 private:
     std::filesystem::path project_filename_temp;

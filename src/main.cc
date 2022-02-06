@@ -20,11 +20,11 @@
 #include <gtkmm.h>
 #include <iostream>
 
-#if defined(__GNUG__) && defined(__linux__) && !defined(CODEBLOCK_IDE)
+#if defined(__linux__) && !defined(CODEBLOCK_IDE)
     #include "config.h"
-#elif defined(__GNUG__) && (defined(_WIN32) || defined(_WIN64))
+#elif (defined(_WIN32) || defined(_WIN64))
 
-#elif defined(__GNUG__) && defined(__linux__) && defined(CODEBLOCK_IDE)
+#elif defined(__linux__) && defined(CODEBLOCK_IDE)
 
 #else
 	#error "Pltaforma desconocida"
@@ -56,9 +56,9 @@ int main (int argc, char *argv[])
             builder = Gtk::Builder::create_from_resource("/sche/schedule.ui");
         #elif  defined(_WIN32) || defined(_WIN64)
             #if defined(DEBUG)
-                builder = Gtk::Builder::create_from_file("src/schedule.ui");
+           	builder = Gtk::Builder::create_from_file("src/schedule.ui");
             #else
-                builder = Gtk::Builder::create_from_file("schedule.ui");
+          	builder = Gtk::Builder::create_from_file("schedule.ui");
             #endif
         #endif
 	}

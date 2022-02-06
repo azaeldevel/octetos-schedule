@@ -46,8 +46,8 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 #endif
 }
 Main::~Main()
-{
-	delete evprog;
+{	
+	if(not evprog) delete evprog;
 }
 const char* Main::titleWindow()const
 {
