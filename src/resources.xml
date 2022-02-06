@@ -2,6 +2,6 @@
 <gresources>
   	<gresource prefix="sche">
   		<file preprocess="xml-stripblanks">schedule.ui</file>
-		<file>schedule.png</file>
+		<file>schedule.ico</file>
 	</gresource>
 </gresources>

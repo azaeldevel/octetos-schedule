@@ -23,6 +23,7 @@ namespace sche
 		builder->get_widget("pg_evprog", pg_evprog);
 
 		count = 0;
+		stoped = false;
 	}
 
 	void th_run(void* obj)
@@ -37,6 +38,7 @@ namespace sche
 		bt_apply->set_sensitive(false);
 		bt_close->set_sensitive(false);
 		bt_stop->set_sensitive(true);
+		stoped = false;
 	}
 
 	void Analyzer::on_bt_stop_clicked()
@@ -44,6 +46,7 @@ namespace sche
 		evprog->stop();
 		bt_apply->set_sensitive(true);
 		bt_close->set_sensitive(true);
+		stoped = true;
 	}
 
 	void Analyzer::on_bt_close_clicked()
@@ -53,7 +56,6 @@ namespace sche
 
 	bool Analyzer::update_progress(int )
 	{
-
 		if(evprog->isRunning())
 		{
 			double progress,percen;
@@ -70,16 +72,16 @@ namespace sche
                 switch(count)
                 {
                 case 1:
-                    str_display += ".";
+                    str_display += ".    ";
                     break;
                 case 2:
-                    str_display += "..";
+                    str_display += "..   ";
                     break;
                 case 3:
-                    str_display += "...";
+                    str_display += "...  ";
                     break;
                 case 4:
-                    str_display += "....";
+                    str_display += ".... ";
                     break;
                 case 5:
                     str_display += ".....";
@@ -89,6 +91,16 @@ namespace sche
             }
 			pg_evprog->set_fraction(progress);
 			pg_evprog->set_text(str_display);
+		}
+		else if(evprog->getSolutions().size() > 0)
+		{
+			Gtk::MessageDialog dialog(*this, "Operacion completada");
+  			dialog.set_secondary_text("Se encontro la(s) soluciones requeridadas");
+  			dialog.run();
+		}
+		else if(stoped)
+		{
+			pg_evprog->set_text("Detenido...");
 		}
 		else
 		{

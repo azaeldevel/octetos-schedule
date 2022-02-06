@@ -92,8 +92,8 @@
                 <property name="height-request">80</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Se recomienda que se ejecute en un computadora dedicada, ya que el 
-analisis puede durar dias</property>
+                <property name="label" translatable="yes">Se recomienda que se ejecute en un computadora dedicada, 
+ya que el analisis puede durar dias</property>
               </object>
               <packing>
                 <property name="x">7</property>
@@ -117,7 +117,7 @@ analisis puede durar dias</property>
     <property name="title" translatable="yes">Horarios - Octetos</property>
     <property name="default-width">500</property>
     <property name="default-height">400</property>
-    <property name="icon">sche/schedule.png</property>
+    <property name="icon">sche/schedule.ico</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>

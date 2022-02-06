@@ -65,6 +65,8 @@ namespace sche
 		std::thread* run_evprog;
 		Gtk::ProgressBar* pg_evprog;
 		unsigned int count;
+		bool stoped;
+		
 	};
 
 	class Main : public Gtk::Window
