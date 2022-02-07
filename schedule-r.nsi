@@ -1,7 +1,7 @@
 !include "MUI.nsh"
 
 !define NAME "sche"
-!define VERSION "0.13.1-alpha2"
+!define VERSION "0.16.0-alpha1"
 !define PUBLISHER "Azael Reyes Inc."
 !define WEBSITE "https://github.com/azaeldevel/octetos-schedule.git"
 
@@ -45,8 +45,6 @@ Section
   File bin\Release\octetos-EC.dll
   File bin\Release\octetos-schedule.dll
   File src\ec-schedule.bat
-  File schedule.ico
-  File src\schedule.ui
   
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   

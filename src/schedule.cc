@@ -146,7 +146,7 @@ void Enviroment::init(const std::filesystem::path& in_dir)
 {
 	mutableProb = data.config.get_mutable_prob();
 	maxMutation = data.config.get_max_mutation();
-		
+
 	if(not in_dir.empty())
 	{
 		//input_directory = in_dir;
@@ -187,7 +187,7 @@ void Enviroment::init(const std::filesystem::path& in_dir)
 	//epsilon = 1.0 / real(std::pow(data.groups.get_list().size() * data.groups.get_max_lessons() * Single::WEEK_HOURS,2) * CRITERION);
 	echoPrecision = 20;
 	create_session();
-	prediction = true;
+	//prediction = true;
 }
 
 void Enviroment::initial()

@@ -3,7 +3,7 @@
 	<tchar.h>
 	<windows.h>
 
-1644113545 source:c:\users\azael\documents\develop\octetos\schedule\src\main.cc
+1644274135 source:c:\users\azael\documents\develop\octetos\schedule\src\main.cc
 	<gtkmm.h>
 	<iostream>
 	"config.h"
@@ -7280,16 +7280,16 @@
 	<sigc++/sigc++.h>
 	<gtkmm/scalebutton.h>
 
-1644166355 c:\users\azael\documents\develop\octetos\schedule\src\main.hh
+1644272788 c:\users\azael\documents\develop\octetos\schedule\src\main.hh
 	<gtkmm.h>
 	<thread>
 	"schedule.hh"
 
-1644105942 source:c:\users\azael\documents\develop\octetos\schedule\src\wndmain.cc
+1644272788 source:c:\users\azael\documents\develop\octetos\schedule\src\wndmain.cc
 	<iostream>
 	"Main.hh"
 
-1643840878 source:c:\users\azael\documents\develop\octetos\schedule\src\schedule-data.cc
+1644272788 source:c:\users\azael\documents\develop\octetos\schedule\src\schedule-data.cc
 	<sstream>
 	<fstream>
 	<iostream>
@@ -7306,14 +7306,14 @@
 1643506543 c:\users\azael\documents\develop\octetos\schedule\src\schedule.hh
 	"schedule-data.hh"
 
-1643502314 c:\users\azael\documents\develop\octetos\schedule\src\schedule-data.hh
+1644272788 c:\users\azael\documents\develop\octetos\schedule\src\schedule-data.hh
 	<map>
 	<ctime>
 	<execinfo.h>
 	<octetos/EC/ec.hh>
 	<ec.hh>
 
-1644098821 c:\users\azael\documents\develop\octetos\ec\src\ec.hh
+1644272580 c:\users\azael\documents\develop\octetos\ec\src\ec.hh
 	<list>
 	<string>
 	<vector>
@@ -7358,7 +7358,7 @@
 1643324815 source:c:\users\azael\documents\develop\octetos\schedule\src\schedule-output.cc
 	"schedule-data.hh"
 
-1644100854 source:c:\users\azael\documents\develop\octetos\schedule\src\schedule.cc
+1644274715 source:c:\users\azael\documents\develop\octetos\schedule\src\schedule.cc
 	<iomanip>
 	<typeinfo>
 	<typeindex>
@@ -7401,13 +7401,13 @@
 	"schedule.hh"
 	"Packing.hh"
 
-1631618036 c:\msys64\mingw64\include\zip.h
+1641483099 c:\msys64\mingw64\include\zip.h
 	<zipconf.h>
 	<stdio.h>
 	<sys/types.h>
 	<time.h>
 
-1631618036 c:\msys64\mingw64\include\zipconf.h
+1641483099 c:\msys64\mingw64\include\zipconf.h
 	<inttypes.h>
 
 1643595839 source:c:\users\azael\documents\develop\octetos\schedule\tests\v0-schedule.cc
@@ -7440,16 +7440,17 @@
 	<Packing.hh>
 	<Project.hh>
 
-1644098586 c:\users\azael\documents\develop\octetos\schedule\src\project.hh
+1644272788 c:\users\azael\documents\develop\octetos\schedule\src\project.hh
 	<string>
 	"schedule.hh"
 	"Packing.hh"
 
-1643670153 source:c:\users\azael\documents\develop\octetos\schedule\src\project.cc
+1644273717 source:c:\users\azael\documents\develop\octetos\schedule\src\project.cc
 	<stdlib.h>
 	<unistd.h>
 	<stdio.h>
 	<string.h>
+	<fstream>
 	<octetos/core/Exception.hh>
 	<Exception.hh>
 	"Project.hh"
@@ -7462,6 +7463,15 @@
 	<windows.h>
 	<shlobj.h>
 
-1644115722 source:c:\users\azael\documents\develop\octetos\schedule\src\analyzer.cc
+1644274694 source:c:\users\azael\documents\develop\octetos\schedule\src\analyzer.cc
 	"Main.hh"
+
+1621089904 c:\msys64\mingw64\include\libconfig.h++
+	<stdio.h>
+	<exception>
+	<string>
+
+1644274715 source:c:\users\azael\documents\develop\octetos\schedule\src\resources.c
+	<gio/gio.h>
+	<stdlib.h>
 
