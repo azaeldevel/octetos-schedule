@@ -187,6 +187,7 @@ void Enviroment::init(const std::filesystem::path& in_dir)
 	//epsilon = 1.0 / real(std::pow(data.groups.get_list().size() * data.groups.get_max_lessons() * Single::WEEK_HOURS,2) * CRITERION);
 	echoPrecision = 20;
 	create_session();
+	prediction = true;
 }
 
 void Enviroment::initial()

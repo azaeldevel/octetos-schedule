@@ -67,6 +67,7 @@ namespace sche
 		Gtk::ProgressBar* pg_evprog;
 		unsigned int count;
 		bool stoped;
+		Gtk::Label* lb_prediction;
 		
 	};
 
