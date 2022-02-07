@@ -10,6 +10,14 @@
 namespace sche
 {
 
+class TemporaryDirectory
+{
+public:
+	const std::filesystem::path& create();
+	const std::filesystem::path& get_path()const;
+private:
+	std::filesystem::path path_temp;
+};
 class Project
 {
 public:
@@ -17,13 +25,14 @@ public:
     ~Project();
 
 
-	std::filesystem::path open(const std::filesystem::path& project_filename);
+	const std::filesystem::path& open(const std::filesystem::path& project_filename);
 	bool run();
 	bool save(const std::filesystem::path& source,const std::filesystem::path& destino);
 	bool create(const std::filesystem::path& destino);
 	
 private:
-    std::filesystem::path project_filename_temp;
+    //std::filesystem::path project_filename_temp;
+	TemporaryDirectory project_filename_temp;
 };
 
 

@@ -19,6 +19,42 @@
 namespace sche
 {
 
+const std::filesystem::path& TemporaryDirectory::create()
+{
+	path_temp = std::filesystem::temp_directory_path()/"XXXXXX";
+	char* temple_path_temp = (char*)malloc(path_temp.string().size() + 1);
+	strcpy(temple_path_temp,path_temp.string().c_str());
+	char *str_path_temp = MK_TEMP_DIR(temple_path_temp);
+	if(not str_path_temp)
+	{
+        std::string msg = "Fallo la creacion de directorio temporal ";
+        msg += path_temp.string();
+        throw oct::core::Exception(msg,__FILE__,__LINE__);
+    }
+    path_temp = str_path_temp;
+#if defined(_WIN32) || defined(_WIN64)
+    std::filesystem::create_directory(project_filename_temp);
+#endif
+    if(not std::filesystem::exists(path_temp))
+    {
+        std::string msg = "No se encontro el directorio temporal ";
+        msg += path_temp.string();
+        throw oct::core::Exception(msg,__FILE__,__LINE__);
+    }
+    free(str_path_temp);
+    return path_temp;
+}
+
+const std::filesystem::path& TemporaryDirectory::get_path()const
+{
+	return path_temp;
+}
+
+
+
+
+
+
 
 Project::Project()
 {
@@ -28,32 +64,12 @@ Project::~Project()
 }
 
 
-std::filesystem::path Project::open(const std::filesystem::path& project)
+const std::filesystem::path& Project::open(const std::filesystem::path& project)
 {
-	project_filename_temp = std::filesystem::temp_directory_path()/"XXXXXX";
-	char* temple_project_filename_temp = (char*)malloc(project_filename_temp.string().size() + 1);
-	strcpy(temple_project_filename_temp,project_filename_temp.string().c_str());
-	char *str_project_filename_temp = MK_TEMP_DIR(temple_project_filename_temp);
-	if(not str_project_filename_temp)
-	{
-        std::string msg = "Fallo la creacion de directorio temporal ";
-        msg += project_filename_temp.string();
-        throw oct::core::Exception(msg,__FILE__,__LINE__);
-    }
-    project_filename_temp = str_project_filename_temp;
-#if defined(_WIN32) || defined(_WIN64)
-    std::filesystem::create_directory(project_filename_temp);
-#endif
-    if(not std::filesystem::exists(project_filename_temp))
-    {
-        std::string msg = "No se encontro el directorio temporal ";
-        msg += project_filename_temp.string();
-        throw oct::core::Exception(msg,__FILE__,__LINE__);
-    }
-    free(temple_project_filename_temp);
+	project_filename_temp.create();
 
 	oct::pack::Zip zip;
-	zip.extract(project,project_filename_temp);
+	zip.extract(project,project_filename_temp.get_path());
 	/*for (auto const& dir_entry : std::filesystem::directory_iterator{project_filename_temp})
     {
         std::cout << "project_filename_temp : " << dir_entry << "\n";
@@ -61,7 +77,7 @@ std::filesystem::path Project::open(const std::filesystem::path& project)
 
     //evprog.init(output,project_filename_temp,output);
 
-    return project_filename_temp;
+    return project_filename_temp.get_path();
 }
 /*bool Project::open(const std::filesystem::path& project, const std::filesystem::path& output,oct::ec::echo echo, unsigned int level,bool create_session)
 {
