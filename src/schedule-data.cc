@@ -2461,17 +2461,18 @@ namespace oct::ec::sche
 
 
 
+	const std::filesystem::path Data::config_fn = "config";
 	Data::Data()
 	{
 	}
-	Data::Data(const std::filesystem::path& in_dir) : config(in_dir/"schedule.cfg")
+	Data::Data(const std::filesystem::path& in_dir) : config(in_dir/config_fn)
 	{
 	}
 	Data::Data(const std::filesystem::path& in_dir,const std::filesystem::path& out_dir)
 	{
-		std::filesystem::path proy_dir= in_dir / "schedule.cfg";
+		std::filesystem::path proy_dir= in_dir/config_fn;
 		config.load_file(proy_dir,out_dir);
-
+		
 		load(in_dir);
 	}
 	const std::map<Data::key_hbs, Data::HBRS>& Data::get_list_hbrs() const
@@ -2485,7 +2486,9 @@ namespace oct::ec::sche
 	void Data::load(const std::filesystem::path& dir)
 	{
         //std::cout << "Data::load\n";
-		config.load_file(dir / "schedule.cfg");
+        std::filesystem::path config_path = dir / config_fn;
+        if(not std::filesystem::exists(config_path)) throw core::Exception("No se encontro el archivo de configuracion en el directorio de projecto",__FILE__,__LINE__);
+		config.load_file(config_path);
 		//TODO:validacion estricta delas entredas
 		((Targets&)teachers) = this;
 		teachers.load_file(dir / "teachers.csv");

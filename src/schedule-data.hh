@@ -467,6 +467,7 @@ namespace oct::ec::sche
 		static const std::string formats_dt_hour;
 		static const std::string formats_dt_day_hour;
 		static const std::string formats_dt_dayn_hour;
+
 	};
 
 	class Target
@@ -770,11 +771,14 @@ namespace oct::ec::sche
 		const std::map<key_hbs, HBRS>& get_list_hbrs() const;
 		const std::map<std::string, Data::HBS>& get_hbs()const;
 
+		//
+		static const std::filesystem::path config_fn; 
 	private:
 		void build();
 	private:
 		std::map<std::string, HBS> hbs_by_subject;
 		std::map<key_hbs, HBRS> hbrs_list;//horas disponible por materia y salon
+
 	};
 
 	struct Lesson

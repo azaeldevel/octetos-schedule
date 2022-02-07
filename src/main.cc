@@ -62,19 +62,27 @@ int main (int argc, char *argv[])
             #endif
         #endif
 	}
-	catch (const Glib::FileError & ex)
+	catch (const Glib::FileError & e)
 	{
-		std::cerr << ex.what() << std::endl;
-		return 1;
+		std::cerr << e.what() << std::endl;
+		return EXIT_FAILURE;
 	}
 
 	//Login* wndLogin = 0;
 	sche::Main* wndMain = 0;
 	builder->get_widget_derived("wndMain", wndMain);
 
-	if (wndMain)
+	try
 	{
-		kit.run(*wndMain);
+		if (wndMain)
+		{
+			kit.run(*wndMain);
+		}
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		return EXIT_FAILURE;
 	}
 
 	return 0;

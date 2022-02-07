@@ -379,6 +379,29 @@ void project_devel()
     {
         CU_ASSERT(false);
     }
+    
+    //
+    sche::Project project2;
+   	if(project2.create())
+   	{
+        CU_ASSERT(true);
+    }
+    else
+    {
+        CU_ASSERT(false);
+    }
+    
+    sche::Temporary project3_tmep;
+    project3_tmep.create_document();
+    sche::Project project3;
+   	if(project3.create(project3_tmep.get_path()))
+   	{
+        CU_ASSERT(true);
+    }
+    else
+    {
+        CU_ASSERT(false);
+    }
 }
 int main(int argc, char *argv[])
 {
