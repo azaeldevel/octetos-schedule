@@ -46,8 +46,8 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 #endif
 }
 Main::~Main()
-{
-	delete evprog;
+{	
+	if(not evprog) delete evprog;
 }
 const char* Main::titleWindow()const
 {
@@ -91,11 +91,21 @@ void Main::on_bt_main_open_clicked()
 		gtk_widget_destroy (dialog);
 	}
 
+	
 	if(not project_path.empty() and not result_path.empty())
 	{
-		evprog = new Enviroment(result_path,project_path,result_path);
+		try
+		{
+			evprog = new Enviroment(result_path,project_path,result_path);
+		}
+		catch(const std::exception& e)
+		{
+			Gtk::MessageDialog dialog(*this, "Error ineperador",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+	  		dialog.set_secondary_text(e.what());
+	  		dialog.run();
+		}
 		evprog->stopperMinSolutions(1);
-		std::cout << "Enviroment created\n";
+		//std::cout << "Enviroment created\n";
 	}
 	else
 	{

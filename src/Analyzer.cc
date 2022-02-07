@@ -4,7 +4,7 @@
 namespace sche
 {
 
-	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL)
+	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* const ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL)
 	{
 		bt_apply = 0;
 		builder->get_widget("bt_Analyzer_Apply", bt_apply);
@@ -18,13 +18,25 @@ namespace sche
 		bt_close = 0;
 		builder->get_widget("bt_Analyzer_Close", bt_close);
 		bt_close->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_close_clicked));
+		
+		lb_prediction = 0;
+		builder->get_widget("lb_Analyzer_prediction", lb_prediction);
 
 		pg_evprog = 0;
 		builder->get_widget("pg_evprog", pg_evprog);
 
 		count = 0;
 		stoped = false;
+		
+		run_evprog = NULL;
 	}
+	
+	Analyzer::~Analyzer()
+	{
+		if(not run_evprog) delete run_evprog;
+	}
+	
+	
 
 	void th_run(void* obj)
 	{
@@ -59,7 +71,7 @@ namespace sche
 		if(evprog->isRunning())
 		{
 			double progress,percen;
-			std::string str_display;
+			std::string str_display,str_predict;
 
 			progress = evprog->getProgress();
 			progress = round(double(100000000) * progress);
@@ -91,6 +103,8 @@ namespace sche
             }
 			pg_evprog->set_fraction(progress);
 			pg_evprog->set_text(str_display);
+			str_predict = std::to_string(evprog->getIterationActual()) + "/" + std::to_string(evprog->getPredictFinally());
+			lb_prediction->set_text(str_predict.c_str());
 		}
 		else if(evprog->getSolutions().size() > 0)
 		{
