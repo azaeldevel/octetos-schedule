@@ -11,11 +11,12 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
-uidir = $(pkgdatadir)
-ui_DATA = schedule.ui schedule.png
 
 desktopdir = /usr/share/applications
 desktop_DATA = sche.desktop
+
+icondir = /usr/share/pixmaps/
+icon_DATA = schedule.png
 
 lib_LTLIBRARIES = liboctetos-schedule.la
 
