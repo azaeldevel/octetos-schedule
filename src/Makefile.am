@@ -11,7 +11,7 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
-uidir = $(pkgdatadir)/ui
+uidir = $(pkgdatadir)
 ui_DATA = schedule.ui schedule.png sche.desktop
 
 
