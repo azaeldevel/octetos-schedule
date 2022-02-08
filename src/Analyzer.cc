@@ -72,7 +72,7 @@ namespace sche
 		{
 			double progress,percen;
 			std::string str_display;
-			std::string str_predict;
+			//std::string str_predict;
 
 			progress = evprog->getProgress();
 			progress = round(double(100000000) * progress);
