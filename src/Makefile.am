@@ -12,8 +12,10 @@ AM_CFLAGS =\
 	 -g
 
 uidir = $(pkgdatadir)
-ui_DATA = schedule.ui schedule.png sche.desktop
+ui_DATA = schedule.ui schedule.png
 
+desktopdir = /usr/share/applications
+desktop_DATA = sche.desktop
 
 lib_LTLIBRARIES = liboctetos-schedule.la
 
@@ -39,7 +41,7 @@ $(top_srcdir)/src/schedule.png : $(top_srcdir)/src/schedule.svg
 	rsvg-convert $(top_srcdir)/src/schedule.svg -w 256 -h 256 -f png -o $(top_srcdir)/src/schedule.png
 
 
-EXTRA_DIST = $(ui_DATA)
+EXTRA_DIST = $(ui_DATA) $(desktop_DATA)
 
 
 # Remove ui directory on uninstall
