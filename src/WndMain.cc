@@ -46,6 +46,10 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 	builder->get_widget("bt_main_save", bt_main_save);
 	bt_main_save->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_save_clicked));
 
+	bt_main_saveas = 0;
+	builder->get_widget("bt_main_saveas", bt_main_saveas);
+	bt_main_saveas->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_saveas_clicked));
+
 	evprog = NULL;
 	set_icon_name("/sche/schedule.ico");
 	project_saved = true;
@@ -163,6 +167,58 @@ void Main::on_bt_main_save_clicked()
 	}
 	
 	//
+	if(project_path.empty())
+	{
+		GtkWidget * dialog = gtk_file_chooser_dialog_new("Guardar",NULL,GTK_FILE_CHOOSER_ACTION_SAVE,"_Cancel",GTK_RESPONSE_CANCEL, "_Guardar", GTK_RESPONSE_ACCEPT, NULL);
+		if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+		{
+			char* tmpfilename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER (dialog));
+			gtk_widget_destroy (dialog);
+			project_path = tmpfilename;
+			g_free(tmpfilename);
+			gtk_widget_destroy (dialog);
+		}
+		else
+		{
+			gtk_widget_destroy (dialog);
+			return;
+		}
+	}
+	if(std::filesystem::exists(project_path))
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo existen",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_YES_NO);
+	  	dialog.set_secondary_text("El archivo inidicado ya existe, Desea sobrescribir?");
+	  	int  ret = dialog.run();
+	  	if(ret == GTK_RESPONSE_YES)
+	  	{
+	  		std::filesystem::remove(project_path);
+	  	}	
+	  	else
+	  	{
+	  		return;
+	  	}
+	}
+	
+	//
+	project->save(project_path);
+	
+	
+	//
+	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string(); 
+	set_title(msg.c_str());
+	project_saved = true;
+}
+void Main::on_bt_main_saveas_clicked()
+{
+	if(not project)
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+	  	dialog.set_secondary_text("No hay archivo abierto");
+	  	dialog.run();	
+	  	return;
+	}
+	
+	//
 	GtkWidget * dialog = gtk_file_chooser_dialog_new("Guardar",NULL,GTK_FILE_CHOOSER_ACTION_SAVE,"_Cancel",GTK_RESPONSE_CANCEL, "_Guardar", GTK_RESPONSE_ACCEPT, NULL);
 	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
 	{
@@ -177,15 +233,27 @@ void Main::on_bt_main_save_clicked()
 		gtk_widget_destroy (dialog);
 		return;
 	}
-	
+	if(std::filesystem::exists(project_path))
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo existen",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_YES_NO);
+	  	dialog.set_secondary_text("El archivo inidicado ya existe, Desea sobrescribir?");
+	  	int  ret = dialog.run();
+	  	if(ret == GTK_RESPONSE_YES)
+	  	{
+	  		std::filesystem::remove(project_path);
+	  	}	
+	  	else
+	  	{
+	  		return;
+	  	}
+	}
+		
 	//
-	project->save(project_path);
-	
+	project->save(project_path);	
 	
 	//
 	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string(); 
 	set_title(msg.c_str());
 	project_saved = true;
-} 
-
+}
 }

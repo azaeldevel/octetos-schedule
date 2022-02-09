@@ -89,7 +89,7 @@ namespace sche
 		void on_bt_main_analize_clicked();
 		void on_bt_main_new_clicked();
 		void on_bt_main_save_clicked();
-		void on_bt_main_save_as_clicked();
+		void on_bt_main_saveas_clicked();
 
 	private:
 		const Glib::RefPtr<Gtk::Builder> builder;
@@ -97,6 +97,7 @@ namespace sche
 		Gtk::ToolButton* bt_main_analize;
 		Gtk::ToolButton* bt_main_new;
 		Gtk::ToolButton* bt_main_save;
+		Gtk::ToolButton* bt_main_saveas;
 		Analyzer* dlgAnalyzer;
 		Enviroment* evprog;
 		Project* project;
