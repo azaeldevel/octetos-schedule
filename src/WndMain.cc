@@ -50,6 +50,10 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 	builder->get_widget("bt_main_saveas", bt_main_saveas);
 	bt_main_saveas->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_saveas_clicked));
 
+	bt_main_close = 0;
+	builder->get_widget("bt_main_close", bt_main_close);
+	bt_main_close->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_close_clicked));
+
 	evprog = NULL;
 	set_icon_name("/sche/schedule.ico");
 	project_saved = true;
@@ -153,11 +157,11 @@ void Main::on_bt_main_new_clicked()
 	
 	std::string msg = std::string(titleWindow()) + " - *";
 	set_title(msg.c_str());
-	project_saved = true;
+	project_saved = false;
 }
 void Main::on_bt_main_save_clicked()
 {
-	if(not project_saved) return;
+	if(project_saved) return;
 	if(not project)
 	{
 		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
@@ -255,5 +259,20 @@ void Main::on_bt_main_saveas_clicked()
 	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string(); 
 	set_title(msg.c_str());
 	project_saved = true;
+}
+void Main::on_bt_main_close_clicked()
+{
+	if(not project_saved)
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_YES_NO);
+	  	dialog.set_secondary_text("Hay un archivo sin guardar, Desea guardarlo antes de continuar?");
+	  	int ret = dialog.run();
+	  	if(ret == GTK_RESPONSE_YES) on_bt_main_save_clicked();
+	}
+	if(not project) return;
+	
+	delete project;
+	project = NULL;
+	set_title(titleWindow());
 }
 }
