@@ -26,24 +26,29 @@ AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builde
 
 
 
-Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder(refGlade)
+Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder(refGlade),project(NULL)
 {
 	set_title(titleWindow());
 
+	bt_main_open = 0;
 	builder->get_widget("bt_main_open", bt_main_open);
 	bt_main_open->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_open_clicked));
 
+	bt_main_analize = 0;
 	builder->get_widget("bt_main_analize", bt_main_analize);
 	bt_main_analize->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_analize_clicked));
 
+	bt_main_new = 0;
+	builder->get_widget("bt_main_new", bt_main_new);
+	bt_main_new->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_new_clicked));
+
+	bt_main_save = 0;
+	builder->get_widget("bt_main_save", bt_main_save);
+	bt_main_save->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_save_clicked));
+
 	evprog = NULL;
-#if defined(_WIN32) || defined(_WIN64)
-    #if defined(DEBUG)
-        set_icon_name("src/schedule.ico");
-    #else
-        set_icon_name("schedule.ico");
-    #endif
-#endif
+	set_icon_name("/sche/schedule.ico");
+	project_saved = true;
 }
 Main::~Main()
 {	
@@ -51,7 +56,7 @@ Main::~Main()
 }
 const char* Main::titleWindow()const
 {
-	return "Schedule - Octetos";
+	return "sche";
 }
 const char* Main::systemName()const
 {
@@ -129,5 +134,58 @@ void Main::on_bt_main_analize_clicked()
   		dialog.run();
 	}
 }
+void Main::on_bt_main_new_clicked()
+{
+	if(project)
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+	  	dialog.set_secondary_text("Hay un archivo abierto, cierre primero antes de continuar.");
+	  	dialog.run();	
+	  	return;
+	}
+	
+	project = new Project();
+	project->create();
+	
+	std::string msg = std::string(titleWindow()) + " - *";
+	set_title(msg.c_str());
+	project_saved = true;
+}
+void Main::on_bt_main_save_clicked()
+{
+	if(not project_saved) return;
+	if(not project)
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+	  	dialog.set_secondary_text("No hay archivo abierto");
+	  	dialog.run();	
+	  	return;
+	}
+	
+	//
+	GtkWidget * dialog = gtk_file_chooser_dialog_new("Guardar",NULL,GTK_FILE_CHOOSER_ACTION_SAVE,"_Cancel",GTK_RESPONSE_CANCEL, "_Guardar", GTK_RESPONSE_ACCEPT, NULL);
+	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+	{
+		char* tmpfilename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER (dialog));
+		gtk_widget_destroy (dialog);
+		project_path = tmpfilename;
+		g_free(tmpfilename);
+		gtk_widget_destroy (dialog);
+	}
+	else
+	{
+		gtk_widget_destroy (dialog);
+		return;
+	}
+	
+	//
+	project->save(project_path);
+	
+	
+	//
+	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string(); 
+	set_title(msg.c_str());
+	project_saved = true;
+} 
 
 }

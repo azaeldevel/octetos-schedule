@@ -19,9 +19,6 @@ namespace sche
 		builder->get_widget("bt_Analyzer_Close", bt_close);
 		bt_close->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_close_clicked));
 
-		lb_prediction = 0;
-		builder->get_widget("lb_Analyzer_prediction", lb_prediction);
-
 		pg_evprog = 0;
 		builder->get_widget("pg_evprog", pg_evprog);
 

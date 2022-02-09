@@ -34,9 +34,9 @@ public:
 	bool create();
 	bool create(const std::filesystem::path& destino);
 	bool create_default_config();
+	bool save(const std::filesystem::path&);
 	
 private:
-    //std::filesystem::path project_filename_temp;
 	Temporary project_filename_temp;
 };
 
