@@ -14,12 +14,12 @@
 
 
 #include "Main.hh"
-
+#include "config.h"
 
 namespace sche
 {
 
-AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) :  Gtk::AboutDialog(cobject), builder(refGlade)
+AboutDialog::AboutDialog(BaseObjectType* o, const Glib::RefPtr<Gtk::Builder>& b) :  Gtk::AboutDialog(o), builder(b)
 {
 
 }
@@ -53,6 +53,10 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 	bt_main_close = 0;
 	builder->get_widget("bt_main_close", bt_main_close);
 	bt_main_close->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_close_clicked));
+
+	bt_main_about = 0;
+	builder->get_widget("bt_main_about", bt_main_about);
+	bt_main_about->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_about_clicked));
 
 	evprog = NULL;
 	set_icon_name("/sche/schedule.ico");
@@ -274,5 +278,20 @@ void Main::on_bt_main_close_clicked()
 	delete project;
 	project = NULL;
 	set_title(titleWindow());
+}
+void Main::on_bt_main_about_clicked()
+{
+	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/sche/schedule.ico", NULL);
+
+  	GtkWidget *dialog = gtk_about_dialog_new();
+  	//gtk_about_dialog_set_name(GTK_ABOUT_DIALOG(dialog), "Schedule");
+  	gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), PACKAGE_VERSION); 
+  	gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog),"(c) Azael Reyes");
+  	gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), "Organizador de horarios Escolar");
+  	gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), "https://github.com/azaeldevel/octetos-schedule.git");
+  	gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog), pixbuf);
+  	g_object_unref(pixbuf), pixbuf = NULL;
+  	gtk_dialog_run(GTK_DIALOG (dialog));
+  	gtk_widget_destroy(dialog);
 }
 }
