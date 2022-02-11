@@ -294,4 +294,6 @@ void Main::on_bt_main_about_clicked()
   	gtk_dialog_run(GTK_DIALOG (dialog));
   	gtk_widget_destroy(dialog);
 }
+
+
 }
