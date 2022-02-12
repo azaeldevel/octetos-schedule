@@ -6,13 +6,15 @@
 #include <string>
 #include <zip.h>
 #include <filesystem>
-/*#if defined(__GNUC__) && defined(__linux__)
+/*
+#if defined(__linux__)
     #include <octetos/core/shell.hh>
-#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
+#elif (defined(_WIN32) || defined(_WIN64))
     #include <shell.hh>
 #else
     #error "Pltaforma desconocida"
-#endif*/
+#endif
+*/
 
 
 namespace oct::pack

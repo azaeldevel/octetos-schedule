@@ -111,14 +111,17 @@ Project::~Project()
 
 const std::filesystem::path& Project::open(const std::filesystem::path& project)
 {
-	if(not project_filename_temp.get_path().empty()) throw oct::core::Exception("El directorio temporal esta ocupa.",__FILE__,__LINE__);
-	
-	project_filename_temp.create_directory();
+	//if(not project_filename_temp.get_path().empty()) throw oct::core::Exception("El directorio temporal esta ocupa.",__FILE__,__LINE__);
 
-	oct::pack::Zip zip;
-	zip.extract(project,project_filename_temp.get_path());
+	//project_filename_temp.create_directory();
 
-    return project_filename_temp.get_path();
+	//oct::pack::Zip zip;
+	//zip.extract(project,project_filename_temp.get_path());
+
+    //return project_filename_temp.get_path();
+
+
+    return project;
 }
 
 /*

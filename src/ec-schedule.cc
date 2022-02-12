@@ -62,6 +62,7 @@ int main(int argc, const char* argv[])
     {
         std::cout << "Eliga el modo de operacion :\n";
         std::cout << "\t\tec-schedule --develop|--local-processes|--project-file";
+        return EXIT_FAILURE;
     }
     Mode mode = Mode::UNKNOW;
     sche::Project* project;
@@ -98,8 +99,7 @@ int main(int argc, const char* argv[])
             std::cout << "Opcion desconocida : " << argv[i] << "\n";
         }
     }
-  	
-  	
+
     if(mode == Mode::USER or mode == Mode::DEVELOP)
     {
         std::cout << "Schedule Directory : " << schedule_directory << "\n";
@@ -108,7 +108,6 @@ int main(int argc, const char* argv[])
 		std::string strid = strDay + "-" + strTime;
 		std::string strlog = "logs/" + strid;
 		log_directory = schedule_directory / strlog;
-
 		project_directory = schedule_directory / "project";
     }
     else if(mode == Mode::COMMAND)

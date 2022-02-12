@@ -37,7 +37,14 @@ namespace sche
 
 	void th_run(void* obj)
 	{
-        ((Enviroment*)obj)->run();
+	    try
+	    {
+            ((Enviroment*)obj)->run();
+        }
+		catch(const std::exception& e)
+		{
+            std::cerr << e.what() << std::endl;
+		}
     }
 	void Analyzer::on_bt_apply_clicked()
 	{
