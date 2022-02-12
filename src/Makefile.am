@@ -12,12 +12,18 @@ AM_CFLAGS =\
 	 -g
 
 
+desktopdir = /usr/share/applications
+desktop_DATA = sche.desktop
+
+icondir = /usr/share/pixmaps/
+icon_DATA = schedule.png
+
 lib_LTLIBRARIES = liboctetos-schedule.la
 
 
 liboctetos_schedule_la_SOURCES = schedule.cc  schedule-data.cc schedule-eval.cc  Packing.cc  Project.cc
 liboctetos_schedule_la_LDFLAGS = $(OCTETOS_SCHEDULE_CFLAGS) 
-liboctetos_schedule_la_LIBADD = $(OCTETOS_SCHEDULE_LIBS)
+liboctetos_schedule_la_LIBADD = $(OCTETOS_SCHEDULE_LIBS) 
 
 bin_PROGRAMS = ec-schedule schedule
 
@@ -36,7 +42,7 @@ $(top_srcdir)/src/schedule.png : $(top_srcdir)/src/schedule.svg
 	rsvg-convert $(top_srcdir)/src/schedule.svg -w 256 -h 256 -f png -o $(top_srcdir)/src/schedule.png
 
 
-EXTRA_DIST = schedule.ui schedule.png sche.desktop
+EXTRA_DIST = $(ui_DATA) $(desktop_DATA)
 
 
 # Remove ui directory on uninstall

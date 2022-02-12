@@ -14,36 +14,53 @@
 
 
 #include "Main.hh"
-
+#include "config.h"
 
 namespace sche
 {
 
-AboutDialog::AboutDialog(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) :  Gtk::AboutDialog(cobject), builder(refGlade)
+AboutDialog::AboutDialog(BaseObjectType* o, const Glib::RefPtr<Gtk::Builder>& b) :  Gtk::AboutDialog(o), builder(b)
 {
 
 }
 
 
 
-Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder(refGlade)
+Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder(refGlade),project(NULL)
 {
 	set_title(titleWindow());
 
+	bt_main_open = 0;
 	builder->get_widget("bt_main_open", bt_main_open);
 	bt_main_open->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_open_clicked));
 
+	bt_main_analize = 0;
 	builder->get_widget("bt_main_analize", bt_main_analize);
 	bt_main_analize->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_analize_clicked));
 
+	bt_main_new = 0;
+	builder->get_widget("bt_main_new", bt_main_new);
+	bt_main_new->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_new_clicked));
+
+	bt_main_save = 0;
+	builder->get_widget("bt_main_save", bt_main_save);
+	bt_main_save->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_save_clicked));
+
+	bt_main_saveas = 0;
+	builder->get_widget("bt_main_saveas", bt_main_saveas);
+	bt_main_saveas->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_saveas_clicked));
+
+	bt_main_close = 0;
+	builder->get_widget("bt_main_close", bt_main_close);
+	bt_main_close->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_close_clicked));
+
+	bt_main_about = 0;
+	builder->get_widget("bt_main_about", bt_main_about);
+	bt_main_about->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_about_clicked));
+
 	evprog = NULL;
-#if defined(_WIN32) || defined(_WIN64)
-    #if defined(DEBUG)
-        set_icon_name("src/schedule.ico");
-    #else
-        set_icon_name("schedule.ico");
-    #endif
-#endif
+	set_icon_name("/sche/schedule.ico");
+	project_saved = true;
 }
 Main::~Main()
 {	
@@ -51,7 +68,7 @@ Main::~Main()
 }
 const char* Main::titleWindow()const
 {
-	return "Schedule - Octetos";
+	return "sche";
 }
 const char* Main::systemName()const
 {
@@ -129,5 +146,154 @@ void Main::on_bt_main_analize_clicked()
   		dialog.run();
 	}
 }
+void Main::on_bt_main_new_clicked()
+{
+	if(project)
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+	  	dialog.set_secondary_text("Hay un archivo abierto, cierre primero antes de continuar.");
+	  	dialog.run();	
+	  	return;
+	}
+	
+	project = new Project();
+	project->create();
+	
+	std::string msg = std::string(titleWindow()) + " - *";
+	set_title(msg.c_str());
+	project_saved = false;
+}
+void Main::on_bt_main_save_clicked()
+{
+	if(project_saved) return;
+	if(not project)
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+	  	dialog.set_secondary_text("No hay archivo abierto");
+	  	dialog.run();	
+	  	return;
+	}
+	
+	//
+	if(project_path.empty())
+	{
+		GtkWidget * dialog = gtk_file_chooser_dialog_new("Guardar",NULL,GTK_FILE_CHOOSER_ACTION_SAVE,"_Cancel",GTK_RESPONSE_CANCEL, "_Guardar", GTK_RESPONSE_ACCEPT, NULL);
+		if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+		{
+			char* tmpfilename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER (dialog));
+			gtk_widget_destroy (dialog);
+			project_path = tmpfilename;
+			g_free(tmpfilename);
+			gtk_widget_destroy (dialog);
+		}
+		else
+		{
+			gtk_widget_destroy (dialog);
+			return;
+		}
+	}
+	if(std::filesystem::exists(project_path))
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo existen",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_YES_NO);
+	  	dialog.set_secondary_text("El archivo inidicado ya existe, Desea sobrescribir?");
+	  	int  ret = dialog.run();
+	  	if(ret == GTK_RESPONSE_YES)
+	  	{
+	  		std::filesystem::remove(project_path);
+	  	}	
+	  	else
+	  	{
+	  		return;
+	  	}
+	}
+	
+	//
+	project->save(project_path);
+	
+	
+	//
+	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string(); 
+	set_title(msg.c_str());
+	project_saved = true;
+}
+void Main::on_bt_main_saveas_clicked()
+{
+	if(not project)
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+	  	dialog.set_secondary_text("No hay archivo abierto");
+	  	dialog.run();	
+	  	return;
+	}
+	
+	//
+	GtkWidget * dialog = gtk_file_chooser_dialog_new("Guardar",NULL,GTK_FILE_CHOOSER_ACTION_SAVE,"_Cancel",GTK_RESPONSE_CANCEL, "_Guardar", GTK_RESPONSE_ACCEPT, NULL);
+	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+	{
+		char* tmpfilename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER (dialog));
+		gtk_widget_destroy (dialog);
+		project_path = tmpfilename;
+		g_free(tmpfilename);
+		gtk_widget_destroy (dialog);
+	}
+	else
+	{
+		gtk_widget_destroy (dialog);
+		return;
+	}
+	if(std::filesystem::exists(project_path))
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo existen",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_YES_NO);
+	  	dialog.set_secondary_text("El archivo inidicado ya existe, Desea sobrescribir?");
+	  	int  ret = dialog.run();
+	  	if(ret == GTK_RESPONSE_YES)
+	  	{
+	  		std::filesystem::remove(project_path);
+	  	}	
+	  	else
+	  	{
+	  		return;
+	  	}
+	}
+		
+	//
+	project->save(project_path);	
+	
+	//
+	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string(); 
+	set_title(msg.c_str());
+	project_saved = true;
+}
+void Main::on_bt_main_close_clicked()
+{
+	if(not project_saved)
+	{
+		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_YES_NO);
+	  	dialog.set_secondary_text("Hay un archivo sin guardar, Desea guardarlo antes de continuar?");
+	  	int ret = dialog.run();
+	  	if(ret == GTK_RESPONSE_YES) on_bt_main_save_clicked();
+	}
+	if(not project) return;
+	
+	delete project;
+	project = NULL;
+	set_title(titleWindow());
+}
+void Main::on_bt_main_about_clicked()
+{
+	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/sche/schedule.ico", NULL);
+
+  	GtkWidget *dialog = gtk_about_dialog_new();
+  	//gtk_about_dialog_set_name(GTK_ABOUT_DIALOG(dialog), "Schedule");
+  	gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), PACKAGE_VERSION); 
+  	gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog),"(c) Azael Reyes");
+  	gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), "Organizador de horarios Escolar");
+  	gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), "https://github.com/azaeldevel/octetos-schedule.git");
+  	gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog), pixbuf);
+  	g_object_unref(pixbuf), pixbuf = NULL;
+  	gtk_dialog_run(GTK_DIALOG (dialog));
+  	gtk_widget_destroy(dialog);
+}
+
 
 }
