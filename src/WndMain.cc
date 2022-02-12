@@ -14,7 +14,14 @@
 
 
 #include "Main.hh"
-#include "config.h"
+
+#if defined(__GNUC__) && defined(__linux__)
+    #include "config.h"
+#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
+
+#else
+    #error "Pltaforma desconocida"
+#endif
 
 namespace sche
 {
@@ -63,7 +70,7 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 	project_saved = true;
 }
 Main::~Main()
-{	
+{
 	if(not evprog) delete evprog;
 }
 const char* Main::titleWindow()const
@@ -108,7 +115,7 @@ void Main::on_bt_main_open_clicked()
 		gtk_widget_destroy (dialog);
 	}
 
-	
+
 	if(not project_path.empty() and not result_path.empty())
 	{
 		try
@@ -152,13 +159,13 @@ void Main::on_bt_main_new_clicked()
 	{
 		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
 	  	dialog.set_secondary_text("Hay un archivo abierto, cierre primero antes de continuar.");
-	  	dialog.run();	
+	  	dialog.run();
 	  	return;
 	}
-	
+
 	project = new Project();
 	project->create();
-	
+
 	std::string msg = std::string(titleWindow()) + " - *";
 	set_title(msg.c_str());
 	project_saved = false;
@@ -170,10 +177,10 @@ void Main::on_bt_main_save_clicked()
 	{
 		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
 	  	dialog.set_secondary_text("No hay archivo abierto");
-	  	dialog.run();	
+	  	dialog.run();
 	  	return;
 	}
-	
+
 	//
 	if(project_path.empty())
 	{
@@ -200,19 +207,19 @@ void Main::on_bt_main_save_clicked()
 	  	if(ret == GTK_RESPONSE_YES)
 	  	{
 	  		std::filesystem::remove(project_path);
-	  	}	
+	  	}
 	  	else
 	  	{
 	  		return;
 	  	}
 	}
-	
+
 	//
 	project->save(project_path);
-	
-	
+
+
 	//
-	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string(); 
+	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string();
 	set_title(msg.c_str());
 	project_saved = true;
 }
@@ -222,10 +229,10 @@ void Main::on_bt_main_saveas_clicked()
 	{
 		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
 	  	dialog.set_secondary_text("No hay archivo abierto");
-	  	dialog.run();	
+	  	dialog.run();
 	  	return;
 	}
-	
+
 	//
 	GtkWidget * dialog = gtk_file_chooser_dialog_new("Guardar",NULL,GTK_FILE_CHOOSER_ACTION_SAVE,"_Cancel",GTK_RESPONSE_CANCEL, "_Guardar", GTK_RESPONSE_ACCEPT, NULL);
 	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
@@ -249,18 +256,18 @@ void Main::on_bt_main_saveas_clicked()
 	  	if(ret == GTK_RESPONSE_YES)
 	  	{
 	  		std::filesystem::remove(project_path);
-	  	}	
+	  	}
 	  	else
 	  	{
 	  		return;
 	  	}
 	}
-		
+
 	//
-	project->save(project_path);	
-	
+	project->save(project_path);
+
 	//
-	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string(); 
+	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string();
 	set_title(msg.c_str());
 	project_saved = true;
 }
@@ -274,7 +281,7 @@ void Main::on_bt_main_close_clicked()
 	  	if(ret == GTK_RESPONSE_YES) on_bt_main_save_clicked();
 	}
 	if(not project) return;
-	
+
 	delete project;
 	project = NULL;
 	set_title(titleWindow());
@@ -282,10 +289,15 @@ void Main::on_bt_main_close_clicked()
 void Main::on_bt_main_about_clicked()
 {
 	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/sche/schedule.ico", NULL);
-
   	GtkWidget *dialog = gtk_about_dialog_new();
   	//gtk_about_dialog_set_name(GTK_ABOUT_DIALOG(dialog), "Schedule");
-  	gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), PACKAGE_VERSION); 
+#if defined(__GNUC__) && defined(__linux__)
+    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), PACKAGE_VERSION);
+#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
+    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), "0.14.0-alpha");
+#else
+    #error "Pltaforma desconocida"
+#endif
   	gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog),"(c) Azael Reyes");
   	gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), "Organizador de horarios Escolar");
   	gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), "https://github.com/azaeldevel/octetos-schedule.git");
