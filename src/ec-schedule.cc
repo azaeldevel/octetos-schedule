@@ -102,12 +102,12 @@ int main(int argc, const char* argv[])
 
     if(mode == Mode::USER or mode == Mode::DEVELOP)
     {
-        std::cout << "Schedule Directory : " << schedule_directory << "\n";
-		std::string strDay = std::to_string(oct::core::getDayID());
-		std::string strTime = std::to_string(oct::core::getTimeID());
-		std::string strid = strDay + "-" + strTime;
-		std::string strlog = "logs/" + strid;
-		log_directory = schedule_directory / strlog;
+        //std::cout << "Schedule Directory : " << schedule_directory << "\n";
+		//std::string strDay = std::to_string(oct::core::getDayID());
+		//std::string strTime = std::to_string(oct::core::getTimeID());
+		//std::string strid = strDay + "-" + strTime;
+		//std::string strlog = "logs/" + strid;
+		log_directory = schedule_directory / "logs" ;
 		project_directory = schedule_directory / "project";
     }
     else if(mode == Mode::COMMAND)
