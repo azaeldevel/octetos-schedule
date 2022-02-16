@@ -188,6 +188,7 @@ void Enviroment::init(const std::filesystem::path& in_dir)
 	echoPrecision = 20;
 	create_session();
 	//prediction = true;
+	junting_sigma = 5.0;
 }
 
 void Enviroment::initial()
