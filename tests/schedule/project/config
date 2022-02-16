@@ -5,3 +5,4 @@ max_population = 1000;
 max_progenitor = 100;
 mutable_prob = 0.05;
 max_mutation = 4;
+junting_sigma = 5.0;

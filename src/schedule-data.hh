@@ -429,6 +429,7 @@ namespace oct::ec::sche
 		unsigned int get_max_progenitor()const;
 		unsigned int get_mutable_prob()const;
 		unsigned int get_max_mutation()const;
+		real get_junting_sigma()const;
 
 		/**
 		*\brief Agrega a la hora indicada, la cantidad de horas indicas y coloca el resultado el variable de retorno
@@ -463,6 +464,7 @@ namespace oct::ec::sche
 		unsigned int max_mutation;
 		Population max_population;
 		Population max_progenitor;
+		real junting_sigma;
 	public:
 		static const std::string formats_dt_hour;
 		static const std::string formats_dt_day_hour;
@@ -772,7 +774,7 @@ namespace oct::ec::sche
 		const std::map<std::string, Data::HBS>& get_hbs()const;
 
 		//
-		static const std::filesystem::path config_fn; 
+		static const std::filesystem::path config_fn;
 	private:
 		void build();
 	private:
