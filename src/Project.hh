@@ -14,7 +14,7 @@ class Temporary
 {
 public:
 	const std::filesystem::path& create_directory();
-	const std::filesystem::path& create_document();
+	//const std::filesystem::path& create_document();
 	const std::filesystem::path& create_document(std::ofstream&);
 	const std::filesystem::path& get_path()const;
 private:

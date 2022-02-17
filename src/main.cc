@@ -59,6 +59,16 @@ int main (int argc, char *argv[])
 		std::cerr << e.what() << std::endl;
 		return EXIT_FAILURE;
 	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		return EXIT_FAILURE;
+	}
+	catch (const Gtk::BuilderError& e)
+	{
+		std::cerr << e.what() << std::endl;
+		return EXIT_FAILURE;
+	}
 
 	//Login* wndLogin = 0;
 	sche::Main* wndMain = 0;
