@@ -68,7 +68,7 @@ namespace sche
 		Gtk::ProgressBar* pg_evprog;
 		unsigned int count;
 		bool stoped;
-		//Gtk::Label* lb_prediction;		
+		//Gtk::Label* lb_prediction;
 	};
 
 	class Main : public Gtk::Window
@@ -80,7 +80,7 @@ namespace sche
 		**/
 		Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
 		~Main();
-		
+
 		const char* titleWindow()const;
 		const char* systemName()const;
 

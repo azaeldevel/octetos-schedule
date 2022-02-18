@@ -82,6 +82,7 @@ namespace sche
 			progress = round(double(100000000) * progress);
 			progress /= double(100000000);
 			percen = progress * double(100);
+			str_display.clear();
 			str_display = std::to_string(percen) + "%";
 			if(count < 6)
             {
