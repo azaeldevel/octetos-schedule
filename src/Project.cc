@@ -47,7 +47,7 @@ const std::filesystem::path& Temporary::create_directory()
     free(str_path_temp);
     return path_temp;
 }
-const std::filesystem::path& Temporary::create_document()
+/*const std::filesystem::path& Temporary::create_path()
 {
 	if(not path_temp.empty()) throw oct::core::Exception("El directorio temporal esta ocupa.",__FILE__,__LINE__);
 
@@ -64,7 +64,7 @@ const std::filesystem::path& Temporary::create_document()
     path_temp = str_path_temp;
     free(str_path_temp);
     return path_temp;
-}
+}*/
 const std::filesystem::path& Temporary::create_document(std::ofstream& out)
 {
 	if(not path_temp.empty()) throw oct::core::Exception("El directorio temporal esta ocupa.",__FILE__,__LINE__);
