@@ -304,7 +304,7 @@ void zip_devel()
     char string_origin[256], string_extracted[256];
     unsigned int line;
 	for (auto const& dir_entry : std::filesystem::directory_iterator{oring_project})
-    {    
+    {
         origin_stream.open(dir_entry.path());
         if(origin_stream.is_open())
         {
@@ -379,7 +379,7 @@ void project_devel()
     {
         CU_ASSERT(false);
     }
-    
+
     //
     sche::Project project2;
    	if(project2.create())
@@ -390,8 +390,8 @@ void project_devel()
     {
         CU_ASSERT(false);
     }
-    
-    sche::Temporary project3_tmep;
+
+    /*sche::Temporary project3_tmep;
     project3_tmep.create_document();
     sche::Project project3;
    	if(project3.create(project3_tmep.get_path()))
@@ -401,7 +401,7 @@ void project_devel()
     else
     {
         CU_ASSERT(false);
-    }
+    }*/
 }
 int main(int argc, char *argv[])
 {

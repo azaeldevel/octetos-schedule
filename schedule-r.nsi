@@ -1,7 +1,7 @@
 !include "MUI.nsh"
 
 !define NAME "sche"
-!define VERSION "0.23.0-alpha1"
+!define VERSION "0.24.0-alpha1"
 !define PUBLISHER "Azael Reyes Inc."
 !define WEBSITE "https://github.com/azaeldevel/octetos-schedule.git"
 

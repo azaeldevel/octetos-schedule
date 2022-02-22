@@ -85,7 +85,9 @@ namespace oct::core
 
 namespace oct::ec::sche
 {
-
+    static std::random_device rd;
+    static std::default_random_engine dre;
+    static std::mt19937 gen;
 
 	class Enviroment;
 	struct Data;

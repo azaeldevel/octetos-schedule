@@ -44,6 +44,7 @@
 					<Add directory="../core/src" />
 					<Add directory="../EC/src" />
 					<Add directory="src" />
+					<Add directory="../math/src" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config libconfig++ --libs`" />
@@ -83,6 +84,7 @@
 					<Add directory="../core/src" />
 					<Add directory="../EC/src" />
 					<Add directory="src" />
+					<Add directory="../math/src" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config libconfig++ --libs`" />
@@ -198,6 +200,10 @@
 		<Unit filename="src/Analyzer.cc">
 			<Option target="schedule-r" />
 			<Option target="schedule-dbg" />
+		</Unit>
+		<Unit filename="src/Main.hh">
+			<Option target="schedule-dbg" />
+			<Option target="schedule-r" />
 		</Unit>
 		<Unit filename="src/Packing.cc">
 			<Option target="liboctetos-schedule-dbg" />

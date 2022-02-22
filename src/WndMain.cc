@@ -291,10 +291,10 @@ void Main::on_bt_main_about_clicked()
 	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/sche/schedule.ico", NULL);
   	GtkWidget *dialog = gtk_about_dialog_new();
   	//gtk_about_dialog_set_name(GTK_ABOUT_DIALOG(dialog), "Schedule");
-#if defined(__GNUC__) && defined(__linux__)
+#if defined(__linux__)
     gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), PACKAGE_VERSION);
-#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
-    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), "0.14.0-alpha");
+#elif (defined(_WIN32) || defined(_WIN64))
+    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), "alpha 24.0");
 #else
     #error "Pltaforma desconocida"
 #endif
