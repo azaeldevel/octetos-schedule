@@ -48,7 +48,7 @@ namespace sche
             GTK_DIALOG_MODAL,
             GTK_MESSAGE_ERROR,
             GTK_BUTTONS_OK,
-            e.waht());
+            e.what());
 		  	gtk_window_set_title(GTK_WINDOW(dialog), "Error inesperado");
 		  	gtk_dialog_run(GTK_DIALOG(dialog));
 		  	gtk_widget_destroy(dialog);
