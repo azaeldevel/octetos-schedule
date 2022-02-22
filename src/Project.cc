@@ -169,6 +169,7 @@ bool Project::create_default_config()
 	file << "max_progenitor = 100;\n";
 	file << "mutable_prob = 0.05;\n";
 	file << "max_mutation = 4;\n";
+	file << "junting_sigma = 5.0;\n";
 	file.flush();
 	file.close();
 
