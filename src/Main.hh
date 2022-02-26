@@ -27,6 +27,7 @@
 #include <thread>
 
 #include "schedule.hh"
+#include "Project.hh"
 
 using namespace oct::ec::sche;
 
@@ -67,8 +68,7 @@ namespace sche
 		Gtk::ProgressBar* pg_evprog;
 		unsigned int count;
 		bool stoped;
-		Gtk::Label* lb_prediction;
-		
+		//Gtk::Label* lb_prediction;
 	};
 
 	class Main : public Gtk::Window
@@ -81,20 +81,31 @@ namespace sche
 		Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
 		~Main();
 
-		bool on_button_press(GdkEventButton* event);
 		const char* titleWindow()const;
 		const char* systemName()const;
 
 	protected:
 		void on_bt_main_open_clicked();
 		void on_bt_main_analize_clicked();
+		void on_bt_main_new_clicked();
+		void on_bt_main_save_clicked();
+		void on_bt_main_saveas_clicked();
+		void on_bt_main_close_clicked();
+		void on_bt_main_about_clicked();
 
 	private:
 		const Glib::RefPtr<Gtk::Builder> builder;
 		Gtk::ToolButton* bt_main_open;
 		Gtk::ToolButton* bt_main_analize;
+		Gtk::ToolButton* bt_main_new;
+		Gtk::ToolButton* bt_main_save;
+		Gtk::ToolButton* bt_main_saveas;
+		Gtk::ToolButton* bt_main_close;
+		Gtk::ToolButton* bt_main_about;
 		Analyzer* dlgAnalyzer;
 		Enviroment* evprog;
+		Project* project;
+		bool project_saved;
 		std::filesystem::path project_path;
 		std::filesystem::path result_path;
 	};

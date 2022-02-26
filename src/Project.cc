@@ -47,7 +47,7 @@ const std::filesystem::path& Temporary::create_directory()
     free(str_path_temp);
     return path_temp;
 }
-const std::filesystem::path& Temporary::create_document()
+/*const std::filesystem::path& Temporary::create_path()
 {
 	if(not path_temp.empty()) throw oct::core::Exception("El directorio temporal esta ocupa.",__FILE__,__LINE__);
 
@@ -64,7 +64,7 @@ const std::filesystem::path& Temporary::create_document()
     path_temp = str_path_temp;
     free(str_path_temp);
     return path_temp;
-}
+}*/
 const std::filesystem::path& Temporary::create_document(std::ofstream& out)
 {
 	if(not path_temp.empty()) throw oct::core::Exception("El directorio temporal esta ocupa.",__FILE__,__LINE__);
@@ -111,34 +111,35 @@ Project::~Project()
 
 const std::filesystem::path& Project::open(const std::filesystem::path& project)
 {
-	project_filename_temp.create_directory();
+	//if(not project_filename_temp.get_path().empty()) throw oct::core::Exception("El directorio temporal esta ocupa.",__FILE__,__LINE__);
 
-	oct::pack::Zip zip;
-	zip.extract(project,project_filename_temp.get_path());
-	/*
-	for (auto const& dir_entry : std::filesystem::directory_iterator{project_filename_temp})
-    {
-        std::cout << "project_filename_temp : " << dir_entry << "\n";
-    }
-    */
+	//project_filename_temp.create_directory();
 
-    //evprog.init(output,project_filename_temp,output);
+	//oct::pack::Zip zip;
+	//zip.extract(project,project_filename_temp.get_path());
 
-    return project_filename_temp.get_path();
+    //return project_filename_temp.get_path();
+
+
+    return project;
 }
 
-/*bool Project::open(const std::filesystem::path& project, const std::filesystem::path& output,oct::ec::echo echo, unsigned int level,bool create_session)
+/*
+bool Project::open(const std::filesystem::path& project, const std::filesystem::path& output,oct::ec::echo echo, unsigned int level,bool create_session)
 {
     if(not open(project,output)) return false;
     evprog.enableEcho(echo,level);
     if(create_session) evprog.create_session();
 
     return true;
-}*/
-/*bool Project::run()
+}
+*/
+/*
+bool Project::run()
 {
     return evprog.run();
-}*/
+}
+*/
 bool Project::save(const std::filesystem::path& source,const std::filesystem::path& destino)
 {
     oct::pack::Zip zip;
@@ -168,6 +169,7 @@ bool Project::create_default_config()
 	file << "max_progenitor = 100;\n";
 	file << "mutable_prob = 0.05;\n";
 	file << "max_mutation = 4;\n";
+	file << "junting_sigma = 5.0;\n";
 	file.flush();
 	file.close();
 
@@ -179,19 +181,15 @@ bool Project::create(const std::filesystem::path& project)
 	if(not create()) return false;
 
 	//
-	//Temporary temp_zip;
-	//std::ofstream file;
-	//temp_zip.create_document(file);
-	//std::cout << "Path : " << temp_zip.get_path() << "\n";
-	//if(not file.is_open()) throw oct::core::Exception("Archivo de trabajo no esta abierto",__FILE__,__LINE__);
-
-	//uardar project
 	oct::pack::Zip zip;
 	if(not zip.compress(project_filename_temp.get_path(),project)) throw oct::core::Exception("Fallo el proceso de compresion",__FILE__,__LINE__);
 
-
-
 	return true;
+}
+
+bool Project::save(const std::filesystem::path& fn)
+{
+	return save(project_filename_temp.get_path(),fn);
 }
 
 }

@@ -1618,6 +1618,10 @@ namespace oct::ec::sche
 	{
 		return max_mutation;
 	}
+	real Configuration::get_junting_sigma()const
+	{
+		return junting_sigma;
+	}
 
 	void Configuration::load_file(const std::filesystem::path& proyect)
 	{
@@ -1655,20 +1659,23 @@ namespace oct::ec::sche
 		int max_population;
 		config.lookupValue("max_population",max_population);
 		this->max_population = max_population;
-				
+
 		int max_progenitor;
 		config.lookupValue("max_progenitor",max_progenitor);
 		this->max_progenitor = max_progenitor;
-				
+
 		int mutable_prob;
 		config.lookupValue("mutable_prob",mutable_prob);
 		this->mutable_prob = mutable_prob;
-				
+
 		int max_mutation;
 		config.lookupValue("max_mutation",max_mutation);
 		this->max_mutation = max_mutation;
-		
-		
+
+		real junting_sigma;
+		config.lookupValue("junting_sigma",junting_sigma);
+		this->junting_sigma = junting_sigma;
+
 	}
 	void Configuration::load_file(const std::filesystem::path& proyect,const std::filesystem::path& out_dir)
 	{
@@ -2472,7 +2479,7 @@ namespace oct::ec::sche
 	{
 		std::filesystem::path proy_dir= in_dir/config_fn;
 		config.load_file(proy_dir,out_dir);
-		
+
 		load(in_dir);
 	}
 	const std::map<Data::key_hbs, Data::HBRS>& Data::get_list_hbrs() const

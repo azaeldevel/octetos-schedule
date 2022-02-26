@@ -146,6 +146,7 @@ void Enviroment::init(const std::filesystem::path& in_dir)
 {
 	mutableProb = data.config.get_mutable_prob();
 	maxMutation = data.config.get_max_mutation();
+	junting_sigma = data.config.get_junting_sigma();
 
 	if(not in_dir.empty())
 	{

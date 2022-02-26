@@ -30,6 +30,7 @@
 					<Add before="cmd /c copy /y ..\core\bin\Debug\octetos-core.dll bin\Debug\" />
 					<Add before="cmd /c copy /y ..\EC\bin\Debug\octetos-EC.dll bin\Debug\" />
 					<Add before="cmd /c copy /y src\schedule.ui schedule.ui" />
+					<Add before="cmd /c glib-compile-resources --target=src/resources.c --generate-source src/resources.xml --sourcedir src/" />
 				</ExtraCommands>
 			</Target>
 			<Target title="liboctetos-schedule-r">
@@ -43,6 +44,7 @@
 					<Add directory="../core/src" />
 					<Add directory="../EC/src" />
 					<Add directory="src" />
+					<Add directory="../math/src" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config libconfig++ --libs`" />
@@ -82,6 +84,7 @@
 					<Add directory="../core/src" />
 					<Add directory="../EC/src" />
 					<Add directory="src" />
+					<Add directory="../math/src" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config libconfig++ --libs`" />
@@ -161,6 +164,29 @@
 					<Add directory="bin/Debug" />
 				</Linker>
 			</Target>
+			<Target title="ec-schedule-r">
+				<Option output="bin/Release/ec-schedule" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/Release/" />
+				<Option type="1" />
+				<Option compiler="msys2_x86_64_gcc" />
+				<Compiler>
+					<Add directory="../core/src" />
+					<Add directory="../EC/src" />
+					<Add directory="src" />
+				</Compiler>
+				<Linker>
+					<Add library="octetos-EC" />
+					<Add library="octetos-schedule" />
+					<Add library="octetos-core" />
+					<Add directory="bin/Release" />
+				</Linker>
+				<ExtraCommands>
+					<Add before='cmd /c COPY /Y &quot;C:\msys64\mingw64\bin\libgcc_s_seh-1.dll&quot; bin\Release' />
+					<Add before="cmd /c copy /y ..\core\bin\Release\octetos-core.dll bin\Release\" />
+					<Add before="cmd /c copy /y ..\EC\bin\Release\octetos-EC.dll bin\Release\" />
+					<Add before="cmd /c copy /y src\schedule.ui schedule.ui" />
+				</ExtraCommands>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
@@ -174,6 +200,10 @@
 		<Unit filename="src/Analyzer.cc">
 			<Option target="schedule-r" />
 			<Option target="schedule-dbg" />
+		</Unit>
+		<Unit filename="src/Main.hh">
+			<Option target="schedule-dbg" />
+			<Option target="schedule-r" />
 		</Unit>
 		<Unit filename="src/Packing.cc">
 			<Option target="liboctetos-schedule-dbg" />
@@ -197,8 +227,14 @@
 		</Unit>
 		<Unit filename="src/ec-schedule.cc">
 			<Option target="ec-schedule-dbg" />
+			<Option target="ec-schedule-r" />
 		</Unit>
 		<Unit filename="src/main.cc">
+			<Option target="schedule-dbg" />
+			<Option target="schedule-r" />
+		</Unit>
+		<Unit filename="src/resources.c">
+			<Option compilerVar="CC" />
 			<Option target="schedule-dbg" />
 			<Option target="schedule-r" />
 		</Unit>

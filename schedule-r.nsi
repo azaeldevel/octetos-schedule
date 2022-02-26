@@ -1,7 +1,7 @@
 !include "MUI.nsh"
 
 !define NAME "sche"
-!define VERSION "0.16.0-alpha1"
+!define VERSION "0.26.0-alpha1"
 !define PUBLISHER "Azael Reyes Inc."
 !define WEBSITE "https://github.com/azaeldevel/octetos-schedule.git"
 
@@ -67,6 +67,7 @@ Section "Uninstall"
   Delete "$INSTDIR\schedule.ico"
   Delete "$INSTDIR\schedule.ui"
   Delete "$INSTDIR\Uninstall.exe"
+  Delete "$INSTDIR\ec-schedule.bat"
   RMDir "$INSTDIR"
   Delete "$SMPROGRAMS\${NAME}\$(Uninstall).lnk"
   Delete "$SMPROGRAMS\${NAME}\Schedule.lnk"

@@ -19,9 +19,6 @@ namespace sche
 		builder->get_widget("bt_Analyzer_Close", bt_close);
 		bt_close->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_close_clicked));
 
-		lb_prediction = 0;
-		builder->get_widget("lb_Analyzer_prediction", lb_prediction);
-
 		pg_evprog = 0;
 		builder->get_widget("pg_evprog", pg_evprog);
 
@@ -40,7 +37,22 @@ namespace sche
 
 	void th_run(void* obj)
 	{
-        ((Enviroment*)obj)->run();
+	    try
+	    {
+            ((Enviroment*)obj)->run();
+        }
+		catch(const std::exception& e)
+		{
+            GtkWidget *dialog;
+  			dialog = gtk_message_dialog_new(NULL,
+            GTK_DIALOG_MODAL,
+            GTK_MESSAGE_ERROR,
+            GTK_BUTTONS_OK,
+            e.what());
+		  	gtk_window_set_title(GTK_WINDOW(dialog), "Error inesperado");
+		  	gtk_dialog_run(GTK_DIALOG(dialog));
+		  	gtk_widget_destroy(dialog);
+		}
     }
 	void Analyzer::on_bt_apply_clicked()
 	{
@@ -72,12 +84,13 @@ namespace sche
 		{
 			double progress,percen;
 			std::string str_display;
-			std::string str_predict;
+			//std::string str_predict;
 
 			progress = evprog->getProgress();
 			progress = round(double(100000000) * progress);
 			progress /= double(100000000);
 			percen = progress * double(100);
+			str_display.clear();
 			str_display = std::to_string(percen) + "%";
 			if(count < 6)
             {
