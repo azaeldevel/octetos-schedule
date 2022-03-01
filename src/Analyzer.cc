@@ -18,6 +18,9 @@ namespace sche
 		bt_close = 0;
 		builder->get_widget("bt_Analyzer_Close", bt_close);
 		bt_close->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_close_clicked));
+		
+		lbIterations = 0;
+		builder->get_widget("lbIterations", lbIterations);
 
 		pg_evprog = 0;
 		builder->get_widget("pg_evprog", pg_evprog);
@@ -117,8 +120,7 @@ namespace sche
             }
 			pg_evprog->set_fraction(progress);
 			pg_evprog->set_text(str_display);
-			//str_predict = std::to_string(evprog->getIterationActual()) + "/" + std::to_string(evprog->getPredictFinally());
-			//lb_prediction->set_text(str_predict.c_str());
+			lbIterations->set_text(std::to_string(evprog->getIterationActual()));
 		}
 		else if(evprog->getSolutions().size() > 0)
 		{

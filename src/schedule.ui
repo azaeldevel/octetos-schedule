@@ -87,6 +87,18 @@
                 <property name="y">10</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkLabel" id="lbIterations">
+                <property name="name">lbIterations</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">            </property>
+              </object>
+              <packing>
+                <property name="x">191</property>
+                <property name="y">28</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">True</property>

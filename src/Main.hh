@@ -68,7 +68,7 @@ namespace sche
 		Gtk::ProgressBar* pg_evprog;
 		unsigned int count;
 		bool stoped;
-		//Gtk::Label* lb_prediction;
+		Gtk::Label* lbIterations;
 	};
 
 	class Main : public Gtk::Window
