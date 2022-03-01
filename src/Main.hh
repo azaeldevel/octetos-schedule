@@ -69,6 +69,10 @@ namespace sche
 		unsigned int count;
 		bool stoped;
 		Gtk::Label* lbIterations;
+		Gtk::Expander* exp_logs;
+		Gtk::Label* lb_leader;
+		Gtk::Label* lb_mean;
+		Gtk::Label* lb_sigma;
 	};
 
 	class Main : public Gtk::Window

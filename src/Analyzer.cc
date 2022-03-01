@@ -19,8 +19,16 @@ namespace sche
 		builder->get_widget("bt_Analyzer_Close", bt_close);
 		bt_close->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_close_clicked));
 		
+		exp_logs = 0;
+		builder->get_widget("exp_logs", exp_logs);
 		lbIterations = 0;
-		builder->get_widget("lbIterations", lbIterations);
+		builder->get_widget("lbIterations", lbIterations);				
+		lb_leader = 0;
+		builder->get_widget("lb_leader", lb_leader);	
+		lb_mean = 0;
+		builder->get_widget("lb_mean", lb_mean);	
+		lb_sigma = 0;
+		builder->get_widget("lb_sigma", lb_sigma);
 
 		pg_evprog = 0;
 		builder->get_widget("pg_evprog", pg_evprog);
@@ -119,8 +127,14 @@ namespace sche
                 }
             }
 			pg_evprog->set_fraction(progress);
-			pg_evprog->set_text(str_display);
-			lbIterations->set_text(std::to_string(evprog->getIterationActual()));
+			pg_evprog->set_text(str_display);			
+			if (exp_logs->get_expanded())
+			{
+				lbIterations->set_text(std::to_string(evprog->getIterationActual()));
+				lb_leader->set_text(std::to_string(evprog->getProgress()));
+				lb_mean->set_text(std::to_string(evprog->getMean()));
+				lb_sigma->set_text(std::to_string(evprog->getSigma()));
+			}
 		}
 		else if(evprog->getSolutions().size() > 0)
 		{
