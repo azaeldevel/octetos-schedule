@@ -192,36 +192,70 @@ Main::PageConfig::PageConfig()
 	box_config.pack_start(box_childs);
 	box_progenitors.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
 	box_config.pack_start(box_progenitors);
-	box_mutation.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
-	box_config.pack_start(box_mutation);
+	box_mutation_prob.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_mutation_prob);
+	box_mutation_max.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_mutation_max);
+	box_directory.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_directory);
 	container.add(box_config);
 	
 	//controls
 	box_childs.pack_start(lb_childs);
 	box_childs.pack_start(in_childs);
 	lb_childs.set_text("Max. cant. de variable(Hijos) : ");
+	lb_childs.set_halign(Gtk::ALIGN_START);
+	in_childs.set_halign(Gtk::ALIGN_START);
+	in_childs.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
 	
 	box_progenitors.pack_start(lb_progenitors);
 	box_progenitors.pack_start(in_progenitors);
 	lb_progenitors.set_text("Max. cant. variables conservadas(Progenitores) : ");
+	lb_progenitors.set_halign(Gtk::ALIGN_START);
+	in_progenitors.set_halign(Gtk::ALIGN_START);
+	in_progenitors.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
 	
-	box_mutation.pack_start(lb_mutation);
-	box_mutation.pack_start(in_mutation);
-	lb_mutation.set_text("Taza de cambio(Mutaciones) : ");
+	box_mutation_prob.pack_start(lb_mutation_prob);
+	box_mutation_prob.pack_start(in_mutation_prob);
+	lb_mutation_prob.set_text("Taza de cambio(Mutaciones) : ");
+	lb_mutation_prob.set_halign(Gtk::ALIGN_START);
+	in_mutation_prob.set_halign(Gtk::ALIGN_START);
+	in_mutation_prob.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+		
+	box_mutation_max.pack_start(lb_mutation_max);
+	box_mutation_max.pack_start(in_mutation_max);
+	lb_mutation_max.set_text("Max. cant. cambios(Max. Mutacion) : ");
+	lb_mutation_max.set_halign(Gtk::ALIGN_START);
+	in_mutation_max.set_halign(Gtk::ALIGN_START);
+	in_mutation_max.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+	
+	box_directory.pack_start(lb_directory);
+	box_directory.pack_start(bt_directory);
+	lb_directory.set_text("Directorio de Resultados : ");
+	lb_directory.set_halign(Gtk::ALIGN_START);
+	bt_directory.set_halign(Gtk::ALIGN_START);
 }
 void Main::PageConfig::show()
 {
 	container.show();
+	
 	box_config.show();
 	box_childs.show();
 	box_progenitors.show();
-	box_mutation.show();
+	box_mutation_prob.show();
+	box_mutation_max.show();
+	box_directory.show();
+	
 	lb_childs.show();
 	in_childs.show();
 	lb_progenitors.show();
 	in_progenitors.show();
-	lb_mutation.show();
-	in_mutation.show();
+	lb_mutation_prob.show();
+	in_mutation_prob.show();
+	lb_mutation_max.show();
+	in_mutation_max.show();
+	lb_directory.show();
+	bt_directory.show();
 	
 }
 void Main::append_config()
@@ -375,5 +409,21 @@ void Main::on_bt_main_about_clicked()
   	gtk_widget_destroy(dialog);
 }
 
+
+
+bool Main::load_update_config()
+{
+	project->ep_config->set_max_population(std::stoi(page_config->in_childs.get_text()));
+	
+	project->ep_config->set_max_progenitor(std::stoi(page_config->in_progenitors.get_text()));
+	
+	project->ep_config->set_mutable_prob(std::stoi(page_config->in_mutation_prob.get_text()));
+	
+	project->ep_config->set_max_mutation(std::stoi(page_config->in_mutation_max.get_text()));
+		
+	project->ep_config->set_out_directory(page_config->directory);
+	
+	return true;
+}
 
 }

@@ -426,12 +426,22 @@ namespace oct::ec::sche
 		//FormatDT get_format_dt()const;
 		int get_begin_day() const;
 		real get_hours_sigma()const;
+		
 		const std::filesystem::path& get_out_directory()const;
 		unsigned int get_max_population()const;
 		unsigned int get_max_progenitor()const;
 		unsigned int get_mutable_prob()const;
 		unsigned int get_max_mutation()const;
 		real get_junting_sigma()const;
+
+		void set_out_directory(const std::filesystem::path&);
+		void set_max_population(unsigned int);
+		void set_max_progenitor(unsigned int);
+		void set_mutable_prob(unsigned int);
+		void set_max_mutation(unsigned int);
+		void set_junting_sigma(real);
+		void set_seconds_per_hour(std::time_t);
+		void set_schema_week(SchemaWeek);
 
 		/**
 		*\brief Agrega a la hora indicada, la cantidad de horas indicas y coloca el resultado el variable de retorno
@@ -451,6 +461,7 @@ namespace oct::ec::sche
 
 		void load_file(const std::filesystem::path& project);
 		void load_file(const std::filesystem::path& project,const std::filesystem::path& out_dir);
+		bool write_file_project(const std::filesystem::path&);
 
 		//
 		unsigned int _id;

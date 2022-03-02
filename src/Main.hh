@@ -119,22 +119,31 @@ namespace sche
 	private:
 		void append_config();
 		void append_teachers();
+		bool load_update_config();//to fileproject
 
 	private:
 		struct PageConfig
 		{
 			Gtk::Fixed container;
+			
 			Gtk::Box box_config;
 			Gtk::Box box_childs;
 			Gtk::Box box_progenitors;
-			Gtk::Box box_mutation;
+			Gtk::Box box_mutation_prob;
+			Gtk::Box box_mutation_max;
+			Gtk::Box box_directory;
+			
 			Gtk::Label lb_childs;
 			Gtk::Entry in_childs;
 			Gtk::Label lb_progenitors;
 			Gtk::Entry in_progenitors;
-			Gtk::Label lb_mutation;
-			Gtk::Entry in_mutation;
-			
+			Gtk::Label lb_mutation_prob;
+			Gtk::Entry in_mutation_prob;
+			Gtk::Label lb_mutation_max;
+			Gtk::Entry in_mutation_max;
+			Gtk::Label lb_directory;			
+			Gtk::FileChooserButton bt_directory;
+			std::filesystem::path directory;
 
 			PageConfig();
 			void show();
