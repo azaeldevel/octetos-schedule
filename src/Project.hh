@@ -37,7 +37,7 @@ public:
 	bool save(const std::filesystem::path&);
 	
 public:
-	oct::ec::sche::Configuration* ep_config;
+	oct::ec::sche::Configuration ep_config;
 	
 private:
 	Temporary project_filename_temp;

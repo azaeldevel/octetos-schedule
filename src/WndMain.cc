@@ -413,15 +413,15 @@ void Main::on_bt_main_about_clicked()
 
 bool Main::load_update_config()
 {
-	project->ep_config->set_max_population(std::stoi(page_config->in_childs.get_text()));
+	project->ep_config.set_max_population(std::stoi(page_config->in_childs.get_text()));
 	
-	project->ep_config->set_max_progenitor(std::stoi(page_config->in_progenitors.get_text()));
+	project->ep_config.set_max_progenitor(std::stoi(page_config->in_progenitors.get_text()));
 	
-	project->ep_config->set_mutable_prob(std::stoi(page_config->in_mutation_prob.get_text()));
+	project->ep_config.set_mutable_prob(std::stoi(page_config->in_mutation_prob.get_text()));
 	
-	project->ep_config->set_max_mutation(std::stoi(page_config->in_mutation_max.get_text()));
+	project->ep_config.set_max_mutation(std::stoi(page_config->in_mutation_max.get_text()));
 		
-	project->ep_config->set_out_directory(page_config->directory);
+	project->ep_config.set_out_directory(page_config->directory);
 	
 	return true;
 }
