@@ -1682,8 +1682,78 @@ namespace oct::ec::sche
 		load_file(proyect);
 		this->out_dir = out_dir;
 	}
+	void Configuration::set_out_directory(const std::filesystem::path& p)
+	{
+		out_dir = p;
+	}
+	void Configuration::Configuration::set_max_population(unsigned int i)
+	{
+		max_population = i;
+	}
+	void Configuration::set_max_progenitor(unsigned int i)
+	{
+		max_progenitor = i;
+	}
+	void Configuration::set_mutable_prob(unsigned int i)
+	{
+		mutable_prob = i;
+	}
+	void Configuration::set_max_mutation(unsigned int i)
+	{
+		max_mutation = i;
+	}
+	void Configuration::set_junting_sigma(real s)
+	{
+		junting_sigma = s;
+	}
+	void Configuration::set_seconds_per_hour(std::time_t t)
+	{
+		seconds_per_hour = t;
+	}
+	void Configuration::set_schema_week(SchemaWeek week)
+	{
+		schema_week = week;
+	}
+	bool Configuration::write_file_project(const std::filesystem::path& path_file)
+	{
+		if(path_file.empty()) throw oct::core::Exception("No se especifico ruta",__FILE__,__LINE__);
+		
+		std::ofstream file;
+		file.open(path_file);
 
+		file << "schema_week = \"";
+		if(schema_week == SchemaWeek::MF)
+		{
+			file << "MF";
+		}
+		else if(schema_week == SchemaWeek::MS)
+		{
+			file << "MS";
+		}
+		else if(schema_week == SchemaWeek::DS)
+		{
+			file << "DS";
+		}
+		else
+		{
+			throw core::Exception("El valor de schema_week es desconocido.",__FILE__,__LINE__);
+		}
+		file << "\";\n";
+		file << "seconds = " << seconds_per_hour << ";\n";
+		
+		file << "out = \"" << out_dir << "\";\n";
+		
+		file << "max_population = " << max_population << ";\n";
+		file << "max_progenitor = " << max_progenitor << ";\n";
+		file << "mutable_prob = " << mutable_prob << ";\n";
+		file << "max_mutation = " << max_mutation << ";\n";
+		file << "junting_sigma = " << junting_sigma <<";\n";
+		
+		file.flush();
+		file.close();
 
+		return true;
+	}
 
 
 

@@ -96,6 +96,8 @@
                 <property name="height-request">80</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="margin-left">5</property>
+                <property name="margin-right">5</property>
                 <child>
                   <object class="GtkBox">
                     <property name="visible">True</property>
@@ -109,7 +111,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Iteracion:</property>
+                            <property name="label" translatable="yes">Iteracion  : </property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -145,7 +147,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Leder:</property>
+                            <property name="label" translatable="yes">Leder   : </property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -179,7 +181,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Media:</property>
+                            <property name="label" translatable="yes">Media  : </property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -213,7 +215,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Desviacion Estandar:</property>
+                            <property name="label" translatable="yes">Desviacion Estandar : </property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -507,7 +509,7 @@
     <property name="default-height">400</property>
     <property name="icon">schedule.ico</property>
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="box_main">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
@@ -664,79 +666,6 @@
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
-        </child>
-        <child>
-          <object class="GtkNotebook">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <child>
-              <object class="GtkFixed">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="reorderable">True</property>
-              </packing>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">page 1</property>
-              </object>
-              <packing>
-                <property name="tab-fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkFixed">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">page 2</property>
-              </object>
-              <packing>
-                <property name="position">1</property>
-                <property name="tab-fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkFixed">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">page 3</property>
-              </object>
-              <packing>
-                <property name="position">2</property>
-                <property name="tab-fill">False</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <placeholder/>
         </child>
       </object>
     </child>

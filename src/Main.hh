@@ -106,12 +106,51 @@ namespace sche
 		Gtk::ToolButton* bt_main_saveas;
 		Gtk::ToolButton* bt_main_close;
 		Gtk::ToolButton* bt_main_about;
+		Gtk::Notebook* ntb_project;
+		Gtk::Box* box_main;
 		Analyzer* dlgAnalyzer;
 		Enviroment* evprog;
 		Project* project;
 		bool project_saved;
+		bool project_open;
 		std::filesystem::path project_path;
 		std::filesystem::path result_path;
+
+	private:
+		void append_config();
+		void append_teachers();
+		bool load_update_config();//to fileproject
+
+	private:
+		struct PageConfig
+		{
+			Gtk::Fixed container;
+			
+			Gtk::Box box_config;
+			Gtk::Box box_childs;
+			Gtk::Box box_progenitors;
+			Gtk::Box box_mutation_prob;
+			Gtk::Box box_mutation_max;
+			Gtk::Box box_directory;
+			
+			Gtk::Label lb_childs;
+			Gtk::Entry in_childs;
+			Gtk::Label lb_progenitors;
+			Gtk::Entry in_progenitors;
+			Gtk::Label lb_mutation_prob;
+			Gtk::Entry in_mutation_prob;
+			Gtk::Label lb_mutation_max;
+			Gtk::Entry in_mutation_max;
+			Gtk::Label lb_directory;			
+			Gtk::FileChooserButton bt_directory;
+			std::filesystem::path directory;
+
+			PageConfig();
+			void show();
+		};
+
+
+		PageConfig* page_config;
 	};
 
 }

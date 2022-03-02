@@ -37,8 +37,6 @@ namespace sche
 
 		count = 0;
 		stoped = false;
-
-		run_evprog = NULL;
 	}
 
 	Analyzer::~Analyzer()
@@ -52,19 +50,22 @@ namespace sche
 	{
 	    try
 	    {
+	    	//std::cout << "Running..\n";
             ((Enviroment*)obj)->run();
         }
 		catch(const std::exception& e)
 		{
-            GtkWidget *dialog;
-  			dialog = gtk_message_dialog_new(NULL,
-            GTK_DIALOG_MODAL,
-            GTK_MESSAGE_ERROR,
-            GTK_BUTTONS_OK,
-            e.what());
-		  	gtk_window_set_title(GTK_WINDOW(dialog), "Error inesperado");
-		  	gtk_dialog_run(GTK_DIALOG(dialog));
-		  	gtk_widget_destroy(dialog);
+            std::filesystem::path dir;
+            if(not ((Enviroment*)obj)->getLogDirectory().empty()) dir = ((Enviroment*)obj)->getLogDirectory();
+            else if(not ((Enviroment*)obj)->getLogDirectorySolutions().empty()) dir = ((Enviroment*)obj)->getLogDirectorySolutions();
+            else if(not ((Enviroment*)obj)->getLogDirectoryHistory().empty()) dir = ((Enviroment*)obj)->getLogDirectoryHistory();
+            
+            if(not dir.empty())
+            {
+            	std::ofstream errofile;
+            	errofile.open(dir/"errors");
+            	errofile << e.what();
+            }
 		}
     }
 	void Analyzer::on_bt_apply_clicked()

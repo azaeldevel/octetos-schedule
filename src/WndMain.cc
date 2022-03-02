@@ -65,9 +65,16 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 	builder->get_widget("bt_main_about", bt_main_about);
 	bt_main_about->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_about_clicked));
 
+	box_main = 0;
+	builder->get_widget("box_main", box_main);
+	
 	evprog = NULL;
 	set_icon_name("/sche/schedule.ico");
 	project_saved = true;
+	project_open = false;
+	
+	page_config = NULL;
+	
 }
 Main::~Main()
 {
@@ -169,6 +176,99 @@ void Main::on_bt_main_new_clicked()
 	std::string msg = std::string(titleWindow()) + " - *";
 	set_title(msg.c_str());
 	project_saved = false;
+	project_open = true;
+	
+	ntb_project = new Gtk::Notebook();
+	box_main->pack_start(*ntb_project);
+	ntb_project->show();
+	append_config();
+	append_teachers();
+}
+Main::PageConfig::PageConfig()
+{
+	//boxes
+	box_config.set_orientation(Gtk::ORIENTATION_VERTICAL);
+	box_childs.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_childs);
+	box_progenitors.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_progenitors);
+	box_mutation_prob.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_mutation_prob);
+	box_mutation_max.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_mutation_max);
+	box_directory.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_directory);
+	container.add(box_config);
+	
+	//controls
+	box_childs.pack_start(lb_childs);
+	box_childs.pack_start(in_childs);
+	lb_childs.set_text("Max. cant. de variable(Hijos) : ");
+	lb_childs.set_halign(Gtk::ALIGN_START);
+	in_childs.set_halign(Gtk::ALIGN_START);
+	in_childs.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+	
+	box_progenitors.pack_start(lb_progenitors);
+	box_progenitors.pack_start(in_progenitors);
+	lb_progenitors.set_text("Max. cant. variables conservadas(Progenitores) : ");
+	lb_progenitors.set_halign(Gtk::ALIGN_START);
+	in_progenitors.set_halign(Gtk::ALIGN_START);
+	in_progenitors.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+	
+	box_mutation_prob.pack_start(lb_mutation_prob);
+	box_mutation_prob.pack_start(in_mutation_prob);
+	lb_mutation_prob.set_text("Taza de cambio(Mutaciones) : ");
+	lb_mutation_prob.set_halign(Gtk::ALIGN_START);
+	in_mutation_prob.set_halign(Gtk::ALIGN_START);
+	in_mutation_prob.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+		
+	box_mutation_max.pack_start(lb_mutation_max);
+	box_mutation_max.pack_start(in_mutation_max);
+	lb_mutation_max.set_text("Max. cant. cambios(Max. Mutacion) : ");
+	lb_mutation_max.set_halign(Gtk::ALIGN_START);
+	in_mutation_max.set_halign(Gtk::ALIGN_START);
+	in_mutation_max.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+	
+	box_directory.pack_start(lb_directory);
+	box_directory.pack_start(bt_directory);
+	lb_directory.set_text("Directorio de Resultados : ");
+	lb_directory.set_halign(Gtk::ALIGN_START);
+	bt_directory.set_halign(Gtk::ALIGN_START);
+}
+void Main::PageConfig::show()
+{
+	container.show();
+	
+	box_config.show();
+	box_childs.show();
+	box_progenitors.show();
+	box_mutation_prob.show();
+	box_mutation_max.show();
+	box_directory.show();
+	
+	lb_childs.show();
+	in_childs.show();
+	lb_progenitors.show();
+	in_progenitors.show();
+	lb_mutation_prob.show();
+	in_mutation_prob.show();
+	lb_mutation_max.show();
+	in_mutation_max.show();
+	lb_directory.show();
+	bt_directory.show();
+	
+}
+void Main::append_config()
+{
+	page_config = new PageConfig;
+	page_config->show();
+	ntb_project->append_page(page_config->container, "Configuracion");
+}
+void Main::append_teachers()
+{
+	Gtk::Label* lb_teachers = new Gtk::Label("Teachers");
+  	ntb_project->append_page(*lb_teachers, "Maestros");
+  	lb_teachers->show();
 }
 void Main::on_bt_main_save_clicked()
 {
@@ -216,8 +316,7 @@ void Main::on_bt_main_save_clicked()
 
 	//
 	project->save(project_path);
-
-
+	
 	//
 	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string();
 	set_title(msg.c_str());
@@ -275,7 +374,7 @@ void Main::on_bt_main_close_clicked()
 {
 	if(not project_saved)
 	{
-		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_YES_NO);
+		Gtk::MessageDialog dialog(*this, "Archivo abierto",false,Gtk::MESSAGE_ERROR,Gtk::BUTTONS_YES_NO);
 	  	dialog.set_secondary_text("Hay un archivo sin guardar, Desea guardarlo antes de continuar?");
 	  	int ret = dialog.run();
 	  	if(ret == GTK_RESPONSE_YES) on_bt_main_save_clicked();
@@ -284,7 +383,10 @@ void Main::on_bt_main_close_clicked()
 
 	delete project;
 	project = NULL;
+	delete evprog;
+	evprog = NULL;
 	set_title(titleWindow());
+	project_open = false;
 }
 void Main::on_bt_main_about_clicked()
 {
@@ -294,7 +396,7 @@ void Main::on_bt_main_about_clicked()
 #if defined(__linux__)
     gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), PACKAGE_VERSION);
 #elif (defined(_WIN32) || defined(_WIN64))
-    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), "alpha 28.0");
+    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), "alpha 31.0");
 #else
     #error "Plataforma desconocida"
 #endif
@@ -307,5 +409,21 @@ void Main::on_bt_main_about_clicked()
   	gtk_widget_destroy(dialog);
 }
 
+
+
+bool Main::load_update_config()
+{
+	project->ep_config.set_max_population(std::stoi(page_config->in_childs.get_text()));
+	
+	project->ep_config.set_max_progenitor(std::stoi(page_config->in_progenitors.get_text()));
+	
+	project->ep_config.set_mutable_prob(std::stoi(page_config->in_mutation_prob.get_text()));
+	
+	project->ep_config.set_max_mutation(std::stoi(page_config->in_mutation_max.get_text()));
+		
+	project->ep_config.set_out_directory(page_config->directory);
+	
+	return true;
+}
 
 }
