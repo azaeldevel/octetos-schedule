@@ -131,7 +131,7 @@ namespace sche
 			if (exp_logs->get_expanded())
 			{
 				lbIterations->set_text(std::to_string(evprog->getIterationActual()));
-				lb_leader->set_text(std::to_string(evprog->getProgress()));
+				lb_leader->set_text(std::to_string(evprog->get_single(0)->getFitness()));
 				lb_mean->set_text(std::to_string(evprog->getMean()));
 				lb_sigma->set_text(std::to_string(evprog->getSigma()));
 			}

@@ -72,6 +72,9 @@
           <object class="GtkFixed">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-left">5</property>
+            <property name="margin-right">5</property>
+            <property name="margin-top">5</property>
             <child>
               <object class="GtkProgressBar" id="pg_evprog">
                 <property name="name">pg_evprog</property>

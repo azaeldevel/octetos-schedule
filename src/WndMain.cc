@@ -294,7 +294,7 @@ void Main::on_bt_main_about_clicked()
 #if defined(__linux__)
     gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), PACKAGE_VERSION);
 #elif (defined(_WIN32) || defined(_WIN64))
-    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), "alpha 27.0");
+    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), "alpha 28.0");
 #else
     #error "Pltaforma desconocida"
 #endif
