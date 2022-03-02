@@ -1,3 +1,5 @@
+#include <sstream>
+
 
 #include "Main.hh"
 
@@ -18,15 +20,15 @@ namespace sche
 		bt_close = 0;
 		builder->get_widget("bt_Analyzer_Close", bt_close);
 		bt_close->signal_clicked().connect(sigc::mem_fun(*this,&Analyzer::on_bt_close_clicked));
-		
+
 		exp_logs = 0;
 		builder->get_widget("exp_logs", exp_logs);
 		lbIterations = 0;
-		builder->get_widget("lbIterations", lbIterations);				
+		builder->get_widget("lbIterations", lbIterations);
 		lb_leader = 0;
-		builder->get_widget("lb_leader", lb_leader);	
+		builder->get_widget("lb_leader", lb_leader);
 		lb_mean = 0;
-		builder->get_widget("lb_mean", lb_mean);	
+		builder->get_widget("lb_mean", lb_mean);
 		lb_sigma = 0;
 		builder->get_widget("lb_sigma", lb_sigma);
 
@@ -127,13 +129,27 @@ namespace sche
                 }
             }
 			pg_evprog->set_fraction(progress);
-			pg_evprog->set_text(str_display);			
+			pg_evprog->set_text(str_display);
 			if (exp_logs->get_expanded())
 			{
 				lbIterations->set_text(std::to_string(evprog->getIterationActual()));
-				lb_leader->set_text(std::to_string(evprog->get_single(0)->getFitness()));
-				lb_mean->set_text(std::to_string(evprog->getMean()));
-				lb_sigma->set_text(std::to_string(evprog->getSigma()));
+				std::ostringstream ssnumber;
+				std::string snumber;
+				ssnumber << std::fixed;
+				ssnumber << std::setprecision(15);
+				ssnumber << evprog->get_single(0)->getFitness();
+				snumber = ssnumber.str();
+				lb_leader->set_text(snumber);
+                ssnumber.str("");
+				ssnumber.clear();
+                ssnumber << evprog->getMean();
+                snumber = ssnumber.str();
+				lb_mean->set_text(snumber);
+				ssnumber.str("");
+				ssnumber.clear();
+                ssnumber << evprog->getSigma();
+                snumber = ssnumber.str();
+				lb_sigma->set_text(snumber);
 			}
 		}
 		else if(evprog->getSolutions().size() > 0)

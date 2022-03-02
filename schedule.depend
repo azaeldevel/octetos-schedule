@@ -7281,13 +7281,13 @@
 	<sigc++/sigc++.h>
 	<gtkmm/scalebutton.h>
 
-1645142886 c:\users\azael\documents\develop\octetos\schedule\src\main.hh
+1646207724 c:\users\azael\documents\develop\octetos\schedule\src\main.hh
 	<gtkmm.h>
 	<thread>
 	"schedule.hh"
 	"Project.hh"
 
-1645484540 source:c:\users\azael\documents\develop\octetos\schedule\src\wndmain.cc
+1646179822 source:c:\users\azael\documents\develop\octetos\schedule\src\wndmain.cc
 	<iostream>
 	"Main.hh"
 	"config.h"
@@ -7316,7 +7316,7 @@
 	<octetos/EC/ec.hh>
 	<ec.hh>
 
-1645655140 c:\users\azael\documents\develop\octetos\ec\src\ec.hh
+1646179955 c:\users\azael\documents\develop\octetos\ec\src\ec.hh
 	<list>
 	<string>
 	<vector>
@@ -7425,7 +7425,7 @@
 	<stdio.h>
 	<time.h>
 
-1644272788 source:c:\users\azael\documents\develop\octetos\schedule\tests\v0.cc
+1645484393 source:c:\users\azael\documents\develop\octetos\schedule\tests\v0.cc
 	<CUnit/Basic.h>
 	<iostream>
 	<cstdlib>
@@ -7448,7 +7448,7 @@
 	"schedule.hh"
 	"Packing.hh"
 
-1644701403 source:c:\users\azael\documents\develop\octetos\schedule\src\project.cc
+1645570505 source:c:\users\azael\documents\develop\octetos\schedule\src\project.cc
 	<stdlib.h>
 	<unistd.h>
 	<stdio.h>
@@ -7466,7 +7466,8 @@
 	<windows.h>
 	<shlobj.h>
 
-1645142912 source:c:\users\azael\documents\develop\octetos\schedule\src\analyzer.cc
+1646180912 source:c:\users\azael\documents\develop\octetos\schedule\src\analyzer.cc
+	<sstream>
 	"Main.hh"
 
 1621089904 c:\msys64\mingw64\include\libconfig.h++
