@@ -111,7 +111,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Iteracion  :</property>
+                            <property name="label" translatable="yes">Iteracion  : </property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -147,7 +147,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Leder      :</property>
+                            <property name="label" translatable="yes">Leder   : </property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -181,7 +181,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Media     :</property>
+                            <property name="label" translatable="yes">Media  : </property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -215,7 +215,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Desviacion Estandar:</property>
+                            <property name="label" translatable="yes">Desviacion Estandar : </property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -509,7 +509,7 @@
     <property name="default-height">400</property>
     <property name="icon">schedule.ico</property>
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="box_main">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
@@ -666,12 +666,6 @@
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
         </child>
       </object>
     </child>
