@@ -79,6 +79,7 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 Main::~Main()
 {
 	if(not evprog) delete evprog;
+	if(not page_config) delete page_config;
 }
 const char* Main::titleWindow()const
 {
@@ -188,6 +189,10 @@ Main::PageConfig::PageConfig()
 {
 	//boxes
 	box_config.set_orientation(Gtk::ORIENTATION_VERTICAL);
+	box_seconds.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_seconds);
+	box_week.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_week);
 	box_childs.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
 	box_config.pack_start(box_childs);
 	box_progenitors.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
@@ -201,6 +206,20 @@ Main::PageConfig::PageConfig()
 	container.add(box_config);
 	
 	//controls
+	box_seconds.pack_start(lb_seconds);
+	box_seconds.pack_start(in_seconds);
+	lb_seconds.set_text("Segundois por hora : ");
+	lb_seconds.set_halign(Gtk::ALIGN_START);
+	in_seconds.set_halign(Gtk::ALIGN_START);
+	in_seconds.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+	
+	box_week.pack_start(lb_week);
+	box_week.pack_start(cmb_week);
+	lb_week.set_text("Semana : ");
+	lb_week.set_halign(Gtk::ALIGN_START);
+	cmb_week.set_halign(Gtk::ALIGN_START);
+	//in_seconds.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+	
 	box_childs.pack_start(lb_childs);
 	box_childs.pack_start(in_childs);
 	lb_childs.set_text("Max. cant. de variable(Hijos) : ");
@@ -234,18 +253,102 @@ Main::PageConfig::PageConfig()
 	lb_directory.set_text("Directorio de Resultados : ");
 	lb_directory.set_halign(Gtk::ALIGN_START);
 	bt_directory.set_halign(Gtk::ALIGN_START);
+	
+	//ComboBox>>
+	m_refTreeModel = Gtk::ListStore::create(m_Columns);
+  	cmb_week.set_model(m_refTreeModel);
+
+  	m_refTreeModel = Gtk::ListStore::create(m_Columns);
+  	cmb_week.set_model(m_refTreeModel);
+
+  	//Fill the ComboBox's Tree Model:
+  	Gtk::TreeModel::Row row = *(m_refTreeModel->append());
+  	row[m_Columns.id] = weekname::MF;
+  	cmb_week.set_active(row);
+
+  	row = *(m_refTreeModel->append());
+  	row[m_Columns.id] = weekname::MS;
+	
+  	row = *(m_refTreeModel->append());
+  	row[m_Columns.id] = weekname::DS;
+
+  	//Add the model columns to the Combo (which is a kind of view),
+  	//rendering them in the default way:
+  	cmb_week.set_cell_data_func(id_cell,sigc::mem_fun(*this, &Main::PageConfig::on_cell_id));
+  	cmb_week.pack_start(id_cell);
+  	//cmb_week.pack_start(m_Columns.name);
+
+  	//An example of adding a cell renderer manually,
+  	//instead of using pack_start(model_column)
+  	//so we have more control:
+  	//cmb_week.set_cell_data_func(m_cell,sigc::mem_fun(*this, &Main::PageConfig::on_cell_data_extra));
+  	//cmb_week.pack_start(m_cell);
+
+  	//Connect signal handler:
+  	cmb_week.signal_changed().connect( sigc::mem_fun(*this, &Main::PageConfig::on_combo_changed) );
+
+}
+Main::ModelColumns::ModelColumns()
+{ 
+	add(id);
+}
+void Main::PageConfig::on_cell_id(const Gtk::TreeModel::const_iterator& iter)
+{
+  	auto row = *iter;
+  	weekname id = row[m_Columns.id];
+
+  	switch(id)
+  	{
+  	case weekname::MF:
+  		id_cell.property_text()  = "Lunes a Viernes";
+  		break;
+  	case weekname::MS:
+  		id_cell.property_text()  = "Lunes a Sabado";  		
+  		break;
+  	case weekname::DS:
+  		id_cell.property_text()  = "Domingo a Sabado";  		
+  		break;
+  	default:
+  		id_cell.property_text()  = "Desconocido";    		
+  	}
+  	id_cell.property_foreground() = (id == weekname::MF ? "green" : "blue");
+}
+void Main::PageConfig::on_combo_changed()
+{
+  Gtk::TreeModel::iterator iter = cmb_week.get_active();
+  if(iter)
+  {
+    Gtk::TreeModel::Row row = *iter;
+    if(row)
+    {
+      //Get the data for the selected row, using our knowledge of the tree
+      //model:
+      int id = row[m_Columns.id];
+      //Glib::ustring name = row[m_Columns.name];
+
+      //std::cout << " ID=" << id << ", name=" << name << std::endl;
+    }
+  }
+  else
+    std::cout << "invalid iter" << std::endl;
 }
 void Main::PageConfig::show()
 {
 	container.show();
 	
 	box_config.show();
+	box_seconds.show();
+	box_week.show();
 	box_childs.show();
 	box_progenitors.show();
 	box_mutation_prob.show();
 	box_mutation_max.show();
 	box_directory.show();
-	
+		
+	lb_seconds.show();
+	in_seconds.show();
+	lb_week.show();
+	cmb_week.show();
 	lb_childs.show();
 	in_childs.show();
 	lb_progenitors.show();

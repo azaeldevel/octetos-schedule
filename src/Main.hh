@@ -122,17 +122,35 @@ namespace sche
 		bool load_update_config();//to fileproject
 
 	private:
+		using weekname = oct::ec::sche::Configuration::SchemaWeek;
+		class ModelColumns : public Gtk::TreeModel::ColumnRecord
+  		{
+  		public:
+
+    		ModelColumns();
+
+    		Gtk::TreeModelColumn<weekname> id;
+  		};
 		struct PageConfig
 		{
 			Gtk::Fixed container;
 			
 			Gtk::Box box_config;
+			Gtk::Box box_seconds;
+			Gtk::Box box_week;
 			Gtk::Box box_childs;
 			Gtk::Box box_progenitors;
 			Gtk::Box box_mutation_prob;
 			Gtk::Box box_mutation_max;
 			Gtk::Box box_directory;
 			
+			Gtk::Label lb_seconds;
+			Gtk::Entry in_seconds;
+			Gtk::Label lb_week;
+			Gtk::ComboBox cmb_week;
+  			Gtk::CellRendererText id_cell;
+  			Glib::RefPtr<Gtk::ListStore> m_refTreeModel;
+			ModelColumns m_Columns;
 			Gtk::Label lb_childs;
 			Gtk::Entry in_childs;
 			Gtk::Label lb_progenitors;
@@ -147,6 +165,8 @@ namespace sche
 
 			PageConfig();
 			void show();
+			void on_cell_id(const Gtk::TreeModel::const_iterator& iter);
+			void on_combo_changed();
 		};
 
 
