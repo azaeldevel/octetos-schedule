@@ -461,7 +461,7 @@ namespace oct::ec::sche
 
 		void load_file(const std::filesystem::path& project);
 		void load_file(const std::filesystem::path& project,const std::filesystem::path& out_dir);
-		bool write_file_project(const std::filesystem::path&);
+		bool write_file_project(const std::filesystem::path&)const;
 
 		//
 		unsigned int _id;

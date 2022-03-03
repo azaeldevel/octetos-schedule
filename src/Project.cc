@@ -159,24 +159,13 @@ bool Project::create_default_config()
 
 	project_filename_temp.create_directory();
 
-	//std::ofstream file;
-	//file.open(project_filename_temp.get_path()/oct::ec::sche::Data::config_fn);
-	oct::ec::sche::Configuration config;
-	//file << "schema_week = \"MF\";\n";
 	ep_config.set_schema_week(oct::ec::sche::Configuration::SchemaWeek::MF);
-	//file << "seconds = 2700;\n";
 	ep_config.set_seconds_per_hour(2700);
-	//file << "out = \"logs/schedule\";\n";
 	ep_config.set_out_directory("logs/schedule");
-	//file << "max_population = 1000;\n";
 	ep_config.set_max_population(2000);
-	//file << "max_progenitor = 100;\n";
 	ep_config.set_max_progenitor(300);
-	//file << "mutable_prob = 0.05;\n";
 	ep_config.set_mutable_prob(0.05);
-	//file << "max_mutation = 4;\n";
 	ep_config.set_max_mutation(4);
-	//file << "junting_sigma = 5.0;\n";
 	ep_config.set_junting_sigma(5.0);
 		
 	ep_config.write_file_project(project_filename_temp.get_path()/oct::ec::sche::Data::config_fn);

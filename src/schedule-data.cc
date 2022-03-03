@@ -1714,7 +1714,7 @@ namespace oct::ec::sche
 	{
 		schema_week = week;
 	}
-	bool Configuration::write_file_project(const std::filesystem::path& path_file)
+	bool Configuration::write_file_project(const std::filesystem::path& path_file)const
 	{
 		if(path_file.empty()) throw oct::core::Exception("No se especifico ruta",__FILE__,__LINE__);
 		

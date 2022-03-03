@@ -119,7 +119,8 @@ namespace sche
 	private:
 		void append_config();
 		void append_teachers();
-		bool load_update_config();//to fileproject
+		bool load_update_config(const std::filesystem::path&);//to fileproject
+		bool read_project();
 
 	private:
 		using weekname = oct::ec::sche::Configuration::SchemaWeek;
@@ -150,7 +151,7 @@ namespace sche
 			Gtk::ComboBox cmb_week;
   			Gtk::CellRendererText id_cell;
   			Glib::RefPtr<Gtk::ListStore> m_refTreeModel;
-			ModelColumns m_Columns;
+			ModelColumns columns;
 			Gtk::Label lb_childs;
 			Gtk::Entry in_childs;
 			Gtk::Label lb_progenitors;

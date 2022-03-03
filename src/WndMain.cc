@@ -171,7 +171,7 @@ void Main::on_bt_main_new_clicked()
 	  	return;
 	}
 
-	project = new Project();
+	project = new Project;
 	project->create();
 
 	std::string msg = std::string(titleWindow()) + " - *";
@@ -184,6 +184,8 @@ void Main::on_bt_main_new_clicked()
 	ntb_project->show();
 	append_config();
 	append_teachers();
+	
+	read_project();
 }
 Main::PageConfig::PageConfig()
 {
@@ -255,22 +257,22 @@ Main::PageConfig::PageConfig()
 	bt_directory.set_halign(Gtk::ALIGN_START);
 	
 	//ComboBox>>
-	m_refTreeModel = Gtk::ListStore::create(m_Columns);
+	m_refTreeModel = Gtk::ListStore::create(columns);
   	cmb_week.set_model(m_refTreeModel);
 
-  	m_refTreeModel = Gtk::ListStore::create(m_Columns);
+  	m_refTreeModel = Gtk::ListStore::create(columns);
   	cmb_week.set_model(m_refTreeModel);
 
   	//Fill the ComboBox's Tree Model:
   	Gtk::TreeModel::Row row = *(m_refTreeModel->append());
-  	row[m_Columns.id] = weekname::MF;
+  	row[columns.id] = weekname::MF;
   	cmb_week.set_active(row);
 
   	row = *(m_refTreeModel->append());
-  	row[m_Columns.id] = weekname::MS;
+  	row[columns.id] = weekname::MS;
 	
   	row = *(m_refTreeModel->append());
-  	row[m_Columns.id] = weekname::DS;
+  	row[columns.id] = weekname::DS;
 
   	//Add the model columns to the Combo (which is a kind of view),
   	//rendering them in the default way:
@@ -295,7 +297,7 @@ Main::ModelColumns::ModelColumns()
 void Main::PageConfig::on_cell_id(const Gtk::TreeModel::const_iterator& iter)
 {
   	auto row = *iter;
-  	weekname id = row[m_Columns.id];
+  	weekname id = row[columns.id];
 
   	switch(id)
   	{
@@ -311,7 +313,7 @@ void Main::PageConfig::on_cell_id(const Gtk::TreeModel::const_iterator& iter)
   	default:
   		id_cell.property_text()  = "Desconocido";    		
   	}
-  	id_cell.property_foreground() = (id == weekname::MF ? "green" : "blue");
+  	//id_cell.property_foreground() = (id == weekname::MF ? "green" : "blue");
 }
 void Main::PageConfig::on_combo_changed()
 {
@@ -323,7 +325,7 @@ void Main::PageConfig::on_combo_changed()
     {
       //Get the data for the selected row, using our knowledge of the tree
       //model:
-      int id = row[m_Columns.id];
+      int id = row[columns.id];
       //Glib::ustring name = row[m_Columns.name];
 
       //std::cout << " ID=" << id << ", name=" << name << std::endl;
@@ -514,8 +516,14 @@ void Main::on_bt_main_about_clicked()
 
 
 
-bool Main::load_update_config()
+bool Main::load_update_config(const std::filesystem::path& file)
 {
+	project->ep_config.set_seconds_per_hour(std::stoi(page_config->in_seconds.get_text()));
+
+	Gtk::TreeModel::iterator it = page_config->cmb_week.get_active();
+	Gtk::TreeModel::Row row = *it;
+	if(row) project->ep_config.set_schema_week(row[page_config->columns.id]);
+	
 	project->ep_config.set_max_population(std::stoi(page_config->in_childs.get_text()));
 	
 	project->ep_config.set_max_progenitor(std::stoi(page_config->in_progenitors.get_text()));
@@ -528,5 +536,10 @@ bool Main::load_update_config()
 	
 	return true;
 }
-
+bool Main::read_project()
+{
+	page_config->in_seconds.set_text(std::to_string(project->ep_config.get_seconds_per_hour()));
+	
+	return true;
+}
 }
