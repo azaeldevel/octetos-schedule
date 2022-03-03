@@ -130,7 +130,7 @@ namespace sche
 
     		ModelColumns();
 
-    		Gtk::TreeModelColumn<weekname> id;
+    		Gtk::TreeModelColumn<week_name> id;
   		};
 		struct PageConfig
 		{

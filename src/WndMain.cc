@@ -272,14 +272,14 @@ Main::PageConfig::PageConfig()
 
   	//Fill the ComboBox's Tree Model:
   	Gtk::TreeModel::Row row = *(m_refTreeModel->append());
-  	row[columns.id] = weekname::MF;
+  	row[columns.id] = week_name::MF;
   	cmb_week.set_active(row);
 
   	row = *(m_refTreeModel->append());
-  	row[columns.id] = weekname::MS;
+  	row[columns.id] = week_name::MS;
 	
   	row = *(m_refTreeModel->append());
-  	row[columns.id] = weekname::DS;
+  	row[columns.id] = week_name::DS;
 
   	//Add the model columns to the Combo (which is a kind of view),
   	//rendering them in the default way:
@@ -304,17 +304,17 @@ Main::ModelColumns::ModelColumns()
 void Main::PageConfig::on_cell_id(const Gtk::TreeModel::const_iterator& iter)
 {
   	auto row = *iter;
-  	weekname id = row[columns.id];
+  	week_name id = row[columns.id];
 
   	switch(id)
   	{
-  	case weekname::MF:
+  	case week_name::MF:
   		id_cell.property_text()  = "Lunes a Viernes";
   		break;
-  	case weekname::MS:
+  	case week_name::MS:
   		id_cell.property_text()  = "Lunes a Sabado";  		
   		break;
-  	case weekname::DS:
+  	case week_name::DS:
   		id_cell.property_text()  = "Domingo a Sabado";  		
   		break;
   	default:

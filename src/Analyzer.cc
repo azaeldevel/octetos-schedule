@@ -69,6 +69,25 @@ namespace sche
             	errofile.close();
             }
 		}
+		catch(...)
+		{		  
+			std::exception_ptr p = std::current_exception();
+			  
+		    std::filesystem::path dir;
+            if(not ((Enviroment*)obj)->getLogDirectory().empty()) dir = ((Enviroment*)obj)->getLogDirectory();
+            else if(not ((Enviroment*)obj)->getLogDirectorySolutions().empty()) dir = ((Enviroment*)obj)->getLogDirectorySolutions();
+            else if(not ((Enviroment*)obj)->getLogDirectoryHistory().empty()) dir = ((Enviroment*)obj)->getLogDirectoryHistory();
+
+            if(not dir.empty())
+            {
+            	std::ofstream errofile;
+            	errofile.open(dir/"errors");
+            	errofile << "Excepcion desconocida.. ";
+            	errofile << (p ? p.__cxa_exception_type()->name() : "null") << std::endl;;
+            	errofile.flush();
+            	errofile.close();
+            }
+		}
     }
 	void Analyzer::on_bt_apply_clicked()
 	{
