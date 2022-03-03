@@ -70,7 +70,7 @@ namespace sche
             }
 		}
 		catch(...)
-		{		  
+		{
 			std::exception_ptr p = std::current_exception();
 			  
 		    std::filesystem::path dir;
