@@ -65,6 +65,8 @@ namespace sche
             	std::ofstream errofile;
             	errofile.open(dir/"errors");
             	errofile << e.what();
+            	errofile.flush();
+            	errofile.close();
             }
 		}
     }

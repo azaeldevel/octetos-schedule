@@ -123,7 +123,7 @@ namespace sche
 		bool read_project();
 
 	private:
-		using weekname = oct::ec::sche::Configuration::SchemaWeek;
+		using week_name = oct::ec::sche::Configuration::SchemaWeek;
 		class ModelColumns : public Gtk::TreeModel::ColumnRecord
   		{
   		public:

@@ -80,6 +80,7 @@ Main::~Main()
 {
 	if(not evprog) delete evprog;
 	if(not page_config) delete page_config;
+	if(not project) delete project;
 }
 const char* Main::titleWindow()const
 {
@@ -172,7 +173,13 @@ void Main::on_bt_main_new_clicked()
 	}
 
 	project = new Project;
-	project->create();
+	if(not project->create()) 
+	{
+		Gtk::MessageDialog dialog(*this, "Fallo de operacion",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+  		dialog.set_secondary_text("Fallo la creacion del projecto temporal");
+  		dialog.run();
+  		return;
+	}
 
 	std::string msg = std::string(titleWindow()) + " - *";
 	set_title(msg.c_str());
@@ -539,6 +546,11 @@ bool Main::load_update_config(const std::filesystem::path& file)
 bool Main::read_project()
 {
 	page_config->in_seconds.set_text(std::to_string(project->ep_config.get_seconds_per_hour()));
+	std::cout << "Segundos : " << project->ep_config.get_seconds_per_hour() << "\n";
+	
+	page_config->cmb_week.set_active(project->ep_config.get_schema_week());
+	
+	page_config->in_childs.set_text(std::to_string(project->ep_config.get_max_population()));
 	
 	return true;
 }

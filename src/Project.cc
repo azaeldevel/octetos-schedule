@@ -160,7 +160,7 @@ bool Project::create_default_config()
 	project_filename_temp.create_directory();
 
 	ep_config.set_schema_week(oct::ec::sche::Configuration::SchemaWeek::MF);
-	ep_config.set_seconds_per_hour(2700);
+	ep_config.set_seconds_per_hour(std::time_t(2700));
 	ep_config.set_out_directory("logs/schedule");
 	ep_config.set_max_population(2000);
 	ep_config.set_max_progenitor(300);
