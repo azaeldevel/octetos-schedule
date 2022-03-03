@@ -59,7 +59,7 @@ namespace sche
             if(not ((Enviroment*)obj)->getLogDirectory().empty()) dir = ((Enviroment*)obj)->getLogDirectory();
             else if(not ((Enviroment*)obj)->getLogDirectorySolutions().empty()) dir = ((Enviroment*)obj)->getLogDirectorySolutions();
             else if(not ((Enviroment*)obj)->getLogDirectoryHistory().empty()) dir = ((Enviroment*)obj)->getLogDirectoryHistory();
-            
+
             if(not dir.empty())
             {
             	std::ofstream errofile;
@@ -133,7 +133,7 @@ namespace sche
             }
 			pg_evprog->set_fraction(progress);
 			pg_evprog->set_text(str_display);
-			if (exp_logs->get_expanded())
+			if(exp_logs->get_expanded())
 			{
 				lbIterations->set_text(std::to_string(evprog->getIterationActual()));
 				std::ostringstream ssnumber;
