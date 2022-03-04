@@ -91,16 +91,7 @@ namespace oct::ec::sche
 		// el horario del maestro despues de recreo no coincidira con el horario del salon despues del recreo al no condicerar en el horario
 		// del maestro este salto en el tiempo.
 		bool bound_schedule()const; //TODO:implemetar
-
-
-		/*
-		void juncting_mesh_lessons(const Single&,const Single&);
-		void juncting_mesh_classroom(const Single&,const Single&);
-		void juncting_half(const Single&,const Single&);
-		void juncting_choose_one_lesson(const Single&,const Single&);
-		void juncting_choose_random_lesson(const Single&,const Single&);
-		*/
-
+		
 	private:
 		typedef void (Schedule::*algorit)(const Schedule&,const Schedule&);
 
@@ -141,11 +132,6 @@ namespace oct::ec::sche
 		unsigned int get_sigma_hours_max2() const;
 		unsigned int get_sigma_hours_limit() const;
 
-		//real get_gamma() const;
-		//double get_portion() const;
-		//unsigned int get_schedule_max_hours() const;
-
-
 		/**
 		*\brief Inicia el proceso de apareo, sobecragada devido a que deve distigir entre grupo para realizar el apareoa
 		*/
@@ -157,9 +143,6 @@ namespace oct::ec::sche
 		virtual void initial();
 
 		void select_times(Lesson&,const WeekHours&);
-		//void random_complete_times(Lesson&,const WeekOptions&);
-
-		//unsigned int counter()const;
 
 	private:
 		//std::filesystem::path input_directory;
@@ -167,15 +150,11 @@ namespace oct::ec::sche
 		std::filesystem::path strid;
 
 		unsigned int CRITERION;
-		//real PORTION;
-		//real GAMMA;
-		//unsigned int schedule_max_hours;
 		unsigned int schedule_overlap_max;
 		unsigned long schedule_overlap_max2;
 		unsigned int schedule_cover_max;
 		unsigned long schedule_cover_max2;
 		unsigned int SCHEDULE_EMPTY_MAX;
-		//real SCHEDULE_ERROR;
 		real schedule_sigma_hours_max;
 		real schedule_sigma_hours_max2;
 		real schedule_sigma_hours_limit;
