@@ -1610,7 +1610,7 @@ namespace oct::ec::sche
 	{
 		return max_progenitor;
 	}
-	unsigned int Configuration::get_mutable_prob()const
+	real Configuration::get_mutable_prob()const
 	{
 		return mutable_prob;
 	}
@@ -1664,7 +1664,7 @@ namespace oct::ec::sche
 		config.lookupValue("max_progenitor",max_progenitor);
 		this->max_progenitor = max_progenitor;
 
-		int mutable_prob;
+		real mutable_prob;
 		config.lookupValue("mutable_prob",mutable_prob);
 		this->mutable_prob = mutable_prob;
 
@@ -1694,7 +1694,7 @@ namespace oct::ec::sche
 	{
 		max_progenitor = i;
 	}
-	void Configuration::set_mutable_prob(unsigned int i)
+	void Configuration::set_mutable_prob(real i)
 	{
 		mutable_prob = i;
 	}
