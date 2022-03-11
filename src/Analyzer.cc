@@ -115,6 +115,14 @@ namespace sche
 
 	bool Analyzer::update_progress(int )
 	{
+		if(evprog->get_population_size() == 0)
+		{
+			on_bt_stop_clicked();
+			Gtk::MessageDialog dialog(*this, "Error ineperador",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+	  		dialog.set_secondary_text("La poblacion actual es 0");
+	  		dialog.run();
+	  		return false;
+		}
 		if(evprog->isRunning())
 		{
 			double progress,percen;
