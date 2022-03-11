@@ -79,6 +79,8 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 Main::~Main()
 {
 	if(not evprog) delete evprog;
+	if(not page_config) delete page_config;
+	if(not project) delete project;
 }
 const char* Main::titleWindow()const
 {
@@ -170,8 +172,14 @@ void Main::on_bt_main_new_clicked()
 	  	return;
 	}
 
-	project = new Project();
-	project->create();
+	project = new Project;
+	if(not project->create()) 
+	{
+		Gtk::MessageDialog dialog(*this, "Fallo de operacion",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+  		dialog.set_secondary_text("Fallo la creacion del projecto temporal");
+  		dialog.run();
+  		return;
+	}
 
 	std::string msg = std::string(titleWindow()) + " - *";
 	set_title(msg.c_str());
@@ -183,11 +191,17 @@ void Main::on_bt_main_new_clicked()
 	ntb_project->show();
 	append_config();
 	append_teachers();
+	
+	read_project();
 }
 Main::PageConfig::PageConfig()
 {
 	//boxes
 	box_config.set_orientation(Gtk::ORIENTATION_VERTICAL);
+	box_seconds.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_seconds);
+	box_week.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+	box_config.pack_start(box_week);
 	box_childs.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
 	box_config.pack_start(box_childs);
 	box_progenitors.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
@@ -201,6 +215,20 @@ Main::PageConfig::PageConfig()
 	container.add(box_config);
 	
 	//controls
+	box_seconds.pack_start(lb_seconds);
+	box_seconds.pack_start(in_seconds);
+	lb_seconds.set_text("Segundois por hora : ");
+	lb_seconds.set_halign(Gtk::ALIGN_START);
+	in_seconds.set_halign(Gtk::ALIGN_START);
+	in_seconds.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+	
+	box_week.pack_start(lb_week);
+	box_week.pack_start(cmb_week);
+	lb_week.set_text("Semana : ");
+	lb_week.set_halign(Gtk::ALIGN_START);
+	cmb_week.set_halign(Gtk::ALIGN_START);
+	//in_seconds.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
+	
 	box_childs.pack_start(lb_childs);
 	box_childs.pack_start(in_childs);
 	lb_childs.set_text("Max. cant. de variable(Hijos) : ");
@@ -234,18 +262,102 @@ Main::PageConfig::PageConfig()
 	lb_directory.set_text("Directorio de Resultados : ");
 	lb_directory.set_halign(Gtk::ALIGN_START);
 	bt_directory.set_halign(Gtk::ALIGN_START);
+	
+	//ComboBox>>
+	m_refTreeModel = Gtk::ListStore::create(columns);
+  	cmb_week.set_model(m_refTreeModel);
+
+  	m_refTreeModel = Gtk::ListStore::create(columns);
+  	cmb_week.set_model(m_refTreeModel);
+
+  	//Fill the ComboBox's Tree Model:
+  	Gtk::TreeModel::Row row = *(m_refTreeModel->append());
+  	row[columns.id] = week_name::MF;
+  	cmb_week.set_active(row);
+
+  	row = *(m_refTreeModel->append());
+  	row[columns.id] = week_name::MS;
+	
+  	row = *(m_refTreeModel->append());
+  	row[columns.id] = week_name::DS;
+
+  	//Add the model columns to the Combo (which is a kind of view),
+  	//rendering them in the default way:
+  	cmb_week.set_cell_data_func(id_cell,sigc::mem_fun(*this, &Main::PageConfig::on_cell_id));
+  	cmb_week.pack_start(id_cell);
+  	//cmb_week.pack_start(m_Columns.name);
+
+  	//An example of adding a cell renderer manually,
+  	//instead of using pack_start(model_column)
+  	//so we have more control:
+  	//cmb_week.set_cell_data_func(m_cell,sigc::mem_fun(*this, &Main::PageConfig::on_cell_data_extra));
+  	//cmb_week.pack_start(m_cell);
+
+  	//Connect signal handler:
+  	cmb_week.signal_changed().connect( sigc::mem_fun(*this, &Main::PageConfig::on_combo_changed) );
+
+}
+Main::ModelColumns::ModelColumns()
+{ 
+	add(id);
+}
+void Main::PageConfig::on_cell_id(const Gtk::TreeModel::const_iterator& iter)
+{
+  	auto row = *iter;
+  	week_name id = row[columns.id];
+
+  	switch(id)
+  	{
+  	case week_name::MF:
+  		id_cell.property_text()  = "Lunes a Viernes";
+  		break;
+  	case week_name::MS:
+  		id_cell.property_text()  = "Lunes a Sabado";  		
+  		break;
+  	case week_name::DS:
+  		id_cell.property_text()  = "Domingo a Sabado";  		
+  		break;
+  	default:
+  		id_cell.property_text()  = "Desconocido";    		
+  	}
+  	//id_cell.property_foreground() = (id == weekname::MF ? "green" : "blue");
+}
+void Main::PageConfig::on_combo_changed()
+{
+  Gtk::TreeModel::iterator iter = cmb_week.get_active();
+  if(iter)
+  {
+    Gtk::TreeModel::Row row = *iter;
+    if(row)
+    {
+      //Get the data for the selected row, using our knowledge of the tree
+      //model:
+      int id = row[columns.id];
+      //Glib::ustring name = row[m_Columns.name];
+
+      //std::cout << " ID=" << id << ", name=" << name << std::endl;
+    }
+  }
+  else
+    std::cout << "invalid iter" << std::endl;
 }
 void Main::PageConfig::show()
 {
 	container.show();
 	
 	box_config.show();
+	box_seconds.show();
+	box_week.show();
 	box_childs.show();
 	box_progenitors.show();
 	box_mutation_prob.show();
 	box_mutation_max.show();
 	box_directory.show();
-	
+		
+	lb_seconds.show();
+	in_seconds.show();
+	lb_week.show();
+	cmb_week.show();
 	lb_childs.show();
 	in_childs.show();
 	lb_progenitors.show();
@@ -411,8 +523,14 @@ void Main::on_bt_main_about_clicked()
 
 
 
-bool Main::load_update_config()
+bool Main::load_update_config(const std::filesystem::path& file)
 {
+	project->ep_config.set_seconds_per_hour(std::stoi(page_config->in_seconds.get_text()));
+
+	Gtk::TreeModel::iterator it = page_config->cmb_week.get_active();
+	Gtk::TreeModel::Row row = *it;
+	if(row) project->ep_config.set_schema_week(row[page_config->columns.id]);
+	
 	project->ep_config.set_max_population(std::stoi(page_config->in_childs.get_text()));
 	
 	project->ep_config.set_max_progenitor(std::stoi(page_config->in_progenitors.get_text()));
@@ -425,5 +543,15 @@ bool Main::load_update_config()
 	
 	return true;
 }
-
+bool Main::read_project()
+{
+	page_config->in_seconds.set_text(std::to_string(project->ep_config.get_seconds_per_hour()));
+	std::cout << "Segundos : " << project->ep_config.get_seconds_per_hour() << "\n";
+	
+	page_config->cmb_week.set_active(project->ep_config.get_schema_week());
+	
+	page_config->in_childs.set_text(std::to_string(project->ep_config.get_max_population()));
+	
+	return true;
+}
 }

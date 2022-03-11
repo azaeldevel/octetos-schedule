@@ -1610,7 +1610,7 @@ namespace oct::ec::sche
 	{
 		return max_progenitor;
 	}
-	unsigned int Configuration::get_mutable_prob()const
+	real Configuration::get_mutable_prob()const
 	{
 		return mutable_prob;
 	}
@@ -1664,7 +1664,7 @@ namespace oct::ec::sche
 		config.lookupValue("max_progenitor",max_progenitor);
 		this->max_progenitor = max_progenitor;
 
-		int mutable_prob;
+		real mutable_prob;
 		config.lookupValue("mutable_prob",mutable_prob);
 		this->mutable_prob = mutable_prob;
 
@@ -1694,7 +1694,7 @@ namespace oct::ec::sche
 	{
 		max_progenitor = i;
 	}
-	void Configuration::set_mutable_prob(unsigned int i)
+	void Configuration::set_mutable_prob(real i)
 	{
 		mutable_prob = i;
 	}
@@ -1714,7 +1714,7 @@ namespace oct::ec::sche
 	{
 		schema_week = week;
 	}
-	bool Configuration::write_file_project(const std::filesystem::path& path_file)
+	bool Configuration::write_file_project(const std::filesystem::path& path_file)const
 	{
 		if(path_file.empty()) throw oct::core::Exception("No se especifico ruta",__FILE__,__LINE__);
 		
@@ -2845,6 +2845,7 @@ namespace oct::ec::sche
 	{
 		if(g2.size() != size()) throw core::Exception("EL tamano de los registros no coincide.",__FILE__,__LINE__);
 		if(g2.size() == 0) throw core::Exception("No hay lecciones",__FILE__,__LINE__);
+		if(g2.size() == 1) throw core::Exception("Solo una leccion",__FILE__,__LINE__);
 
 		std::uniform_int_distribution<> distrib_choose(0,g2.size() - 1);
 		unsigned int choose = distrib_choose(gen);
@@ -2861,6 +2862,7 @@ namespace oct::ec::sche
 	void ClassRoom::mutate()
 	{
 		if(size() == 0) throw core::Exception("Hoario vacio",__FILE__,__LINE__);
+		if(size() == 0) throw core::Exception("Solo un elemento",__FILE__,__LINE__);
 
 		//std::cout << "\tLessons::mutate Step 1\n";
 
@@ -3009,11 +3011,13 @@ namespace oct::ec::sche
 		if(s1.size() != s2.size()) throw core::Exception("Los tamanos de horaios no coincide",__FILE__,__LINE__);
 		if(s1.size() == 0) throw core::Exception("Hoario vacio",__FILE__,__LINE__);
 		if(s2.size() == 0) throw core::Exception("Hoario vacio",__FILE__,__LINE__);
+		if(s1.size() == 1) throw core::Exception("Solo un elemento",__FILE__,__LINE__);
+		if(s2.size() == 1) throw core::Exception("Solo un elemento",__FILE__,__LINE__);
 
-		std::uniform_int_distribution<> distrib_choose(0,size() - 1);
+		/*std::uniform_int_distribution<> distrib_choose(0,s1.size() - 1);
 		unsigned int choose = distrib_choose(gen);
-		real prob = 1.0/real(choose);
-		std::bernoulli_distribution distrib(prob);
+		real prob = 1.0/real(choose);*/
+		std::bernoulli_distribution distrib(0.5);
 		for(unsigned int i = 0; i < s1.size(); i++)
 		{
 			if(distrib(gen))
@@ -3023,7 +3027,7 @@ namespace oct::ec::sche
 			else
 			{
 				at(i) = s2.at(i);
-				at(i).juncting_choose_random_lesson(s2[i]);
+				at(i).juncting_choose_random_lesson(s1[i]);
 			}
 		}
 	}

@@ -430,14 +430,14 @@ namespace oct::ec::sche
 		const std::filesystem::path& get_out_directory()const;
 		unsigned int get_max_population()const;
 		unsigned int get_max_progenitor()const;
-		unsigned int get_mutable_prob()const;
+		real get_mutable_prob()const;
 		unsigned int get_max_mutation()const;
 		real get_junting_sigma()const;
 
 		void set_out_directory(const std::filesystem::path&);
 		void set_max_population(unsigned int);
 		void set_max_progenitor(unsigned int);
-		void set_mutable_prob(unsigned int);
+		void set_mutable_prob(real);
 		void set_max_mutation(unsigned int);
 		void set_junting_sigma(real);
 		void set_seconds_per_hour(std::time_t);
@@ -461,7 +461,7 @@ namespace oct::ec::sche
 
 		void load_file(const std::filesystem::path& project);
 		void load_file(const std::filesystem::path& project,const std::filesystem::path& out_dir);
-		bool write_file_project(const std::filesystem::path&);
+		bool write_file_project(const std::filesystem::path&)const;
 
 		//
 		unsigned int _id;

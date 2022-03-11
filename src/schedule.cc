@@ -20,10 +20,6 @@ namespace oct::ec::sche
 	Single::Single(Enviroment& env,unsigned int c) : ec::Single(env,c)
 	{
 	}
-	/*Single::Single(ID id,Enviroment& env, const Schedule& s) : ec::Single(id,env), Schedule(s)
-	{
-		random_algorit();
-	}*/
 	Single::Single(Enviroment& env) : ec::Single(env)
 	{
 	}
@@ -82,26 +78,7 @@ namespace oct::ec::sche
 			chils.push_back(newsingle);
 		}
 	}
-	/*void Single::juncting_mesh_lessons(const Single& s1,const Single& s2)
-	{
-		Schedule::juncting_mesh_lessons(s1,s2);
-	}
-	void Single::juncting_mesh_classroom(const Single& s1,const Single& s2)
-	{
-		Schedule::juncting_mesh_classroom(s1,s2);
-	}
-	void Single::juncting_half(const Single& s1,const Single& s2)
-	{
-		Schedule::juncting_half(s1,s2);
-	}
-	void Single::juncting_choose_one_lesson(const Single& s1,const Single& s2)
-	{
-		Schedule::juncting_choose_one_lesson(s1,s2);
-	}
-	void Single::juncting_choose_random_lesson(const Single& s1,const Single& s2)
-	{
-		Schedule::juncting_choose_random_lesson(s1,s2);
-	}*/
+
 	void Single::print(std::ostream&) const
 	{
 	}
@@ -147,6 +124,9 @@ void Enviroment::init(const std::filesystem::path& in_dir)
 	mutableProb = data.config.get_mutable_prob();
 	maxMutation = data.config.get_max_mutation();
 	junting_sigma = data.config.get_junting_sigma();
+	std::cout << "mutableProb = " << mutableProb << "\n";
+	std::cout << "maxMutation = " << maxMutation << "\n";
+	std::cout << "junting_sigma = " << junting_sigma << "\n";
 
 	if(not in_dir.empty())
 	{
@@ -394,22 +374,9 @@ void Enviroment::select_times(Lesson& lesson,const WeekHours& week_dispon)
 	for(unsigned int i = day; i < WeekHours::WEEK_SIZE - 1; i++)
 	{
 		week_dispon.get_day(i,hours_per_day,*time,data.config,lesson.week[i]);
-		//if(lesson.week[i].size() >= lesson.subject->get_time()) break;
 	}
 	lesson.week.sort(lesson.data->config);
 }
 
-/*void Enviroment::random_complete_times(Lesson& lesson,const WeekOptions& week_opt)
-{
-	for(unsigned int i = 0; i < WeekHours::WEEK_SIZE; i++)
-	{
-		//std::cout << lesson.subject->get_name() << " requiere " << lesson.subject->get_time() << " de las cuales hay " << lesson.week.count_hours() << "\n";
-		if(lesson.subject->get_time() <= lesson.week.count_hours()) return;
-		if(lesson.week[i].size() > 0) continue;
-
-		//TODO:realizar esta asignacion en un orden aleatorio
-		week_opt[i].random(lesson.week[i]);
-	}
-}*/
 }
 
