@@ -42,6 +42,7 @@ namespace sche
 	Analyzer::~Analyzer()
 	{
 		if(not run_evprog) delete run_evprog;
+		std::cout << "Analyzer::~Analyzer\n";
 	}
 
 
