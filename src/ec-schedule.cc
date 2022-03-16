@@ -23,10 +23,10 @@
 #include <string>
 #include <filesystem>
 
-#if defined(__GNUC__) && defined(__linux__)
+#if defined(__linux__)
     #include <csignal>
-#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
-
+#elif defined(_WIN32) || defined(_WIN64)
+	std::filesystem::path desktop_directory();
 #else
     #error "Pltaforma desconocida"
 #endif
@@ -48,14 +48,14 @@ enum Mode
 };
 int main(int argc, const char* argv[])
 {
-    #if defined(__GNUC__) && defined(__linux__)
+#if defined(__linux__)
 	signal(SIGSEGV,oct::core::signal_segmentv);
 	signal(SIGABRT,oct::core::signal_abort);
-    #elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
+#elif defined(_WIN32) || defined(_WIN64)
 
-    #else
-        #error "Pltaforma desconocida"
-    #endif
+#else
+	#error "Pltaforma desconocida"
+#endif
 
 
     if(argc == 1)
@@ -81,7 +81,16 @@ int main(int argc, const char* argv[])
         }
         else if(strcmp(argv[i],"--local-processes") == 0)
         {
-            root_directory = std::getenv("USERPROFILE");
+            //std::cout << "dir : " << root_directory << "\n";
+            //std::cout << "dir : " << std::getenv("HOME") << "\n";
+#if defined(__linux__)
+			root_directory = std::getenv("HOME");
+#elif defined(_WIN32) || defined(_WIN64)
+			root_directory = desktop_directory();
+#else
+			#error "Plataforma desconocida"
+#endif
+            //std::cout << "dir : " << root_directory << "\n";
             schedule_directory = root_directory / "Desktop/schedule";
             mode = Mode::USER;
         }

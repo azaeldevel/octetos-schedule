@@ -27,11 +27,12 @@
 
 std::filesystem::path desktop_directory()
 {
-    wchar_t* p;
-  if (S_OK != SHGetKnownFolderPath( FOLDERID_Desktop, 0, NULL, &p )) return "";
-  std::filesystem::path result = p;
-  CoTaskMemFree( p );
-  return result;
+	wchar_t* p;
+  	if (S_OK != SHGetKnownFolderPath( FOLDERID_Desktop, 0, NULL, &p )) return "";
+  	std::filesystem::path result = p;
+  	CoTaskMemFree( p );
+  	
+  	return result;
 }
 
 
