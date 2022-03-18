@@ -37,6 +37,7 @@ namespace sche
 
 		count = 0;
 		stoped = false;
+		countP0 = 0;
 	}
 
 	Analyzer::~Analyzer()
@@ -118,10 +119,12 @@ namespace sche
 	{
 		if(evprog->get_population_size() == 0)
 		{
-			on_bt_stop_clicked();
+			/*on_bt_stop_clicked();
 			Gtk::MessageDialog dialog(*this, "Error ineperador",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
 	  		dialog.set_secondary_text("La poblacion actual es 0");
-	  		dialog.run();
+	  		dialog.run();*/
+			countP0++;
+			std::cout << "countP0 : " << countP0 << "\n";
 	  		return false;
 		}
 		if(evprog->isRunning())
