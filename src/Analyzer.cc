@@ -125,7 +125,7 @@ namespace sche
 	  		dialog.run();*/
 			countP0++;
 			std::cout << "countP0 : " << countP0 << "\n";
-	  		return false;
+	  		return true;
 		}
 		if(evprog->isRunning())
 		{
