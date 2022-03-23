@@ -1,5 +1,4 @@
 /*
- * main.cc
  * Copyright (C) 2021 Azael Reyes <azael.devel@gmail.com>
  *
  * octetos-schedule is free software: you can redistribute it and/or modify it

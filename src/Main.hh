@@ -1,26 +1,22 @@
-#ifndef MUPOSYS_MAIN_HH
-#define MUPOSYS_MAIN_HH
+#ifndef OCTETOS_SCHEDULE_HH
+#define OCTETOS_SCHEDULE_HH
 
-/**
+/*
+ * Copyright (C) 2021 Azael Reyes <azael.devel@gmail.com>
  *
- *  This file is part of muposys.
- *  muposys is a Multi-Porpuse Software System GUI.
- *  Copyright (C) 2018  Azael Reyes
+ * octetos-schedule is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * octetos-schedule is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * */
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 
 #include <gtkmm.h>
