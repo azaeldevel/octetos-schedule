@@ -56,6 +56,9 @@ namespace sche
 		count = 0;
 		stoped = false;
 		countP0 = 0;
+		
+		slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
+		Glib::signal_timeout().connect(slot, 1000);
 	}
 
 	Analyzer::~Analyzer()
@@ -111,8 +114,6 @@ namespace sche
     }
 	void Analyzer::on_bt_apply_clicked()
 	{
-		slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
-		Glib::signal_timeout().connect(slot, 1000);
 		//run_evprog = new std::thread(th_run,evprog);
 		bt_apply->set_sensitive(false);
 		bt_close->set_sensitive(false);
