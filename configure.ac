@@ -1,6 +1,6 @@
 
 
-AC_INIT(octetos-schedule, 0.44.0-alpha, azael.devel@gmail.com)
+AC_INIT(octetos-schedule, 0.45.0-alpha, azael.devel@gmail.com)
 
 AC_CONFIG_HEADERS([config.h])
 

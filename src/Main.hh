@@ -56,7 +56,7 @@ namespace sche
 
 		//
 		const Glib::RefPtr<Gtk::Builder>& builder;
-		Enviroment* const evprog;
+		Enviroment* evprog;
 		Gtk::Button* bt_apply;
 		Gtk::Button* bt_stop;
 		Gtk::Button* bt_close;

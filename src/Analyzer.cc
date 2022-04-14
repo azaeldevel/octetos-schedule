@@ -24,7 +24,7 @@
 namespace sche
 {
 
-	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* const ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL)
+	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL)
 	{
 		bt_apply = 0;
 		builder->get_widget("bt_Analyzer_Apply", bt_apply);
