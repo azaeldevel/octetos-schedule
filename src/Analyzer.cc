@@ -24,7 +24,7 @@
 namespace sche
 {
 
-	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL)
+	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep)
 	{
 		bt_apply = 0;
 		builder->get_widget("bt_Analyzer_Apply", bt_apply);
@@ -60,8 +60,8 @@ namespace sche
 
 	Analyzer::~Analyzer()
 	{
-		if(not run_evprog) delete run_evprog;
-		std::cout << "Analyzer::~Analyzer\n";
+		//if(not run_evprog) delete run_evprog;
+		//std::cout << "Analyzer::~Analyzer\n";
 	}
 
 
@@ -111,9 +111,9 @@ namespace sche
     }
 	void Analyzer::on_bt_apply_clicked()
 	{
-		sigc::slot<bool()> slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
+		slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
 		Glib::signal_timeout().connect(slot, 1000);
-		run_evprog = new std::thread(th_run,evprog);
+		//run_evprog = new std::thread(th_run,evprog);
 		bt_apply->set_sensitive(false);
 		bt_close->set_sensitive(false);
 		bt_stop->set_sensitive(true);

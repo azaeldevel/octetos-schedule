@@ -60,7 +60,7 @@ namespace sche
 		Gtk::Button* bt_apply;
 		Gtk::Button* bt_stop;
 		Gtk::Button* bt_close;
-		std::thread* run_evprog;
+		//std::thread* run_evprog;
 		Gtk::ProgressBar* pg_evprog;
 		unsigned int count;
 		bool stoped;
@@ -70,6 +70,7 @@ namespace sche
 		Gtk::Label* lb_mean;
 		Gtk::Label* lb_sigma;
 		unsigned int countP0;
+		sigc::slot<bool()> slot;
 	};
 
 	class Main : public Gtk::Window
