@@ -1,0 +1,9 @@
+
+#ifndef OCTETOS_SCHEDULE_CONFIG_WIN_H
+#define OCTETOS_SCHEDULE_CONFIG_WIN_H
+
+
+#define PACKAGE_NAME "sche"
+#define PACKAGE_VERSION "0.40.0-alpha"
+
+#endif
