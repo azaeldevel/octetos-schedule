@@ -1,4 +1,22 @@
-#include <sstream>
+
+/*
+ * Copyright (C) 2021 Azael Reyes <azael.devel@gmail.com>
+ *
+ * octetos-schedule is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * octetos-schedule is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
+ #include <sstream>
 
 
 #include "Main.hh"
@@ -6,7 +24,7 @@
 namespace sche
 {
 
-	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* const ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL)
+	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep)
 	{
 		bt_apply = 0;
 		builder->get_widget("bt_Analyzer_Apply", bt_apply);
@@ -37,11 +55,16 @@ namespace sche
 
 		count = 0;
 		stoped = false;
+		countP0 = 0;
+		
+		slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
+		Glib::signal_timeout().connect(slot, 1000);
 	}
 
 	Analyzer::~Analyzer()
 	{
-		if(not run_evprog) delete run_evprog;
+		//if(not run_evprog) delete run_evprog;
+		//std::cout << "Analyzer::~Analyzer\n";
 	}
 
 
@@ -91,9 +114,7 @@ namespace sche
     }
 	void Analyzer::on_bt_apply_clicked()
 	{
-		sigc::slot<bool()> slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
-		Glib::signal_timeout().connect(slot, 1000);
-		run_evprog = new std::thread(th_run,evprog);
+		//run_evprog = new std::thread(th_run,evprog);
 		bt_apply->set_sensitive(false);
 		bt_close->set_sensitive(false);
 		bt_stop->set_sensitive(true);
@@ -117,11 +138,13 @@ namespace sche
 	{
 		if(evprog->get_population_size() == 0)
 		{
-			on_bt_stop_clicked();
+			/*on_bt_stop_clicked();
 			Gtk::MessageDialog dialog(*this, "Error ineperador",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
 	  		dialog.set_secondary_text("La poblacion actual es 0");
-	  		dialog.run();
-	  		return false;
+	  		dialog.run();*/
+			countP0++;
+			std::cout << "countP0 : " << countP0 << "\n";
+	  		return true;
 		}
 		if(evprog->isRunning())
 		{
