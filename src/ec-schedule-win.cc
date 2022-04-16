@@ -20,19 +20,12 @@
 #include <filesystem>
 #include <string>
 
-#include <windows.h>
-#include <shlobj.h>
-#include <objbase.h>
+#include <Shlobj.h>
+
 
 std::filesystem::path desktop_directory()
 {
-	wchar_t* p;
-  	if (S_OK != SHGetKnownFolderPath( FOLDERID_Desktop, 0, NULL, &p )) return "";
-  	std::filesystem::path result = p;
-  	CoTaskMemFree( p );
-  	
-  	return result;
+	static char path[MAX_PATH + 1];
+    if (SHGetSpecialFolderPathA(HWND_DESKTOP, path, CSIDL_DESKTOPDIRECTORY, FALSE)) return path;
+    else return "";
 }
-
-
-

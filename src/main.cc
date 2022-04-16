@@ -45,9 +45,6 @@
 
 int main (int argc, char *argv[])
 {
-	signal(SIGSEGV,oct::core::signal_segmentv);
-	signal(SIGABRT,oct::core::signal_abort);
-	
 	Gtk::Main kit(argc, argv);
 
 	//Load the Glade file and instiate its widgets:
