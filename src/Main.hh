@@ -42,7 +42,7 @@ namespace sche
 	class Analyzer : public Gtk::Dialog
 	{
 	public:
-		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade,Enviroment* const);
+		Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade,Enviroment*);
 		~Analyzer();
 
 	protected:
@@ -60,7 +60,7 @@ namespace sche
 		Gtk::Button* bt_apply;
 		Gtk::Button* bt_stop;
 		Gtk::Button* bt_close;
-		//std::thread* run_evprog;
+		std::thread* run_evprog;
 		Gtk::ProgressBar* pg_evprog;
 		unsigned int count;
 		bool stoped;
@@ -133,7 +133,7 @@ namespace sche
 		struct PageConfig
 		{
 			Gtk::Fixed container;
-			
+
 			Gtk::Box box_config;
 			Gtk::Box box_seconds;
 			Gtk::Box box_week;
@@ -142,7 +142,7 @@ namespace sche
 			Gtk::Box box_mutation_prob;
 			Gtk::Box box_mutation_max;
 			Gtk::Box box_directory;
-			
+
 			Gtk::Label lb_seconds;
 			Gtk::Entry in_seconds;
 			Gtk::Label lb_week;
@@ -158,7 +158,7 @@ namespace sche
 			Gtk::Entry in_mutation_prob;
 			Gtk::Label lb_mutation_max;
 			Gtk::Entry in_mutation_max;
-			Gtk::Label lb_directory;			
+			Gtk::Label lb_directory;
 			Gtk::FileChooserButton bt_directory;
 			std::filesystem::path directory;
 

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
  #include <sstream>
 
 
@@ -24,7 +24,7 @@
 namespace sche
 {
 
-	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep)
+	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL)
 	{
 		bt_apply = 0;
 		builder->get_widget("bt_Analyzer_Apply", bt_apply);
@@ -56,12 +56,16 @@ namespace sche
 		count = 0;
 		stoped = false;
 		countP0 = 0;
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> 644264fa7a717050fd0881faf10b288729af9f82
 	}
 
 	Analyzer::~Analyzer()
 	{
-		//if(not run_evprog) delete run_evprog;
+		if(not run_evprog) delete run_evprog;
 		//std::cout << "Analyzer::~Analyzer\n";
 	}
 
@@ -93,7 +97,7 @@ namespace sche
 		catch(...)
 		{
 			std::exception_ptr p = std::current_exception();
-			  
+
 		    std::filesystem::path dir;
             if(not ((Enviroment*)obj)->getLogDirectory().empty()) dir = ((Enviroment*)obj)->getLogDirectory();
             else if(not ((Enviroment*)obj)->getLogDirectorySolutions().empty()) dir = ((Enviroment*)obj)->getLogDirectorySolutions();
@@ -114,8 +118,13 @@ namespace sche
 	{
 		slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
 		Glib::signal_timeout().connect(slot, 1000);
+<<<<<<< HEAD
 		
 		//run_evprog = new std::thread(th_run,evprog);
+=======
+
+		run_evprog = new std::thread(th_run,evprog);
+>>>>>>> 644264fa7a717050fd0881faf10b288729af9f82
 		bt_apply->set_sensitive(false);
 		bt_close->set_sensitive(false);
 		bt_stop->set_sensitive(true);
