@@ -31,3 +31,4 @@ logs
 src/resources.c
 
 vs/*/vcpkg
+vs/*/x64
