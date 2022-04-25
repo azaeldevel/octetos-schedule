@@ -28,7 +28,7 @@
 namespace sche
 {
 
-class Temporary
+class OCTETOS_SCHEDULE_DECLSPCE_DLL Temporary
 {
 public:
 	const std::filesystem::path& create_directory();
@@ -40,7 +40,7 @@ private:
 };
 
 
-class Project
+class OCTETOS_SCHEDULE_DECLSPCE_DLL Project
 {
 public:
     Project();

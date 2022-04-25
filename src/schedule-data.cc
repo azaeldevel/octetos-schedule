@@ -407,7 +407,7 @@ namespace oct::core
 	}
 
 
-#if defined(__GNUC__) && defined(__linux__)
+#if defined(__linux__)
     void print_backtrace(const char* msg,int code)
 	{
 		void* array[20];
@@ -429,7 +429,7 @@ namespace oct::core
 	{
 		print_backtrace("Error signal detected %d:\n",s);
 	}
-#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
+#elif defined(_WIN32) || defined(_WIN64)
 
 #else
     #error "Pltaforma desconocida"
@@ -2010,7 +2010,7 @@ namespace oct::ec::sche
 	{
 		if(not dataObject) throw core::Exception("dataObject no asignado.", __FILE__,__LINE__);
 
-		oct::core::Shell shell;
+		//oct::core::Shell shell;
 		//std::cout << "cwd 2:" << shell.cwd() << "\n";
 		//std::cout << "dir 2:" << fn << "\n";
 

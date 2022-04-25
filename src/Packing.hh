@@ -23,10 +23,25 @@
 #include <string>
 #include <zip.h>
 #include <filesystem>
+#if EXPORTING_OCTETOS_SCHEDULE_DLL
+	#if _MSC_VER
+		#define OCTETOS_SCHEDULE_DECLSPCE_DLL __declspec(dllexport)
+	#elif __GNUG__
+
+	#endif
+#elif IMPORTING_OCTETOS_SCHEDULE_DLL
+	#if _MSC_VER
+		#define OCTETOS_SCHEDULE_DECLSPCE_DLL __declspec(dllimport)
+	#elif __GNUG__
+
+	#endif
+#else
+	#define OCTETOS_SCHEDULE_DECLSPCE_DLL
+#endif
 #if defined(__linux__)
     #include <octetos/core/shell.hh>
 #elif defined(_WIN32) || defined(_WIN64)
-    #include <core/src/shell.hh>
+    //#include <core/src/shell.hh>
 #else
     #error "Pltaforma desconocida"
 #endif
@@ -37,7 +52,7 @@ namespace oct::pack
 {
 
 
-class Package
+class OCTETOS_SCHEDULE_DECLSPCE_DLL Package
 {
 public:
 	/**
@@ -48,7 +63,7 @@ public:
 };
 
 
-class Zip : public Package
+class OCTETOS_SCHEDULE_DECLSPCE_DLL Zip : public Package
 {
 public:
 	Zip();

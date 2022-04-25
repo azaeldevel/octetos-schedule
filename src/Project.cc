@@ -18,16 +18,17 @@
 
 
 #include <stdlib.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include <fstream>
-#if defined(__GNUC__) && defined(__linux__)
+#if defined(__linux__)
     #include <octetos/core/Exception.hh>
     #define MK_TEMP_DIR mkdtemp
-#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
-    #include <Exception.hh>
+	#include <unistd.h>
+#elif defined(_WIN32) || defined(_WIN64)
+    #include <core/src/Exception.hh>
     #define MK_TEMP_DIR mktemp
+	#include <io.h>
 #else
     #error "Plataforma desconocida"
 #endif

@@ -26,24 +26,24 @@
     #include <execinfo.h>
     #include <octetos/EC/ec.hh>
 #elif defined(_WIN32) || defined(_WIN64)
-    #include <ec.hh>
+    #include <EC/src/ec.hh>
 #else
     #error "Pltaforma desconocida"
 #endif
 #if EXPORTING_OCTETOS_SCHEDULE_DLL
-#if _MSC_VER
-#define OCTETOS_SCHEDULE_DECLSPCE_DLL __declspec(dllexport)
-#elif __GNUG__
+	#if _MSC_VER
+		#define OCTETOS_SCHEDULE_DECLSPCE_DLL __declspec(dllexport)
+	#elif __GNUG__
 
-#endif
+	#endif
 #elif IMPORTING_OCTETOS_SCHEDULE_DLL
-#if _MSC_VER
-#define OCTETOS_SCHEDULE_DECLSPCE_DLL __declspec(dllimport)
-#elif __GNUG__
+	#if _MSC_VER
+		#define OCTETOS_SCHEDULE_DECLSPCE_DLL __declspec(dllimport)
+	#elif __GNUG__
 
-#endif
+	#endif
 #else
-#define OCTETOS_SCHEDULE_DECLSPCE_DLL
+	#define OCTETOS_SCHEDULE_DECLSPCE_DLL
 #endif
 
 
