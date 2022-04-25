@@ -29,7 +29,7 @@
     #include <Exception.hh>
     #define MK_TEMP_DIR mktemp
 #else
-    #error "Pltaforma desconocida"
+    #error "Plataforma desconocida"
 #endif
 
 #include "Project.hh"

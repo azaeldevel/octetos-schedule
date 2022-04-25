@@ -36,7 +36,7 @@ namespace oct::ec::sche
 	/**
 	*\brief Representa una posible solucion a nuestro problema
 	*/
-	class Single : public oct::ec::Single, public Schedule
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Single : public oct::ec::Single, public Schedule
 	{
 
 	public:
@@ -119,7 +119,7 @@ namespace oct::ec::sche
 	/**
 	*\brief Variables de control y proceso
 	*/
-	class Enviroment : public oct::ec::Enviroment
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Enviroment : public oct::ec::Enviroment
 	{
 	public:
 

@@ -18,17 +18,18 @@
 
 
 #include <sys/stat.h>
-#include <dirent.h>
+//#include <dirent.h>
 #include <string.h>
 #include <iostream>
 #include <fstream>
 #include <fcntl.h>
-#include <unistd.h>
 #include <filesystem>
-#if defined(__GNUC__) && defined(__linux__)
+#if defined(__linux__)
 	#include <octetos/core/Exception.hh>
-#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
-    #include <Exception.hh>
+	#include <unistd.h>
+#elif defined(_WIN32) || defined(_WIN64)
+    #include <core/src/Exception.hh>
+	#include <io.h>
 #else
     #error "Pltaforma desconocida"
 #endif

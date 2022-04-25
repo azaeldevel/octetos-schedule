@@ -169,6 +169,7 @@
 				<Option object_output=".objs/Release/" />
 				<Option type="1" />
 				<Option compiler="msys2_x86_64_gcc" />
+				<Option parameters="--local-processes" />
 				<Compiler>
 					<Add directory="../core/src" />
 					<Add directory="../EC/src" />
@@ -224,6 +225,14 @@
 		<Unit filename="src/WndMain.cc">
 			<Option target="schedule-dbg" />
 			<Option target="schedule-r" />
+		</Unit>
+		<Unit filename="src/config-win.h">
+			<Option target="liboctetos-schedule-r" />
+			<Option target="liboctetos-schedule-dbg" />
+		</Unit>
+		<Unit filename="src/ec-schedule-win.cc">
+			<Option target="ec-schedule-dbg" />
+			<Option target="ec-schedule-r" />
 		</Unit>
 		<Unit filename="src/ec-schedule.cc">
 			<Option target="ec-schedule-dbg" />

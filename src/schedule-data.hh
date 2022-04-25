@@ -22,21 +22,35 @@
 
 #include <map>
 #include <ctime>
-#if defined(__GNUC__) && defined(__linux__)
+#if defined(__linux__)
     #include <execinfo.h>
     #include <octetos/EC/ec.hh>
-#elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
+#elif defined(_WIN32) || defined(_WIN64)
     #include <ec.hh>
 #else
     #error "Pltaforma desconocida"
 #endif
+#if EXPORTING_OCTETOS_SCHEDULE_DLL
+#if _MSC_VER
+#define OCTETOS_SCHEDULE_DECLSPCE_DLL __declspec(dllexport)
+#elif __GNUG__
 
+#endif
+#elif IMPORTING_OCTETOS_SCHEDULE_DLL
+#if _MSC_VER
+#define OCTETOS_SCHEDULE_DECLSPCE_DLL __declspec(dllimport)
+#elif __GNUG__
+
+#endif
+#else
+#define OCTETOS_SCHEDULE_DECLSPCE_DLL
+#endif
 
 
 
 namespace oct::core
 {
-	class Time : public std::tm
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Time : public std::tm
 	{
 	public:
 		Time();
@@ -82,7 +96,7 @@ namespace oct::core
 		void read(const std::string& time, const std::string& format,const std::locale&);
 	};
 
-	class Person
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Person
 	{
 	public:
 		Person(const std::string& name,const std::string& ap,const std::string& am);
@@ -114,7 +128,7 @@ namespace oct::ec::sche
 	class WeekHours;
 	class DaysOptions;
 
-	class Time : public oct::core::Time
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Time : public oct::core::Time
 	{
 
 	public:
@@ -199,7 +213,7 @@ namespace oct::ec::sche
 		HOURS_DIFFERENT_DAY,
 		BLOCK_CONTENT_SIZE_FAIL,
 	};
-	class Day : public std::list<Time>
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Day : public std::list<Time>
 	{
 	public:
 		typedef std::list<const Time*> Block;
@@ -279,13 +293,13 @@ namespace oct::ec::sche
 	};
 
 	//typedef std::list<Day> DaysOptions;
-	class DaysOptions : public std::list<Day>
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL DaysOptions : public std::list<Day>
 	{
 	public:
 		void random(Day&)const;
 	};
 	//typedef std::vector<DaysCombs> WeekCombs;
-	class WeekOptions : public std::vector<DaysOptions>
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL WeekOptions : public std::vector<DaysOptions>
 	{
 	public:
 		WeekOptions();
@@ -312,7 +326,7 @@ namespace oct::ec::sche
 		//std::random_device rd;
 		const Configuration* config;
 	};
-	class WeekHours : public std::vector<Day>
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL WeekHours : public std::vector<Day>
 	{
 	public:
 		static const unsigned int WEEK_SIZE;
@@ -383,7 +397,7 @@ namespace oct::ec::sche
 		const Configuration* config;
 	};
 
-	struct IntervalTime
+	struct OCTETOS_SCHEDULE_DECLSPCE_DLL IntervalTime
 	{
 		Time begin;
 		Time end;
@@ -407,7 +421,7 @@ namespace oct::ec::sche
 
 
 
-	class Configuration
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Configuration
 	{
 	public:
 		enum SchemaWeek
@@ -503,7 +517,7 @@ namespace oct::ec::sche
 
 	};
 
-	class Target
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Target
 	{
 	public:
 		Target();
@@ -532,7 +546,7 @@ namespace oct::ec::sche
 	};
 
 
-	class Teacher : public oct::core::Person, public Target
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Teacher : public oct::core::Person, public Target
 	{
 	public:
 		Teacher(const std::string& name,const std::string& ap,const std::string& am);
@@ -547,7 +561,7 @@ namespace oct::ec::sche
 		std::string name;
 	};
 
-	class Subject : public Target
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Subject : public Target
 	{
 	public:
 		Subject(const std::string& name);
@@ -565,7 +579,7 @@ namespace oct::ec::sche
 		unsigned int time;//tiempo que se devfe impartir de clase
 	};
 
-	class Room : public Target
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Room : public Target
 	{
 	public:
 		Room(const std::string& name);
@@ -582,7 +596,7 @@ namespace oct::ec::sche
 	};
 
 
-	class Targets
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Targets
 	{
 
 	public:
@@ -598,7 +612,7 @@ namespace oct::ec::sche
 		const Data* dataObject;
 	};
 
-	class Teachers : public Targets
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Teachers : public Targets
 	{
 	public:
 
@@ -620,7 +634,7 @@ namespace oct::ec::sche
 		std::map<std::string, Teacher*> teacher_by_name;
 	};
 
-	class Subjects : public Targets
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Subjects : public Targets
 	{
 	public:
 
@@ -641,7 +655,7 @@ namespace oct::ec::sche
 
 
 
-	class Teachers_Subjects : public Targets
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Teachers_Subjects : public Targets
 	{
 	public:
 		struct Row : public std::list<const Subject*>
@@ -679,7 +693,7 @@ namespace oct::ec::sche
 		std::multimap<std::string, Row*> subjects_by_name;
 	};
 
-	class Rooms : public Targets
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Rooms : public Targets
 	{
 	public:
 
@@ -706,7 +720,7 @@ namespace oct::ec::sche
 		const Subject* subject;
 		bool is;
 	};
-	struct Group : public std::vector<const Subject*>
+	struct OCTETOS_SCHEDULE_DECLSPCE_DLL Group : public std::vector<const Subject*>
 	{
 		std::string name;//TODO:soporte para gruopos en distintos salon
 		const Room* room;
@@ -718,7 +732,7 @@ namespace oct::ec::sche
 		std::map<std::string,coverage> cover;
 	};
 
-	class Groups : public Targets
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Groups : public Targets
 	{
 	public:
 		typedef std::list<Group>::iterator iterator;
@@ -763,7 +777,7 @@ namespace oct::ec::sche
 
 	typedef std::vector<Target> Pile;
 
-	struct Data
+	struct OCTETOS_SCHEDULE_DECLSPCE_DLL Data
 	{
 		struct HBS
 		{
@@ -814,7 +828,7 @@ namespace oct::ec::sche
 
 	};
 
-	struct Lesson
+	struct OCTETOS_SCHEDULE_DECLSPCE_DLL Lesson
 	{
 		const Group* group;
 		const Subject* subject;
@@ -834,7 +848,7 @@ namespace oct::ec::sche
 	/**
 	*\brief Clases impartidas aun gurpo
 	**/
-	class ClassRoom : public std::vector<Lesson>
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL ClassRoom : public std::vector<Lesson>
 	{
 	public:
 		ClassRoom();
@@ -858,7 +872,7 @@ namespace oct::ec::sche
 	/**
 	*\brief
 	**/
-	class Schedule : public std::vector<ClassRoom>
+	class OCTETOS_SCHEDULE_DECLSPCE_DLL Schedule : public std::vector<ClassRoom>
 	{
 	public:
 		Schedule();
@@ -890,7 +904,7 @@ namespace oct::ec::sche
 	/**
 	*\brief Variasiones del Horario
 	**/
-	struct Schedules : std::vector<Schedule>
+	struct OCTETOS_SCHEDULE_DECLSPCE_DLL Schedules : std::vector<Schedule>
 	{
 
 	};

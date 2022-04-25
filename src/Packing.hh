@@ -23,15 +23,14 @@
 #include <string>
 #include <zip.h>
 #include <filesystem>
-/*
 #if defined(__linux__)
     #include <octetos/core/shell.hh>
-#elif (defined(_WIN32) || defined(_WIN64))
-    #include <shell.hh>
+#elif defined(_WIN32) || defined(_WIN64)
+    #include <core/src/shell.hh>
 #else
     #error "Pltaforma desconocida"
 #endif
-*/
+
 
 
 namespace oct::pack

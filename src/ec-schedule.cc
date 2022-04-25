@@ -89,8 +89,8 @@ int main(int argc, const char* argv[])
 #else
 			#error "Plataforma desconocida"
 #endif
-            //std::cout << "dir : " << root_directory << "\n";
-            schedule_directory = root_directory / "Desktop/schedule";
+            std::cout << "dir : " << root_directory << "\n";
+            schedule_directory = root_directory / "schedule";
             mode = Mode::USER;
         }
         else if(strcmp(argv[i],"--project-file") == 0)
