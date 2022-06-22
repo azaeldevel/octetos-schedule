@@ -28,7 +28,7 @@
 #elif defined(_WIN32) || defined(_WIN64)
     #include <EC/src/ec.hh>
 #else
-    #error "Pltaforma desconocida"
+    #error "Plataforma desconocida"
 #endif
 #if EXPORTING_OCTETOS_SCHEDULE_DLL
 	#if _MSC_VER
@@ -458,7 +458,7 @@ namespace oct::ec::sche
 		//FormatDT get_format_dt()const;
 		int get_begin_day() const;
 		real get_hours_sigma()const;
-		
+
 		const std::filesystem::path& get_out_directory()const;
 		unsigned int get_max_population()const;
 		unsigned int get_max_progenitor()const;

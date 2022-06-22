@@ -2,7 +2,7 @@
 #include <CUnit/Basic.h>
 #include <iostream>
 #include <cstdlib>
-#include <schedule.hh>
+#include <schedule/src/schedule.hh>
 #include <locale>
 #include <ctime>
 #include <iomanip>
@@ -14,8 +14,8 @@
 #include <filesystem>
 #include <fstream>
 
-#include <Packing.hh>
-#include <Project.hh>
+#include <schedule/src/Packing.hh>
+#include <schedule/src/Project.hh>
 
 
 

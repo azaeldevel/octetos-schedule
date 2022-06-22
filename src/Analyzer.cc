@@ -56,11 +56,6 @@ namespace sche
 		count = 0;
 		stoped = false;
 		countP0 = 0;
-<<<<<<< HEAD
-		
-=======
-
->>>>>>> 644264fa7a717050fd0881faf10b288729af9f82
 	}
 
 	Analyzer::~Analyzer()
@@ -118,13 +113,8 @@ namespace sche
 	{
 		slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
 		Glib::signal_timeout().connect(slot, 1000);
-<<<<<<< HEAD
-		
-		//run_evprog = new std::thread(th_run,evprog);
-=======
 
-		run_evprog = new std::thread(th_run,evprog);
->>>>>>> 644264fa7a717050fd0881faf10b288729af9f82
+		//run_evprog = new std::thread(th_run,evprog);
 		bt_apply->set_sensitive(false);
 		bt_close->set_sensitive(false);
 		bt_stop->set_sensitive(true);
