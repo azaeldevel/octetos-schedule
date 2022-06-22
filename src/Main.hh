@@ -71,6 +71,7 @@ namespace sche
 		Gtk::Label* lb_sigma;
 		unsigned int countP0;
 		sigc::slot<bool()> slot;
+		std::string str_display;
 	};
 
 	class Main : public Gtk::Window

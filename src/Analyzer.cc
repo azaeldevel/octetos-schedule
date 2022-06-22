@@ -24,7 +24,7 @@
 namespace sche
 {
 
-	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL)
+	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL), str_display(5,'.')
 	{
 		bt_apply = 0;
 		builder->get_widget("bt_Analyzer_Apply", bt_apply);
@@ -114,7 +114,7 @@ namespace sche
 		slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
 		Glib::signal_timeout().connect(slot, 1000);
 
-		//run_evprog = new std::thread(th_run,evprog);
+		run_evprog = new std::thread(th_run,evprog);
 		bt_apply->set_sensitive(false);
 		bt_close->set_sensitive(false);
 		bt_stop->set_sensitive(true);
@@ -138,10 +138,10 @@ namespace sche
 	{
 		if(evprog->get_population_size() == 0)
 		{
-			/*on_bt_stop_clicked();
+			on_bt_stop_clicked();
 			Gtk::MessageDialog dialog(*this, "Error ineperador",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
 	  		dialog.set_secondary_text("La poblacion actual es 0");
-	  		dialog.run();*/
+	  		dialog.run();
 			countP0++;
 			std::cout << "countP0 : " << countP0 << "\n";
 	  		return true;
@@ -149,39 +149,60 @@ namespace sche
 		if(evprog->isRunning())
 		{
 			double progress,percen;
-			std::string str_display;
+			//std::string str_display(5,'.');
 			//std::string str_predict;
 
 			progress = evprog->getProgress();
 			progress = round(double(100000000) * progress);
 			progress /= double(100000000);
 			percen = progress * double(100);
-			str_display.clear();
-			str_display = std::to_string(percen) + "%";
+			//str_display.clear();
+			str_display.resize(count);
 			if(count < 6)
             {
                 count++;
                 switch(count)
                 {
                 case 1:
-                    str_display += ".    ";
+                    str_display[0] = '.';
+                    str_display[1] = ' ';
+                    str_display[2] = ' ';
+                    str_display[3] = ' ';
+                    str_display[4] = ' ';
                     break;
                 case 2:
-                    str_display += "..   ";
+                    str_display[0] = '.';
+                    str_display[1] = '.';
+                    str_display[2] = ' ';
+                    str_display[3] = ' ';
+                    str_display[4] = ' ';
                     break;
                 case 3:
-                    str_display += "...  ";
+                    str_display[0] = '.';
+                    str_display[1] = '.';
+                    str_display[2] = '.';
+                    str_display[3] = ' ';
+                    str_display[4] = ' ';
                     break;
                 case 4:
-                    str_display += ".... ";
+                    str_display[0] = '.';
+                    str_display[1] = '.';
+                    str_display[2] = '.';
+                    str_display[3] = '.';
+                    str_display[4] = ' ';
                     break;
                 case 5:
-                    str_display += ".....";
+                    str_display[0] = '.';
+                    str_display[1] = '.';
+                    str_display[2] = '.';
+                    str_display[3] = '.';
+                    str_display[4] = '.';
                     count = 0;
                     break;
                 }
             }
 			pg_evprog->set_fraction(progress);
+			str_display = std::to_string(percen) + "%" + str_display;
 			pg_evprog->set_text(str_display);
 			if(exp_logs->get_expanded())
 			{
