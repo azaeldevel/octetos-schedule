@@ -1663,24 +1663,23 @@ namespace oct::ec::sche
 		config.lookupValue("max_progenitor",max_progenitor);
 		this->max_progenitor = max_progenitor;
 
-		real mutable_prob;
+		//double mutable_prob;
 		config.lookupValue("mutable_prob",mutable_prob);
-		this->mutable_prob = mutable_prob;
+		this->mutable_prob = 0.05;//TODO: lookupValue not read value for file
 
 		int max_mutation;
 		config.lookupValue("max_mutation",max_mutation);
 		this->max_mutation = max_mutation;
 
-		real junting_sigma;
+		//real junting_sigma;
 		config.lookupValue("junting_sigma",junting_sigma);
-		this->junting_sigma = junting_sigma;
-
+		//this->junting_sigma = junting_sigma;
 	}
-	void Configuration::load_file(const std::filesystem::path& proyect,const std::filesystem::path& out_dir)
+	/*void Configuration::load_file(const std::filesystem::path& proyect,const std::filesystem::path& out_dir)
 	{
 		load_file(proyect);
-		//this->out_dir = out_dir;
-	}
+		this->out_dir = out_dir;
+	}*/
 	/*void Configuration::set_out_directory(const std::filesystem::path& p)
 	{
 		out_dir = p;
@@ -2547,7 +2546,7 @@ namespace oct::ec::sche
 	Data::Data(const std::filesystem::path& in_dir,const std::filesystem::path& out_dir)
 	{
 		std::filesystem::path proy_dir= in_dir/config_fn;
-		config.load_file(proy_dir,out_dir);
+		config.load_file(proy_dir);
 
 		load(in_dir);
 	}

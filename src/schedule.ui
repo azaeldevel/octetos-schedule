@@ -325,11 +325,11 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <child>
-                  <object class="GtkLabel">
-                    <property name="name">in_population</property>
+                  <object class="GtkLabel" id="in_seconds">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Max. cant. de variable(Hijos) : </property>
+                    <property name="tooltip-text" translatable="yes">Indica la cantidad de segundos por hora</property>
+                    <property name="label" translatable="yes">Segundos : </property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -338,10 +338,11 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="in_population">
-                    <property name="name">in_population</property>
+                  <object class="GtkEntry" id="in_config_seconds">
+                    <property name="name">in_config_seconds</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="input-purpose">number</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -365,7 +366,8 @@
                     <property name="name">in_population</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Max. cant. variables conservadas(Progenitores) : </property>
+                    <property name="tooltip-text" translatable="yes">Indica en tamnaño de la poblacion</property>
+                    <property name="label" translatable="yes">Variables : </property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -374,10 +376,11 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry">
-                    <property name="name">in_progenitor</property>
+                  <object class="GtkEntry" id="in_config_population">
+                    <property name="name">in_config_population</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="input-purpose">number</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -398,9 +401,11 @@
                 <property name="can-focus">False</property>
                 <child>
                   <object class="GtkLabel">
+                    <property name="name">in_population</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Taza de cambio(Mutaciones) : </property>
+                    <property name="tooltip-text" translatable="yes">Cantidad de progenitores</property>
+                    <property name="label" translatable="yes">Conservadas : </property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -409,8 +414,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry">
-                    <property name="name">in_mutation_prob</property>
+                  <object class="GtkEntry" id="in_config_progenitor">
+                    <property name="name">in_config_progenitor</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                   </object>
@@ -435,7 +440,8 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Max. cant. cambios(Max. Mutacion) : </property>
+                    <property name="tooltip-text" translatable="yes">Taza de mutacion</property>
+                    <property name="label" translatable="yes">Taza de cambio : </property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -444,9 +450,10 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry">
-                    <property name="name">in_max_mutations</property>
+                  <object class="GtkEntry" id="in_config_mutation_prob">
+                    <property name="name">in_config_mutation_prob</property>
                     <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can-focus">True</property>
                   </object>
                   <packing>
@@ -470,6 +477,42 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="tooltip-text" translatable="yes">Maxima cantiad de mutacion por individio</property>
+                    <property name="label" translatable="yes">Cantiadad de Cambios : </property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="in_config_max_mutations">
+                    <property name="name">in_config_max_mutations</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Directorio de salida : </property>
                   </object>
                   <packing>
@@ -479,8 +522,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkFileChooserButton">
-                    <property name="name">in_result</property>
+                  <object class="GtkFileChooserButton" id="in_config_result">
+                    <property name="name">in_config_result</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="title" translatable="yes"/>
@@ -495,7 +538,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">4</property>
+                <property name="position">5</property>
               </packing>
             </child>
           </object>

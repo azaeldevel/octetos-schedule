@@ -186,7 +186,13 @@ namespace sche
 	private:
 	    const Glib::RefPtr<Gtk::Builder>& builder;
 	    const Project* project;
+
+	    Gtk::Entry* in_seconds;
 	    Gtk::Entry* in_population;
+	    Gtk::Entry* in_progenitor;
+	    Gtk::Entry* in_mutation_prob;
+	    Gtk::Entry* in_max_mutations;
+
 		Gtk::Button* bt_apply;
 	};
 

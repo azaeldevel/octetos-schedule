@@ -492,7 +492,7 @@ namespace oct::ec::sche
 		void rest(const Time& dt, unsigned int hours, Time& result);
 
 		void load_file(const std::filesystem::path& project);
-		void load_file(const std::filesystem::path& project,const std::filesystem::path& out_dir);
+		//void load_file(const std::filesystem::path& project,const std::filesystem::path& out_dir);
 		bool write_file_project(const std::filesystem::path&)const;
 
 		//

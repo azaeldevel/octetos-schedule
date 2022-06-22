@@ -131,11 +131,12 @@ void Main::on_bt_main_open_clicked()
 	}
 
 
-	if(not project_path.empty())
+	if(not project_path.empty() and not result_path.empty())
 	{
 		try
 		{
 			evprog = new Enviroment(result_path,project_path,result_path);
+			bt_main_analize->set_sensitive(true);
 		}
 		catch(const std::exception& e)
 		{
@@ -179,6 +180,10 @@ void Main::on_bt_main_config_clicked()
 	}*/
 	if(project_path.empty())
     {
+        std::string msg = std::string(titleWindow()) + " - *";
+        set_title(msg.c_str());
+        project_saved = false;
+        project_open = true;
         if(not project->create())
         {
             Gtk::MessageDialog dialog(*this, "Fallo de operacion",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
@@ -190,14 +195,13 @@ void Main::on_bt_main_config_clicked()
     else
     {
         project->open(project_path);
+        set_title(std::string(titleWindow()) + " - " + project_path.filename().string());
+        project_saved = true;
+        project_open = true;
     }
 
 
 
-	std::string msg = std::string(titleWindow()) + " - *";
-	set_title(msg.c_str());
-	project_saved = false;
-	project_open = true;
 
 	/*ntb_project = new Gtk::Notebook();
 	box_main->pack_start(*ntb_project);
@@ -208,7 +212,7 @@ void Main::on_bt_main_config_clicked()
 	read_project();*/
 
 	Configuration* dlgConfig = 0;
-    builder->get_widget_derived("dlgConfig", dlgConfig,project);
+    builder->get_widget_derived("dlgConfig", dlgConfig, project);
     int response = dlgConfig->run();
 }
 Main::PageConfig::PageConfig()

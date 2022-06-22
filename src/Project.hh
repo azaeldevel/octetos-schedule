@@ -46,7 +46,7 @@ public:
     Project();
     ~Project();
 
-    const oct::ec::sche::Data & get_data()const;
+    const oct::ec::sche::Data& get_data()const;
 
 	const oct::ec::sche::Data& open(const std::filesystem::path& project_filename);
 	bool run();
