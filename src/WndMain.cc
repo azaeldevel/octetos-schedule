@@ -39,7 +39,7 @@ AboutDialog::AboutDialog(BaseObjectType* o, const Glib::RefPtr<Gtk::Builder>& b)
 
 
 
-Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder(refGlade),project(NULL)
+Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) : Gtk::Window(cobject), builder(refGlade),project(new Project)
 {
 	set_title(titleWindow());
 
@@ -51,9 +51,9 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 	builder->get_widget("bt_main_analize", bt_main_analize);
 	bt_main_analize->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_analize_clicked));
 
-	bt_main_new = 0;
-	builder->get_widget("bt_main_new", bt_main_new);
-	bt_main_new->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_new_clicked));
+	bt_main_config = 0;
+	builder->get_widget("bt_main_config", bt_main_config);
+	bt_main_config->signal_clicked().connect(sigc::mem_fun(*this,&Main::on_bt_main_config_clicked));
 
 	bt_main_save = 0;
 	builder->get_widget("bt_main_save", bt_main_save);
@@ -73,14 +73,14 @@ Main::Main(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) 
 
 	box_main = 0;
 	builder->get_widget("box_main", box_main);
-	
+
 	evprog = NULL;
 	set_icon_name("/sche/schedule.ico");
 	project_saved = true;
 	project_open = false;
-	
+
 	page_config = NULL;
-	
+
 }
 Main::~Main()
 {
@@ -131,7 +131,7 @@ void Main::on_bt_main_open_clicked()
 	}
 
 
-	if(not project_path.empty() and not result_path.empty())
+	if(not project_path.empty())
 	{
 		try
 		{
@@ -168,37 +168,48 @@ void Main::on_bt_main_analize_clicked()
   		dialog.run();
 	}
 }
-void Main::on_bt_main_new_clicked()
+void Main::on_bt_main_config_clicked()
 {
-	if(project)
+	/*if(project)
 	{
 		Gtk::MessageDialog dialog(*this, "Archivo abierto",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
 	  	dialog.set_secondary_text("Hay un archivo abierto, cierre primero antes de continuar.");
 	  	dialog.run();
 	  	return;
-	}
+	}*/
+	if(project_path.empty())
+    {
+        if(not project->create())
+        {
+            Gtk::MessageDialog dialog(*this, "Fallo de operacion",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+            dialog.set_secondary_text("Fallo la creacion del projecto temporal");
+            dialog.run();
+            return;
+        }
+    }
+    else
+    {
+        project->open(project_path);
+    }
 
-	project = new Project;
-	if(not project->create()) 
-	{
-		Gtk::MessageDialog dialog(*this, "Fallo de operacion",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
-  		dialog.set_secondary_text("Fallo la creacion del projecto temporal");
-  		dialog.run();
-  		return;
-	}
+
 
 	std::string msg = std::string(titleWindow()) + " - *";
 	set_title(msg.c_str());
 	project_saved = false;
 	project_open = true;
-	
-	ntb_project = new Gtk::Notebook();
+
+	/*ntb_project = new Gtk::Notebook();
 	box_main->pack_start(*ntb_project);
 	ntb_project->show();
 	append_config();
 	append_teachers();
-	
-	read_project();
+
+	read_project();*/
+
+	Configuration* dlgConfig = 0;
+    builder->get_widget_derived("dlgConfig", dlgConfig,project);
+    int response = dlgConfig->run();
 }
 Main::PageConfig::PageConfig()
 {
@@ -219,7 +230,7 @@ Main::PageConfig::PageConfig()
 	box_directory.set_orientation(Gtk::ORIENTATION_HORIZONTAL);
 	box_config.pack_start(box_directory);
 	container.add(box_config);
-	
+
 	//controls
 	box_seconds.pack_start(lb_seconds);
 	box_seconds.pack_start(in_seconds);
@@ -227,48 +238,48 @@ Main::PageConfig::PageConfig()
 	lb_seconds.set_halign(Gtk::ALIGN_START);
 	in_seconds.set_halign(Gtk::ALIGN_START);
 	in_seconds.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
-	
+
 	box_week.pack_start(lb_week);
 	box_week.pack_start(cmb_week);
 	lb_week.set_text("Semana : ");
 	lb_week.set_halign(Gtk::ALIGN_START);
 	cmb_week.set_halign(Gtk::ALIGN_START);
 	//in_seconds.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
-	
+
 	box_childs.pack_start(lb_childs);
 	box_childs.pack_start(in_childs);
 	lb_childs.set_text("Max. cant. de variable(Hijos) : ");
 	lb_childs.set_halign(Gtk::ALIGN_START);
 	in_childs.set_halign(Gtk::ALIGN_START);
 	in_childs.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
-	
+
 	box_progenitors.pack_start(lb_progenitors);
 	box_progenitors.pack_start(in_progenitors);
 	lb_progenitors.set_text("Max. cant. variables conservadas(Progenitores) : ");
 	lb_progenitors.set_halign(Gtk::ALIGN_START);
 	in_progenitors.set_halign(Gtk::ALIGN_START);
 	in_progenitors.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
-	
+
 	box_mutation_prob.pack_start(lb_mutation_prob);
 	box_mutation_prob.pack_start(in_mutation_prob);
 	lb_mutation_prob.set_text("Taza de cambio(Mutaciones) : ");
 	lb_mutation_prob.set_halign(Gtk::ALIGN_START);
 	in_mutation_prob.set_halign(Gtk::ALIGN_START);
 	in_mutation_prob.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
-		
+
 	box_mutation_max.pack_start(lb_mutation_max);
 	box_mutation_max.pack_start(in_mutation_max);
 	lb_mutation_max.set_text("Max. cant. cambios(Max. Mutacion) : ");
 	lb_mutation_max.set_halign(Gtk::ALIGN_START);
 	in_mutation_max.set_halign(Gtk::ALIGN_START);
 	in_mutation_max.set_input_purpose(Gtk::INPUT_PURPOSE_NUMBER);
-	
+
 	box_directory.pack_start(lb_directory);
 	box_directory.pack_start(bt_directory);
 	lb_directory.set_text("Directorio de Resultados : ");
 	lb_directory.set_halign(Gtk::ALIGN_START);
 	bt_directory.set_halign(Gtk::ALIGN_START);
-	
+
 	//ComboBox>>
 	m_refTreeModel = Gtk::ListStore::create(columns);
   	cmb_week.set_model(m_refTreeModel);
@@ -283,7 +294,7 @@ Main::PageConfig::PageConfig()
 
   	row = *(m_refTreeModel->append());
   	row[columns.id] = week_name::MS;
-	
+
   	row = *(m_refTreeModel->append());
   	row[columns.id] = week_name::DS;
 
@@ -304,7 +315,7 @@ Main::PageConfig::PageConfig()
 
 }
 Main::ModelColumns::ModelColumns()
-{ 
+{
 	add(id);
 }
 void Main::PageConfig::on_cell_id(const Gtk::TreeModel::const_iterator& iter)
@@ -318,13 +329,13 @@ void Main::PageConfig::on_cell_id(const Gtk::TreeModel::const_iterator& iter)
   		id_cell.property_text()  = "Lunes a Viernes";
   		break;
   	case week_name::MS:
-  		id_cell.property_text()  = "Lunes a Sabado";  		
+  		id_cell.property_text()  = "Lunes a Sabado";
   		break;
   	case week_name::DS:
-  		id_cell.property_text()  = "Domingo a Sabado";  		
+  		id_cell.property_text()  = "Domingo a Sabado";
   		break;
   	default:
-  		id_cell.property_text()  = "Desconocido";    		
+  		id_cell.property_text()  = "Desconocido";
   	}
   	//id_cell.property_foreground() = (id == weekname::MF ? "green" : "blue");
 }
@@ -350,7 +361,7 @@ void Main::PageConfig::on_combo_changed()
 void Main::PageConfig::show()
 {
 	container.show();
-	
+
 	box_config.show();
 	box_seconds.show();
 	box_week.show();
@@ -359,7 +370,7 @@ void Main::PageConfig::show()
 	box_mutation_prob.show();
 	box_mutation_max.show();
 	box_directory.show();
-		
+
 	lb_seconds.show();
 	in_seconds.show();
 	lb_week.show();
@@ -374,7 +385,7 @@ void Main::PageConfig::show()
 	in_mutation_max.show();
 	lb_directory.show();
 	bt_directory.show();
-	
+
 }
 void Main::append_config()
 {
@@ -434,7 +445,7 @@ void Main::on_bt_main_save_clicked()
 
 	//
 	project->save(project_path);
-	
+
 	//
 	std::string msg = std::string(titleWindow()) + " - " + project_path.filename().string();
 	set_title(msg.c_str());
@@ -531,33 +542,33 @@ void Main::on_bt_main_about_clicked()
 
 bool Main::load_update_config(const std::filesystem::path& file)
 {
-	project->ep_config.set_seconds_per_hour(std::stoi(page_config->in_seconds.get_text()));
+	/*project->ep_config.set_seconds_per_hour(std::stoi(page_config->in_seconds.get_text()));
 
 	Gtk::TreeModel::iterator it = page_config->cmb_week.get_active();
 	Gtk::TreeModel::Row row = *it;
 	if(row) project->ep_config.set_schema_week(row[page_config->columns.id]);
-	
+
 	project->ep_config.set_max_population(std::stoi(page_config->in_childs.get_text()));
-	
+
 	project->ep_config.set_max_progenitor(std::stoi(page_config->in_progenitors.get_text()));
-	
+
 	project->ep_config.set_mutable_prob(std::stoi(page_config->in_mutation_prob.get_text()));
-	
+
 	project->ep_config.set_max_mutation(std::stoi(page_config->in_mutation_max.get_text()));
-		
-	project->ep_config.set_out_directory(page_config->directory);
-	
+
+	project->ep_config.set_out_directory(page_config->directory);*/
+
 	return true;
 }
 bool Main::read_project()
 {
-	page_config->in_seconds.set_text(std::to_string(project->ep_config.get_seconds_per_hour()));
+	/*page_config->in_seconds.set_text(std::to_string(project->ep_config.get_seconds_per_hour()));
 	std::cout << "Segundos : " << project->ep_config.get_seconds_per_hour() << "\n";
-	
+
 	page_config->cmb_week.set_active(project->ep_config.get_schema_week());
-	
-	page_config->in_childs.set_text(std::to_string(project->ep_config.get_max_population()));
-	
+
+	page_config->in_childs.set_text(std::to_string(project->ep_config.get_max_population()));*/
+
 	return true;
 }
 }

@@ -45,21 +45,23 @@ class OCTETOS_SCHEDULE_DECLSPCE_DLL Project
 public:
     Project();
     ~Project();
-		
-	const std::filesystem::path& open(const std::filesystem::path& project_filename);
+
+    const oct::ec::sche::Data & get_data()const;
+
+	const oct::ec::sche::Data& open(const std::filesystem::path& project_filename);
 	bool run();
 	bool save(const std::filesystem::path& source,const std::filesystem::path& destino);
 	bool create();
 	bool create(const std::filesystem::path& destino);
 	bool create_default_config();
 	bool save(const std::filesystem::path&);
-	
+
 public:
-	oct::ec::sche::Configuration ep_config;
-	
+	oct::ec::sche::Data data;
+
 private:
 	Temporary project_filename_temp;
-	
+
 };
 
 

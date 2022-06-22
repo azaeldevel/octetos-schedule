@@ -63,7 +63,7 @@ namespace sche
 		std::thread* run_evprog;
 		Gtk::ProgressBar* pg_evprog;
 		unsigned int count;
-		bool stoped;
+		//bool stoped;
 		Gtk::Label* lbIterations;
 		Gtk::Expander* exp_logs;
 		Gtk::Label* lb_leader;
@@ -90,7 +90,7 @@ namespace sche
 	protected:
 		void on_bt_main_open_clicked();
 		void on_bt_main_analize_clicked();
-		void on_bt_main_new_clicked();
+		void on_bt_main_config_clicked();
 		void on_bt_main_save_clicked();
 		void on_bt_main_saveas_clicked();
 		void on_bt_main_close_clicked();
@@ -100,7 +100,7 @@ namespace sche
 		const Glib::RefPtr<Gtk::Builder> builder;
 		Gtk::ToolButton* bt_main_open;
 		Gtk::ToolButton* bt_main_analize;
-		Gtk::ToolButton* bt_main_new;
+		Gtk::ToolButton* bt_main_config;
 		Gtk::ToolButton* bt_main_save;
 		Gtk::ToolButton* bt_main_saveas;
 		Gtk::ToolButton* bt_main_close;
@@ -171,6 +171,23 @@ namespace sche
 
 
 		PageConfig* page_config;
+	};
+
+
+	class Configuration : public Gtk::Dialog
+	{
+	public:
+		Configuration(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade, const Project*);
+		~Configuration();
+
+	protected:
+		void on_bt_accept_clicked();
+
+	private:
+	    const Glib::RefPtr<Gtk::Builder>& builder;
+	    const Project* project;
+	    Gtk::Entry* in_population;
+		Gtk::Button* bt_apply;
 	};
 
 }

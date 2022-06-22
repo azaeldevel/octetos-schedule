@@ -128,7 +128,15 @@ Project::~Project()
 }
 
 
-const std::filesystem::path& Project::open(const std::filesystem::path& project)
+
+const oct::ec::sche::Data & Project::get_data() const
+{
+    return data;
+}
+
+
+
+const oct::ec::sche::Data& Project::open(const std::filesystem::path& project)
 {
 	//if(not project_filename_temp.get_path().empty()) throw oct::core::Exception("El directorio temporal esta ocupa.",__FILE__,__LINE__);
 
@@ -139,8 +147,9 @@ const std::filesystem::path& Project::open(const std::filesystem::path& project)
 
     //return project_filename_temp.get_path();
 
+    data.load(project);
 
-    return project;
+    return data;
 }
 
 /*
@@ -178,17 +187,17 @@ bool Project::create_default_config()
 
 	project_filename_temp.create_directory();
 
-	ep_config.set_schema_week(oct::ec::sche::Configuration::SchemaWeek::MF);
-	ep_config.set_seconds_per_hour(std::time_t(2700));
-	ep_config.set_out_directory("logs/schedule");
-	ep_config.set_max_population(2000);
-	ep_config.set_max_progenitor(300);
-	ep_config.set_mutable_prob(0.05);
-	ep_config.set_max_mutation(4);
-	ep_config.set_junting_sigma(5.0);
-		
-	ep_config.write_file_project(project_filename_temp.get_path()/oct::ec::sche::Data::config_fn);
-	
+	data.config.set_schema_week(oct::ec::sche::Configuration::SchemaWeek::MF);
+	data.config.set_seconds_per_hour(std::time_t(2700));
+	//data.config.set_out_directory("logs/schedule");
+	data.config.set_max_population(2000);
+	data.config.set_max_progenitor(300);
+	data.config.set_mutable_prob(0.05);
+	data.config.set_max_mutation(4);
+	data.config.set_junting_sigma(5.0);
+
+	data.config.write_file_project(project_filename_temp.get_path()/oct::ec::sche::Data::config_fn);
+
 	return true;
 }
 

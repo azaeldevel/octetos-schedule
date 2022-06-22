@@ -7289,18 +7289,18 @@
 	<sigc++/sigc++.h>
 	<gtkmm/scalebutton.h>
 
-1655876033 c:\users\azael\documents\develop\octetos\schedule\src\main.hh
+1655886460 c:\users\azael\documents\develop\octetos\schedule\src\main.hh
 	<gtkmm.h>
 	<thread>
 	"schedule.hh"
 	"Project.hh"
 
-1650090240 source:c:\users\azael\documents\develop\octetos\schedule\src\wndmain.cc
+1655886381 source:c:\users\azael\documents\develop\octetos\schedule\src\wndmain.cc
 	<iostream>
 	"Main.hh"
 	"config.h"
 
-1650090240 source:c:\users\azael\documents\develop\octetos\schedule\src\schedule-data.cc
+1655886146 source:c:\users\azael\documents\develop\octetos\schedule\src\schedule-data.cc
 	<sstream>
 	<fstream>
 	<iostream>
@@ -7317,7 +7317,7 @@
 1650851145 c:\users\azael\documents\develop\octetos\schedule\src\schedule.hh
 	"schedule-data.hh"
 
-1655874049 c:\users\azael\documents\develop\octetos\schedule\src\schedule-data.hh
+1655886590 c:\users\azael\documents\develop\octetos\schedule\src\schedule-data.hh
 	<map>
 	<ctime>
 	<execinfo.h>
@@ -7452,19 +7452,20 @@
 	<Packing.hh>
 	<Project.hh>
 
-1650867217 c:\users\azael\documents\develop\octetos\schedule\src\project.hh
+1655886249 c:\users\azael\documents\develop\octetos\schedule\src\project.hh
 	<string>
 	"schedule.hh"
 	"Packing.hh"
 
-1650090240 source:c:\users\azael\documents\develop\octetos\schedule\src\project.cc
+1655886087 source:c:\users\azael\documents\develop\octetos\schedule\src\project.cc
 	<stdlib.h>
-	<unistd.h>
 	<stdio.h>
 	<string.h>
 	<fstream>
 	<octetos/core/Exception.hh>
-	<Exception.hh>
+	<unistd.h>
+	<core/src/Exception.hh>
+	<io.h>
 	"Project.hh"
 
 1650092125 source:c:\users\azael\documents\develop\octetos\schedule\src\ec-schedule-win.cc
@@ -7472,7 +7473,7 @@
 	<string>
 	<Shlobj.h>
 
-1650090279 source:c:\users\azael\documents\develop\octetos\schedule\src\analyzer.cc
+1655880705 source:c:\users\azael\documents\develop\octetos\schedule\src\analyzer.cc
 	<sstream>
 	"Main.hh"
 
@@ -7702,4 +7703,7 @@
 1653408783 c:\msys64\mingw64\include\fcntl.h
 	<crtdefs.h>
 	<io.h>
+
+1655883748 source:c:\users\azael\documents\develop\octetos\schedule\src\configuration.cc
+	"Main.hh"
 

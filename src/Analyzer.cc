@@ -54,7 +54,7 @@ namespace sche
 		builder->get_widget("pg_evprog", pg_evprog);
 
 		count = 0;
-		stoped = false;
+		//stoped = false;
 		countP0 = 0;
 	}
 
@@ -114,19 +114,20 @@ namespace sche
 		slot = sigc::bind(sigc::mem_fun(*this,&Analyzer::update_progress),1);
 		Glib::signal_timeout().connect(slot, 1000);
 
+		//stoped = false;
 		run_evprog = new std::thread(th_run,evprog);
 		bt_apply->set_sensitive(false);
 		bt_close->set_sensitive(false);
 		bt_stop->set_sensitive(true);
-		stoped = false;
 	}
 
 	void Analyzer::on_bt_stop_clicked()
 	{
+		//stoped = true;
 		evprog->stop();
 		bt_apply->set_sensitive(true);
 		bt_close->set_sensitive(true);
-		stoped = true;
+		bt_stop->set_sensitive(false);
 	}
 
 	void Analyzer::on_bt_close_clicked()
@@ -139,7 +140,7 @@ namespace sche
 		if(evprog->get_population_size() == 0)
 		{
 			on_bt_stop_clicked();
-			Gtk::MessageDialog dialog(*this, "Error ineperador",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
+			Gtk::MessageDialog dialog(*this, "Error inesperado",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
 	  		dialog.set_secondary_text("La poblacion actual es 0");
 	  		dialog.run();
 			countP0++;
@@ -202,7 +203,7 @@ namespace sche
                 }
             }
 			pg_evprog->set_fraction(progress);
-			str_display = std::to_string(percen) + "%" + str_display;
+			str_display = std::to_string(percen) + "% " + str_display;
 			pg_evprog->set_text(str_display);
 			if(exp_logs->get_expanded())
 			{
@@ -231,10 +232,12 @@ namespace sche
 			Gtk::MessageDialog dialog(*this, "Operacion completada");
   			dialog.set_secondary_text("Se encontro la(s) soluciones requeridadas");
   			dialog.run();
+  			return false;
 		}
-		else if(stoped)
+		else if(not evprog->isRunning())
 		{
 			pg_evprog->set_text("Detenido...");
+			return false;
 		}
 		else
 		{

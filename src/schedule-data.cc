@@ -1597,10 +1597,10 @@ namespace oct::ec::sche
 		dt_t -= hours * get_time_per_hour() * 60;
 		result = *localtime(&dt_t);
 	}*/
-	const std::filesystem::path& Configuration::get_out_directory()const
+	/*const std::filesystem::path& Configuration::get_out_directory()const
 	{
 		return out_dir;
-	}
+	}*/
 	unsigned int Configuration::get_max_population()const
 	{
 		return max_population;
@@ -1652,8 +1652,8 @@ namespace oct::ec::sche
 		this->seconds_per_hour = (unsigned int)seconds_per_hour;
 		//std::cout << "seconds = " << this->seconds_per_hour << "\n";
 
-		std::string out_dir = config.lookup("out");
-		this->out_dir = out_dir;
+		//std::string out_dir = config.lookup("out");
+		//this->out_dir = out_dir;
 
 		int max_population;
 		config.lookupValue("max_population",max_population);
@@ -1679,12 +1679,12 @@ namespace oct::ec::sche
 	void Configuration::load_file(const std::filesystem::path& proyect,const std::filesystem::path& out_dir)
 	{
 		load_file(proyect);
-		this->out_dir = out_dir;
+		//this->out_dir = out_dir;
 	}
-	void Configuration::set_out_directory(const std::filesystem::path& p)
+	/*void Configuration::set_out_directory(const std::filesystem::path& p)
 	{
 		out_dir = p;
-	}
+	}*/
 	void Configuration::Configuration::set_max_population(unsigned int i)
 	{
 		max_population = i;
@@ -1716,7 +1716,7 @@ namespace oct::ec::sche
 	bool Configuration::write_file_project(const std::filesystem::path& path_file)const
 	{
 		if(path_file.empty()) throw oct::core::Exception("No se especifico ruta",__FILE__,__LINE__);
-		
+
 		std::ofstream file;
 		file.open(path_file);
 
@@ -1739,15 +1739,15 @@ namespace oct::ec::sche
 		}
 		file << "\";\n";
 		file << "seconds = " << seconds_per_hour << ";\n";
-		
-		file << "out = \"" << out_dir << "\";\n";
-		
+
+		//file << "out = \"" << out_dir << "\";\n";
+
 		file << "max_population = " << max_population << ";\n";
 		file << "max_progenitor = " << max_progenitor << ";\n";
 		file << "mutable_prob = " << mutable_prob << ";\n";
 		file << "max_mutation = " << max_mutation << ";\n";
 		file << "junting_sigma = " << junting_sigma <<";\n";
-		
+
 		file.flush();
 		file.close();
 

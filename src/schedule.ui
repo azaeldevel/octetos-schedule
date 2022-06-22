@@ -266,6 +266,7 @@
     </child>
   </object>
   <object class="GtkDialog" id="dlgConfig">
+    <property name="name">dlgConfig</property>
     <property name="can-focus">False</property>
     <property name="type-hint">dialog</property>
     <child internal-child="vbox">
@@ -325,6 +326,7 @@
                 <property name="can-focus">False</property>
                 <child>
                   <object class="GtkLabel">
+                    <property name="name">in_population</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Max. cant. de variable(Hijos) : </property>
@@ -336,7 +338,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry">
+                  <object class="GtkEntry" id="in_population">
+                    <property name="name">in_population</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                   </object>
@@ -359,6 +362,7 @@
                 <property name="can-focus">False</property>
                 <child>
                   <object class="GtkLabel">
+                    <property name="name">in_population</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Max. cant. variables conservadas(Progenitores) : </property>
@@ -371,6 +375,7 @@
                 </child>
                 <child>
                   <object class="GtkEntry">
+                    <property name="name">in_progenitor</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                   </object>
@@ -405,6 +410,7 @@
                 </child>
                 <child>
                   <object class="GtkEntry">
+                    <property name="name">in_mutation_prob</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                   </object>
@@ -439,6 +445,7 @@
                 </child>
                 <child>
                   <object class="GtkEntry">
+                    <property name="name">in_max_mutations</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                   </object>
@@ -473,6 +480,7 @@
                 </child>
                 <child>
                   <object class="GtkFileChooserButton">
+                    <property name="name">in_result</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="title" translatable="yes"/>
@@ -545,6 +553,7 @@
                       <object class="GtkToolButton" id="bt_main_analize">
                         <property name="name">bt_main_analize</property>
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can-focus">False</property>
                         <property name="tooltip-text" translatable="yes">Iniciar proceso de analisis</property>
                         <property name="label" translatable="yes">Analizar</property>
@@ -557,12 +566,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToolButton" id="bt_main_new">
+                      <object class="GtkToolButton" id="bt_main_config">
+                        <property name="name">bt_main_config</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Nuevo</property>
+                        <property name="label" translatable="yes">Archivo de Proyecto</property>
                         <property name="use-underline">True</property>
-                        <property name="stock-id">gtk-new</property>
+                        <property name="stock-id">gtk-preferences</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -572,6 +582,7 @@
                     <child>
                       <object class="GtkToolButton" id="bt_main_save">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Guardar</property>
                         <property name="use-underline">True</property>
@@ -585,6 +596,7 @@
                     <child>
                       <object class="GtkToolButton" id="bt_main_saveas">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Guardar como..</property>
                         <property name="use-underline">True</property>

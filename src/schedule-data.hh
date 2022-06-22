@@ -459,14 +459,14 @@ namespace oct::ec::sche
 		int get_begin_day() const;
 		real get_hours_sigma()const;
 
-		const std::filesystem::path& get_out_directory()const;
+		//const std::filesystem::path& get_out_directory()const;
 		unsigned int get_max_population()const;
 		unsigned int get_max_progenitor()const;
 		real get_mutable_prob()const;
 		unsigned int get_max_mutation()const;
 		real get_junting_sigma()const;
 
-		void set_out_directory(const std::filesystem::path&);
+		//void set_out_directory(const std::filesystem::path&);
 		void set_max_population(unsigned int);
 		void set_max_progenitor(unsigned int);
 		void set_mutable_prob(real);
@@ -503,7 +503,7 @@ namespace oct::ec::sche
 		//Schema schema;
 		//FormatDT format;
 		real hours_sigma;
-		std::filesystem::path out_dir;
+		//std::filesystem::path out_dir;
 		//unsigned int trys;
 		real mutable_prob;
 		unsigned int max_mutation;
