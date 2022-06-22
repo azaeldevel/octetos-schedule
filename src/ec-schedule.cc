@@ -122,7 +122,8 @@ int main(int argc, const char* argv[])
     {
     	if(log_directory.empty()) throw oct::core::Exception("Se deve asignar un directory de resultado '--out-directory'",__FILE__,__LINE__);
 	  	project = new sche::Project();
-	  	project_directory = project->open(project_file);
+	  	//project_directory = project->open(project_file);
+	  	project_directory = project_file;
   	}
 
 	oct::ec::sche::Enviroment* sche = new oct::ec::sche::Enviroment(log_directory,project_directory,log_directory);

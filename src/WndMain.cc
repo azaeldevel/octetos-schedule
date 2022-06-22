@@ -24,7 +24,7 @@
 #if defined(__GNUC__) && defined(__linux__)
     #include "config.h"
 #elif defined(__GNUC__) && (defined(_WIN32) || defined(_WIN64))
-
+    #include "config-win.h"
 #else
     #error "Pltaforma desconocida"
 #endif
@@ -526,13 +526,7 @@ void Main::on_bt_main_about_clicked()
 	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/sche/schedule.ico", NULL);
   	GtkWidget *dialog = gtk_about_dialog_new();
   	//gtk_about_dialog_set_name(GTK_ABOUT_DIALOG(dialog), "Schedule");
-#if defined(__linux__)
     gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), PACKAGE_VERSION);
-#elif (defined(_WIN32) || defined(_WIN64))
-    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), "alpha 31.0");
-#else
-    #error "Plataforma desconocida"
-#endif
   	gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog),"(c) Azael Reyes");
   	gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), "Organizador de horarios Escolar");
   	gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), "https://github.com/azaeldevel/octetos-schedule.git");

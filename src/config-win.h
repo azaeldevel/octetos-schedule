@@ -4,6 +4,6 @@
 
 
 #define PACKAGE_NAME "schedule"
-#define PACKAGE_VERSION "0.46.0-alpha"
+#define PACKAGE_VERSION "0.46.1-alpha"
 
 #endif
