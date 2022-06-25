@@ -7295,10 +7295,11 @@
 	"schedule.hh"
 	"Project.hh"
 
-1655889717 source:c:\users\azael\documents\develop\octetos\schedule\src\wndmain.cc
+1655923356 source:c:\users\azael\documents\develop\octetos\schedule\src\wndmain.cc
 	<iostream>
 	"Main.hh"
 	"config.h"
+	"config-win.h"
 
 1655922074 source:c:\users\azael\documents\develop\octetos\schedule\src\schedule-data.cc
 	<sstream>
@@ -7706,4 +7707,6 @@
 
 1655916140 source:c:\users\azael\documents\develop\octetos\schedule\src\configuration.cc
 	"Main.hh"
+
+1655922902 c:\users\azael\documents\develop\octetos\schedule\src\config-win.h
 
