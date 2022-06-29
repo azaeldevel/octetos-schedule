@@ -44,7 +44,7 @@ namespace oct::ec::sche
 
 	Single::algorit Single::random_algorit()
 	{
-		std::uniform_int_distribution<> distrib(1,4);
+		std::uniform_int_distribution<> distrib(1,5);
 		switch(distrib(gen))
 		{
 			case 1:
