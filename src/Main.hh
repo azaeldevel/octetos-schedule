@@ -69,7 +69,6 @@ namespace sche
 		Gtk::Label* lb_leader;
 		Gtk::Label* lb_mean;
 		Gtk::Label* lb_sigma;
-		unsigned int countP0;
 		sigc::slot<bool()> slot;
 		std::string str_display;
 	};

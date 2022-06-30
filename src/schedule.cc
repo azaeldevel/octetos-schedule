@@ -44,7 +44,7 @@ namespace oct::ec::sche
 
 	Single::algorit Single::random_algorit()
 	{
-		std::uniform_int_distribution<> distrib(1,5);
+		std::uniform_int_distribution<> distrib(1,4);
 		switch(distrib(gen))
 		{
 			case 1:
@@ -55,8 +55,6 @@ namespace oct::ec::sche
 				return &Schedule::juncting_half;
 			case 4:
 				return &Schedule::juncting_choose_one_lesson;
-			case 5:
-				return &Schedule::juncting_choose_random_lesson;
 			default:
 				throw core::Exception("Funcion de apareo desconocida",__FILE__,__LINE__);
 		}

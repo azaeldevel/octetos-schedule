@@ -16,15 +16,15 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include <sstream>
-
+#include <sstream>
+#include <execinfo.h>
 
 #include "Main.hh"
 
 namespace sche
 {
 
-	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL), str_display(5,'.')
+	Analyzer::Analyzer(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& b,Enviroment* ep) : Gtk::Dialog(cobject), builder(b),evprog(ep),run_evprog(NULL), str_display(5,'.'),count(0)
 	{
 		bt_apply = 0;
 		builder->get_widget("bt_Analyzer_Apply", bt_apply);
@@ -52,10 +52,6 @@ namespace sche
 
 		pg_evprog = 0;
 		builder->get_widget("pg_evprog", pg_evprog);
-
-		count = 0;
-		//stoped = false;
-		countP0 = 0;
 	}
 
 	Analyzer::~Analyzer()
@@ -70,7 +66,7 @@ namespace sche
 	{
 	    try
 	    {
-	    	//std::cout << "Running..\n";
+	    	std::cout << "Running..\n";
             ((Enviroment*)obj)->run();
         }
 		catch(const std::exception& e)
@@ -143,22 +139,18 @@ namespace sche
 			Gtk::MessageDialog dialog(*this, "Error inesperado",false, Gtk::MESSAGE_ERROR,Gtk::BUTTONS_OK);
 	  		dialog.set_secondary_text("La poblacion actual es 0");
 	  		dialog.run();
-			countP0++;
-			std::cout << "countP0 : " << countP0 << "\n";
 	  		return true;
 		}
 		if(evprog->isRunning())
 		{
 			double progress,percen;
-			//std::string str_display(5,'.');
-			//std::string str_predict;
 
 			progress = evprog->getProgress();
 			progress = round(double(100000000) * progress);
 			progress /= double(100000000);
 			percen = progress * double(100);
 			//str_display.clear();
-			str_display.resize(count);
+			str_display.resize(5);
 			if(count < 6)
             {
                 count++;
@@ -234,15 +226,9 @@ namespace sche
   			dialog.run();
   			return false;
 		}
-		else if(not evprog->isRunning())
+		else if(not bt_stop->get_sensitive())
 		{
 			pg_evprog->set_text("Detenido...");
-			return false;
-		}
-		else
-		{
-			pg_evprog->set_fraction(0);
-			pg_evprog->set_text("Analisis Fase 1..");
 		}
 
 		return true;

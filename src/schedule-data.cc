@@ -2836,12 +2836,12 @@ namespace oct::ec::sche
 
 		std::uniform_int_distribution<> distrib(0,g2.size() - 1);
 		unsigned int i = distrib(gen);
-		at(i).clear();
+		at(i).week.clear_days();
 		at(i) = g2[i];
 	}
 	void ClassRoom::juncting_choose_random_lesson(const ClassRoom& g2)
 	{
-		if(g2.size() != size()) throw core::Exception("EL tamano de los registros no coincide.",__FILE__,__LINE__);
+		if(g2.size() != size()) throw core::Exception("El tamano de los registros no coincide.",__FILE__,__LINE__);
 		if(g2.size() == 0) throw core::Exception("No hay lecciones",__FILE__,__LINE__);
 		if(g2.size() == 1) throw core::Exception("Solo una leccion",__FILE__,__LINE__);
 
