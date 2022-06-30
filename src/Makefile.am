@@ -27,7 +27,7 @@ liboctetos_schedule_la_LIBADD = $(OCTETOS_SCHEDULE_LIBS)
 
 bin_PROGRAMS = ec-schedule schedule
 
-schedule_SOURCES = main.cc WndMain.cc resources.c Analyzer.cc
+schedule_SOURCES = main.cc WndMain.cc resources.c Analyzer.cc Configuration.cc
 schedule_LDFLAGS = $(OCTETOS_SCHEDULE_CFLAGS) 
 schedule_LDADD = $(OCTETOS_SCHEDULE_LIBS) liboctetos-schedule.la
 
